@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Internships | NovaShyld Technologies</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* GLOBAL */
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #020617;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* MATRIX BACKGROUND */
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 60px;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .logo img {
+            height: 90px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: .3s;
+        }
+
+        nav ul li a:hover {
+            color: #00ffff;
+        }
+
+        /* HERO */
+
+        .hero {
+            text-align: center;
+            padding: 120px 20px;
+        }
+
+        .hero h1 {
+            font-size: 54px;
+            background: linear-gradient(90deg, #00ffff, #00fff7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #94a3b8;
+            font-size: 18px;
+        }
+
+        /* INTERNSHIP GRID */
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+            padding: 80px;
+        }
+
+        /* CARD */
+
+        .card {
+            background: #020617;
+            border: 1px solid #1e293b;
+            border-radius: 14px;
+            padding: 35px;
+            transition: .4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* GLOW BORDER */
+
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, #00ffff, #00ffff, #00ffff);
+            opacity: 0;
+            transition: .4s;
+            z-index: -1;
+            filter: blur(10px);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-12px) scale(1.03);
+        }
+
+        /* CARD TEXT */
+
+        .card h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* SKILLS */
+
+        .skills {
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+
+        .skills span {
+            display: inline-block;
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            padding: 6px 12px;
+            margin: 4px;
+            font-size: 12px;
+            border-radius: 20px;
+        }
+
+        /* APPLY BUTTON */
+
+        .apply-btn {
+            display: inline-block;
+            padding: 10px 22px;
+            background: #00ffff;
+            color: black;
+            font-weight: 600;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: .3s;
+        }
+
+        .apply-btn:hover {
+            background: #00ffff;
+            transform: scale(1.05);
+        }
+
+        /* FLOATING CARD ANIMATION */
+
+        @keyframes float {
+            0% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-8px)
+            }
+
+            100% {
+                transform: translateY(0)
+            }
+        }
+
+        /* SCROLL PROGRESS BAR */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            width: 0%;
+            background: linear-gradient(90deg, #00ffff, #22c55e);
+            z-index: 9999;
+        }
+
+        .card {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 1s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 2s;
+        }
+
+        /* SCROLL REVEAL */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: 1s;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid #1e293b;
+            color: #64748b;
+        }
+
+        .application-note {
+            background: linear-gradient(135deg, #0f172a, #020617);
+            border: 1px solid #00eaff;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 234, 255, 0.3);
+            color: #e2e8f0;
+        }
+
+        .application-note h3 {
+            color: #00eaff;
+            margin-bottom: 15px;
+        }
+
+        .application-note p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            padding: 60px;
+            text-align: center;
+        }
+
+        .stat-box h2 {
+            font-size: 42px;
+            color: #00ffff;
+        }
+
+        .stat-box p {
+            color: #94a3b8;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #0f172a;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-content input {
+            padding: 10px;
+            margin: 10px 0;
+            width: 80%;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #0f172a;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-content input {
+            padding: 10px;
+            margin: 10px 0;
+            width: 80%;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #0f172a;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-content input {
+            padding: 10px;
+            margin: 10px 0;
+            width: 80%;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        #topBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 10px 15px;
+            border-radius: 50%;
+            border: none;
+            background: #00ffff;
+            cursor: pointer;
+            display: none;
+        }
+    </style>
+    </style>
+
+</head>
+
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <canvas id="matrix"></canvas>
+
+    <header class="navbar">
+
+        <div class="logo">
+            <img src="images/logo.png">
+            NovaShyld Technologies
+        </div>
+
+        <nav>
+            <ul>
+
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="internships.html">Internships</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+
+            </ul>
+        </nav>
+
+    </header>
+
+
+    <section class="hero reveal">
+
+        <h1>Cybersecurity Internship Programs</h1>
+
+        <p>Gain real-world cybersecurity skills and hands-on industry experience.</p>
+
+    </section>
+    <section class="stats">
+        <div class="stat-box">
+            <h2 class="counter" data-target="10">0</h2>
+            <p>Students Trained</p>
+        </div>
+        <div class="stat-box">
+            <h2 class="counter" data-target="2">0</h2>
+            <p>Projects Completed</p>
+        </div>
+        <div class="stat-box">
+            <h2 class="counter" data-target="95">0</h2>
+            <p>Success Rate %</p>
+        </div>
+    </section>
+    <div class="application-note">
+        <h3>⚠ Important Before Applying</h3>
+        <p>
+            Before applying for the internship, you must first visit our
+            <strong>Contact</strong> page and send us a message requesting an
+            internship token number.
+        </p>
+        <p>
+            Our team will review your request and send you a unique
+            <strong>Ticket ID</strong> via email.
+        </p>
+        <p>
+            This Ticket ID is mandatory to complete your internship application.
+        </p>
+    </div>
+    <div class="modal" id="tokenModal">
+        <div class="modal-content">
+            <h3>Enter Your Internship Token ID</h3>
+            <input type="text" id="tokenInput" placeholder="Enter Token ID">
+            <button onclick="verifyToken()">Verify & Continue</button>
+            <span onclick="closeModal()" class="close">&times;</span>
+        </div>
+    </div>
+
+
+    <section class="services">
+
+        <div class="card reveal">
+
+            <h3>Ethical Hacking & Penetration Testing</h3>
+
+            <p>Learn professional penetration testing techniques used by security experts to identify vulnerabilities.
+            </p>
+
+            <div class="skills">
+                <span>Kali Linux</span>
+                <span>Metasploit</span>
+                <span>Nmap</span>
+                <span>Burp Suite</span>
+            </div>
+
+            <button class="apply-btn" onclick="openModal()">Apply Now</button>
+
+        </div>
+
+
+        <div class="card reveal">
+
+            <h3>Web Application Security</h3>
+
+            <p>Understand OWASP vulnerabilities, bug bounty techniques, and modern web attack methods.</p>
+
+            <div class="skills">
+                <span>SQL Injection</span>
+                <span>XSS</span>
+                <span>Burp Suite</span>
+                <span>OWASP Top 10</span>
+            </div>
+
+            <button class="apply-btn" onclick="openModal()">Apply Now</button>
+
+        </div>
+
+
+        <div class="card reveal">
+
+            <h3>Network Security</h3>
+
+            <p>Learn network scanning, vulnerability detection, firewall bypass techniques, and infrastructure
+                protection.</p>
+
+            <div class="skills">
+                <span>Nmap</span>
+                <span>Wireshark</span>
+                <span>Firewalls</span>
+                <span>Network Defense</span>
+            </div>
+            <button class="apply-btn" onclick="openModal()">Apply Now</button>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+
+        © 2026 NovaShyld Technologies | Learn. Build. Secure.
+
+    </footer>
+
+
+    <script>
+
+        /* SCROLL REVEAL */
+
+        function reveal() {
+
+            let reveals = document.querySelectorAll(".reveal");
+
+            for (let i = 0; i < reveals.length; i++) {
+
+                let windowHeight = window.innerHeight;
+                let elementTop = reveals[i].getBoundingClientRect().top;
+                let elementVisible = 120;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+
+            }
+
+        }
+        function openModal() {
+            document.getElementById("tokenModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("tokenModal").style.display = "none";
+        }
+
+        function verifyToken() {
+            const token = document.getElementById("tokenInput").value;
+
+            if (token.length > 5) {
+                window.open("https://docs.google.com/forms/d/e/1FAIpQLSdhTGbICGG0nDIyOOgcp90TKFz7UTnBe2Ew7O73pDDBK0S27g/viewform?usp=header", "_blank");
+            } else {
+                alert("Invalid Token ID");
+            }
+        }
+        function openModal() {
+            document.getElementById("tokenModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("tokenModal").style.display = "none";
+        }
+
+        function verifyToken() {
+            const token = document.getElementById("tokenInput").value;
+
+            if (token.length > 5) {
+                window.open("https://docs.google.com/forms/d/e/1FAIpQLSdhTGbICGG0nDIyOOgcp90TKFz7UTnBe2Ew7O73pDDBK0S27g/viewform?usp=header", "_blank");
+            } else {
+                alert("Invalid Token ID");
+            }
+        }
+        function openModal() {
+            document.getElementById("tokenModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("tokenModal").style.display = "none";
+        }
+
+        function verifyToken() {
+            const token = document.getElementById("tokenInput").value;
+
+            if (token.length > 5) {
+                window.open("https://docs.google.com/forms/d/e/1FAIpQLSdhTGbICGG0nDIyOOgcp90TKFz7UTnBe2Ew7O73pDDBK0S27g/viewform?usp=header", "_blank");
+            } else {
+                alert("Invalid Token ID");
+            }
+        }
+
+
+        window.addEventListener("scroll", reveal);
+
+
+        /* MATRIX ANIMATION */
+
+        /* MATRIX ANIMATION FIXED & IMPROVED */
+
+        const canvas = document.getElementById("matrix");
+        const ctx = canvas.getContext("2d");
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        resizeCanvas();
+        window.addEventListener("resize", resizeCanvas);
+
+        const letters = "01";
+        const fontSize = 14;
+        let columns = canvas.width / fontSize;
+
+        let drops = [];
+
+        function initMatrix() {
+            columns = canvas.width / fontSize;
+            drops = [];
+            for (let x = 0; x < columns; x++) {
+                drops[x] = 1;
+            }
+        }
+
+        initMatrix();
+        window.addEventListener("resize", initMatrix);
+
+        function drawMatrix() {
+
+            ctx.fillStyle = "rgba(2,6,23,0.08)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#22c55e";
+            ctx.font = fontSize + "px monospace";
+
+            for (let i = 0; i < drops.length; i++) {
+
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 35);
+        /* COUNTER ANIMATION */
+
+        const counters = document.querySelectorAll('.counter');
+
+        counters.forEach(counter => {
+            counter.innerText = '0';
+
+            const updateCounter = () => {
+                const target = +counter.getAttribute('data-target');
+                const c = +counter.innerText;
+                const increment = target / 100;
+
+                if (c < target) {
+                    counter.innerText = `${Math.ceil(c + increment)}`;
+                    setTimeout(updateCounter, 20);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+
+            updateCounter();
+            const topBtn = document.getElementById("topBtn");
+
+            window.onscroll = function () {
+                let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                let scrolled = (winScroll / height) * 100;
+                document.getElementById("progressBar").style.width = scrolled + "%";
+
+                if (winScroll > 300) {
+                    topBtn.style.display = "block";
+                } else {
+                    topBtn.style.display = "none";
+                }
+            };
+
+            topBtn.onclick = function () {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+        });
+
+        for (let x = 0; x < columns; x++) {
+            drops[x] = 1;
+        }
+
+        function draw() {
+
+            ctx.fillStyle = "rgba(2,6,23,0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#22c55e";
+            ctx.font = fontSize + "px monospace";
+
+            for (let i = 0; i < drops.length; i++) {
+
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                drops[i]++;
+
+            }
+
+        }
+
+        setInterval(draw, 35);
+
+    </script>
+    <script>
+        /* ADVANCED COUNTER ANIMATION */
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const counters = document.querySelectorAll(".counter");
+            const speed = 200; // lower = faster
+
+            const animateCounter = (counter) => {
+
+                const target = +counter.getAttribute("data-target");
+                const isPercentage = counter.parentElement.innerText.includes("%");
+
+                let count = 0;
+                const increment = target / speed;
+
+                const update = () => {
+
+                    if (count < target) {
+                        count += increment;
+                        counter.innerText = Math.ceil(count);
+                        requestAnimationFrame(update);
+                    } else {
+                        counter.innerText = target;
+                        if (isPercentage) {
+                            counter.innerText = target + "%";
+                        }
+                    }
+                };
+
+                update();
+            };
+
+            /* Trigger only when visible */
+            const observer = new IntersectionObserver((entries, observer) => {
+
+                entries.forEach(entry => {
+
+                    if (entry.isIntersecting) {
+                        animateCounter(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+
+                });
+
+            }, { threshold: 0.6 });
+
+            counters.forEach(counter => {
+                observer.observe(counter);
+            });
+
+        });
+    </script>
+    <div class="modal" id="tokenModal">
+        <div class="modal-content">
+            <h3>Enter Your Internship Token ID</h3>
+            <input type="text" id="tokenInput" placeholder="Enter Token ID">
+            <button onclick="verifyToken()">Verify & Continue</button>
+            <span onclick="closeModal()" class="close">&times;</span>
+        </div>
+    </div>
+    <div class="modal" id="tokenModal">
+        <div class="modal-content">
+            <h3>Enter Your Internship Token ID</h3>
+            <input type="text" id="tokenInput" placeholder="Enter Token ID">
+            <button onclick="verifyToken()">Verify & Continue</button>
+            <span onclick="closeModal()" class="close">&times;</span>
+        </div>
+    </div>
+    <button id="topBtn">↑</button>
+
+</body>
+
+</html>

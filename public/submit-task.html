@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Submit Task</title>
+
+    <style>
+        body {
+            background: #020617;
+            color: white;
+            font-family: Arial;
+            text-align: center;
+        }
+
+        input {
+            padding: 10px;
+            margin: 10px;
+        }
+
+        button {
+            padding: 10px;
+            background: #00eaff;
+            border: none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h2>Submit Internship Task</h2>
+
+    <input id="taskLink" placeholder="GitHub / Drive link">
+
+    <button onclick="submitTask()">Submit</button>
+
+    <script>
+
+        async function submitTask() {
+
+            const email = localStorage.getItem("intern");
+            const task = document.getElementById("taskLink").value;
+
+            await fetch("/submit-task", {
+
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, task })
+
+            });
+
+            alert("Task submitted successfully");
+
+        }
+
+    </script>
+
+</body>
+
+</html>

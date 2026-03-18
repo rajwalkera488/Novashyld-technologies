@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Contact | NovaShyld Technologies</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #020617;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* animated cyber grid */
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(#0ea5e9 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridMove 30s linear infinite;
+            opacity: 0.1;
+            z-index: -2;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0)
+            }
+
+            100% {
+                transform: translate(-200px, -200px)
+            }
+        }
+
+
+        /* NAVBAR */
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 80px;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 70px;
+            background: #020617;
+            border-bottom: 1px solid #1e293b;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            height: 90px;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            position: relative;
+        }
+
+        nav ul li a::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: #00eaff;
+            transition: .3s;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+
+        /* CONTACT SECTION */
+
+        .contact-section {
+            min-height: calc(100vh - 80px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 20px;
+        }
+
+
+        /* CONTACT CARD */
+
+        .contact-container {
+            width: 100%;
+            max-width: 460px;
+            padding: 45px;
+
+            background: rgba(2, 6, 23, .7);
+            border-radius: 16px;
+
+            backdrop-filter: blur(15px);
+
+            border: 1px solid rgba(255, 255, 255, .08);
+
+            box-shadow:
+                0 0 40px rgba(0, 234, 255, .15),
+                inset 0 0 30px rgba(0, 234, 255, .05);
+
+            animation: floatCard 6s ease-in-out infinite;
+
+            position: relative;
+            overflow: hidden;
+
+
+        }
+
+        /* glowing border animation */
+
+        .contact-container::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, #00eaff, #0ea5e9, #00eaff);
+            opacity: .15;
+            filter: blur(12px);
+            z-index: -1;
+        }
+
+        @keyframes floatCard {
+            0% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-12px)
+            }
+
+            100% {
+                transform: translateY(0)
+            }
+        }
+
+
+        /* HEADER */
+
+        .contact-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .contact-logo {
+            height: 95px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 15px #00eaff);
+        }
+
+        .contact-header h2 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .contact-header p {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+
+        /* FORM */
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group select {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #1e293b;
+            background: #020617;
+            color: white;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-group select:focus {
+            border-color: #00eaff;
+            box-shadow: 0 0 12px rgba(0, 234, 255, 0.4);
+        }
+
+        .input-group label {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 5px;
+        }
+
+        .input-group input,
+        .input-group textarea {
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            border: 1px solid #1e293b;
+
+            background: #020617;
+
+            color: white;
+
+            outline: none;
+
+            transition: .3s;
+
+        }
+
+
+        /* glow input */
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+
+            border-color: #00eaff;
+
+            box-shadow: 0 0 15px rgba(0, 234, 255, .4);
+
+            transform: scale(1.02);
+
+        }
+
+        textarea {
+            resize: none;
+            height: 120px;
+        }
+
+
+        /* BUTTON */
+
+        .contact-btn {
+
+            margin-top: 8px;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: linear-gradient(90deg, #00eaff, #0ea5e9);
+
+            color: black;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: .3s;
+
+            position: relative;
+            overflow: hidden;
+
+        }
+
+        .contact-btn:hover {
+
+            transform: scale(1.06);
+
+            box-shadow: 0 0 20px #00eaff;
+
+        }
+
+        /* shine */
+
+        .contact-btn::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: -100%;
+
+            width: 100%;
+            height: 100%;
+
+            background: linear-gradient(120deg,
+                    transparent,
+                    rgba(255, 255, 255, .5),
+                    transparent);
+
+            transition: .6s;
+
+        }
+
+        .contact-btn:hover::before {
+            left: 100%;
+        }
+
+
+        /* RESPONSE TEXT */
+
+        #response {
+            margin-top: 15px;
+            color: #00eaff;
+            text-align: center;
+        }
+
+
+        /* FOOTER */
+
+        footer {
+
+            text-align: center;
+
+            padding: 25px;
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            border-top: 1px solid #1e293b;
+
+            margin-top: 40px;
+
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <nav>
+
+        <img src="images/logo.png" class="logo">
+
+        <ul>
+
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="internships.html">Internships</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+
+        </ul>
+
+    </nav>
+
+
+    <section class="contact-section">
+
+        <div class="contact-container">
+
+            <div class="contact-header">
+
+                <img src="images/logo.png" class="contact-logo">
+
+                <h2>Contact NovaShyld Technologies</h2>
+
+                <p>Learn. Build. Secure.</p>
+
+            </div>
+
+
+            <form id="contactForm" class="contact-form">
+
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input id="name" type="text" name="name" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input id="email" type="email" name="email" placeholder="Enter your email address" required>
+                </div>
+                <div class="input-group">
+                    <label>Topic</label>
+                    <select id="topic" name="topic" required>
+                        <option value="">Select Topic</option>
+                        <option value="Internship">Internship</option>
+                        <option value="Services">Services</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Your Message</label>
+                    <textarea id="message" name="message" placeholder="Write your message..." required></textarea>
+                </div>
+
+                <button type="submit" class="contact-btn">
+                    Send Message
+                </button>
+
+            </form>
+
+            <p id="response"></p>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        © 2026 NovaShyld Technologies | Learn. Build. Secure.
+    </footer>
+
+<script>
+document.getElementById("contactForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const form = document.getElementById("contactForm");
+
+    const data = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        topic: document.getElementById("topic").value,
+        message: document.getElementById("message").value
+    };
+     // 🔵 SHOW WAIT MESSAGE
+    document.getElementById("response").innerText = "⏳ Please wait...";
+    document.querySelector(".contact-btn").disabled = true;
+    document.querySelector(".contact-btn").innerText = "Sending...";
+
+    try {
+        const response = await fetch("/send-message", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        // Show ticket ID in popup if available
+        if (result.ticketId) {
+            document.getElementById("ticketIdText").innerText = result.ticketId;
+            document.getElementById("ticketPopup").style.display = "block";
+        }
+
+        document.getElementById("response").innerText = result.message;
+
+        if (result.message === "Message sent successfully") {
+            form.reset();
+        }
+
+    } catch {
+        document.getElementById("response").innerText = "Server error. Try again.";
+    }
+});
+</script>
+<!-- Ticket ID Popup -->
+<div id="ticketPopup" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);
+    background: rgba(2,6,23,0.95); color:#00eaff; padding:25px 35px; border-radius:12px; text-align:center;
+    box-shadow:0 0 30px #00eaff; z-index:2000; font-weight:600; font-size:18px;">
+    Your Ticket ID: <span id="ticketIdText"></span>
+    <br><br>
+    <button onclick="document.getElementById('ticketPopup').style.display='none'" 
+        style="padding:8px 18px; border:none; border-radius:8px; background:#00eaff; color:#020617; cursor:pointer; font-weight:500;">
+        Close
+    </button>
+</div>
+
+</body>
+
+</html>

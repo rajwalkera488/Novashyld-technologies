@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>About | NovaShyld Technologies</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* GLOBAL */
+
+        body {
+            opacity: 0;
+            animation: pageLoad 1s ease forwards;
+        }
+
+        @keyframes pageLoad {
+            to {
+                opacity: 1;
+            }
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #020617;
+            color: white;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 60px;
+            background: #020617;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .logo img {
+            height: 90px;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #22c55e;
+        }
+
+        /* HERO */
+
+        .about-hero {
+            text-align: center;
+            padding: 140px 20px;
+            background: linear-gradient(180deg, #020617, transparent);
+            position: relative;
+        }
+
+        .about-hero h1 {
+            font-size: 52px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #00ffff, #00fff7);
+
+            background-clip: text;
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+
+            animation: glowTitle 4s infinite alternate;
+        }
+
+        @keyframes glowTitle {
+            0% {
+                text-shadow: 0 0 10px rgba(0, 255, 200, 0.3)
+            }
+
+            100% {
+                text-shadow: 0 0 30px rgba(0, 255, 200, 0.6)
+            }
+        }
+
+        .about-hero p {
+            font-size: 20px;
+            color: #94a3b8;
+        }
+
+        .about-hero h1 {
+            font-size: 48px;
+            background: linear-gradient(90deg, #00fff7, #22c55e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .about-hero p {
+            font-size: 18px;
+            color: #94a3b8;
+        }
+
+        /* ABOUT */
+
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            padding: 80px 60px;
+        }
+
+        .about-content h2 {
+            font-size: 30px;
+            margin-bottom: 20px;
+            color: #00fff7;
+            /* change this color */
+        }
+
+        .about-content p {
+            color: #ffffff;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .about-services ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .about-services h2 {
+            font-size: 30px;
+            margin-bottom: 20px;
+            color: #00fff7;
+            /* change this color */
+        }
+
+        .about-services ul li {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid #1e293b;
+            padding: 18px;
+            margin-bottom: 14px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* hover glow */
+
+        .about-services ul li::before {
+            content: "";
+            position: absolute;
+            width: 0%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background: linear-gradient(90deg, transparent, #00fff7, transparent);
+            transition: 0.5s;
+        }
+
+        .about-services ul li:hover::before {
+            width: 100%;
+        }
+
+        .about-services ul li:hover {
+            border-color: #00fff7;
+            transform: translateX(8px);
+        }
+
+        .about-services ul li:hover {
+            border-color: #22c55e;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+        }
+
+        /* TEAM SECTION */
+
+        /* TEAM SECTION */
+
+        .team {
+            padding: 100px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, #020617, #020617, #020617);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* subtle cyber grid */
+
+        .team::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(34, 197, 94, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(34, 197, 94, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .team h2 {
+            font-size: 34px;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 1;
+            color: #00fff7;
+            /* new color */
+            text-shadow: 0 0 15px rgba(0, 255, 247, 0);
+        }
+
+        .team-grid {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* TEAM CARD */
+
+        .team-card {
+            background: rgba(2, 6, 23, 0.6);
+            border: 1px solid #1e293b;
+            border-radius: 16px;
+            padding: 35px;
+            width: 260px;
+            transition: 0.5s;
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* cyber light line */
+
+        .team-card::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            top: 0;
+            left: -100%;
+            background: linear-gradient(90deg, transparent, #00fff7, transparent);
+            transition: 0.6s;
+        }
+
+        .team-card:hover::before {
+            left: 100%;
+        }
+
+        /* glow effect */
+
+        .team-card:hover {
+            transform: translateY(-12px) scale(1.05);
+            box-shadow:
+                0 0 20px rgba(0, 255, 247, 0.2),
+                0 0 40px rgba(0, 255, 247, 0.1);
+            border-color: #00fff7;
+        }
+
+        /* profile image */
+
+        .team-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #00fff7;
+            transition: 0.5s;
+        }
+
+        .team-card:hover img {
+            box-shadow: 0 0 30px #00fff7;
+            transform: scale(1.1);
+        }
+
+        .team-card h3 {
+            margin-top: 15px;
+            font-size: 20px;
+        }
+
+        .team-card span {
+            font-size: 16px;
+            color: #22c5a7;
+            /* green cyber color */
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* SKILLS SECTION INSIDE TEAM CARD */
+
+        .skills {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .skills p {
+            background: rgba(0, 255, 247, 0.1);
+            border: 1px solid #00fff7;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #00fff7;
+            transition: 0.3s;
+        }
+
+        .team-card:hover .skills p {
+            background: #00fff7;
+            color: #020617;
+            transform: scale(1.05);
+        }
+
+        /* glowing border animation */
+
+        .team-card::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border-radius: 14px;
+            background: linear-gradient(45deg, #22c55e, #16a34a, #22c55e);
+            opacity: 0;
+            transition: 0.4s;
+            z-index: -1;
+        }
+
+        .team-card:hover::before {
+            opacity: 1;
+            filter: blur(10px);
+        }
+
+        .team-card:hover {
+            transform: translateY(-12px) scale(1.03);
+        }
+
+        /* profile image */
+
+        .team-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #00fff7;
+            margin-bottom: 15px;
+            transition: 0.4s;
+        }
+
+        /* glow on hover */
+
+        .team-card:hover img {
+            box-shadow: 0 0 25px #00f2ff;
+            transform: scale(1.05);
+        }
+
+        .team-card h3 {
+            margin: 10px 0 5px 0;
+            font-size: 20px;
+        }
+
+        .team-card span {
+            font-size: 14px;
+            color: #00ffff;
+        }
+
+        /* floating animation */
+
+        @keyframes floatCard {
+            0% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-6px)
+            }
+
+            100% {
+                transform: translateY(0)
+            }
+        }
+
+        .team-card {
+            animation: floatCard 4s ease-in-out infinite;
+        }
+
+        .team-card:nth-child(2) {
+            animation-delay: 1s;
+        }
+
+        .team h2 {
+            font-size: 32px;
+            margin-bottom: 50px;
+        }
+
+        .team-grid {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .team-card {
+            background: #020617;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 30px;
+            width: 260px;
+            transition: 0.4s;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            border-color: #00ffff;
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.3);
+        }
+
+        .team-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #00ffff;
+        }
+
+        .team-card h3 {
+            margin: 10px 0 5px 0;
+        }
+
+        .team-card span {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+
+        /* STATS */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            padding: 80px 60px;
+            text-align: center;
+        }
+
+        .stat-card {
+            background: rgba(2, 6, 23, 0.6);
+            border: 1px solid #1e293b;
+            padding: 40px;
+            border-radius: 12px;
+            transition: 0.4s;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(0, 255, 200, 0.2), transparent);
+            opacity: 0;
+            transition: 0.5s;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            border-color: #00fff7;
+            box-shadow: 0 0 25px rgba(0, 255, 200, 0.4);
+        }
+
+        .stat-card h3 {
+            font-size: 40px;
+            color: #00fff7;
+        }
+
+        .stat-card p {
+            color: #94a3b8;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.5);
+            border-color: #22c55e;
+        }
+
+        .stat-card h3 {
+            font-size: 36px;
+            color: #22c55e;
+        }
+
+        .stat-card p {
+            color: #94a3b8;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid #1e293b;
+            color: #64748b;
+        }
+
+        /* CYBER BACKGROUND */
+
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(0, 255, 200, 0.08), transparent 40%),
+                radial-gradient(circle at 80% 60%, rgba(0, 255, 200, 0.05), transparent 40%),
+                #020617;
+            overflow: hidden;
+        }
+
+        /* floating particles */
+
+        .cyber-bg::before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image:
+                radial-gradient(#00fff7 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.05;
+            animation: cyberMove 120s linear infinite;
+        }
+
+        /* ===============================
+   FUTURISTIC ENHANCEMENTS
+=================================*/
+
+        /* SCROLL REVEAL EFFECT */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: 1s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* GLASS UPGRADE */
+        .about-content,
+        .about-services ul li,
+        .team-card,
+        .stat-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 200, 0.15);
+        }
+
+        /* FLOATING CYBER ORBS */
+        .cyber-orb {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 200, 0.25), transparent 70%);
+            filter: blur(60px);
+            z-index: -2;
+            animation: orbFloat 15s infinite alternate ease-in-out;
+        }
+
+        .cyber-orb:nth-child(1) {
+            top: 10%;
+            left: 5%;
+        }
+
+        .cyber-orb:nth-child(2) {
+            bottom: 10%;
+            right: 5%;
+            animation-delay: 4s;
+        }
+
+        @keyframes orbFloat {
+            0% {
+                transform: translateY(0px);
+            }
+
+            100% {
+                transform: translateY(-40px);
+            }
+        }
+
+        /* TEAM SOCIAL HOVER */
+        .team-card::after {
+            content: "View Profile";
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #00fff7;
+            color: #020617;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            opacity: 0;
+            transition: 0.4s;
+        }
+
+        .team-card:hover::after {
+            bottom: 15px;
+            opacity: 1;
+        }
+
+        /* ADVANCED STAT STYLE */
+        .stat-card h3 {
+            font-size: 42px;
+            background: linear-gradient(90deg, #00fff7, #22c55e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        /* SECTION DIVIDER LINE */
+        section::after {
+            content: "";
+            display: block;
+            height: 1px;
+            margin: 80px auto 0;
+            width: 60%;
+            background: linear-gradient(90deg, transparent, #00fff7, transparent);
+            opacity: 0.3;
+        }
+
+        /* ADVANCED MOVING GRID */
+        .cyber-bg::after {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image:
+                linear-gradient(rgba(0, 255, 200, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 200, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridShift 80s linear infinite;
+        }
+
+        /* PROGRESS RING */
+        .circle {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: conic-gradient(#00fff7 0deg, #1e293b 0deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .circle::after {
+            content: "";
+            width: 65px;
+            height: 65px;
+            background: #020617;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .cta {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(180deg, #020617, #0f172a);
+        }
+
+        .cta-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: #00fff7;
+            color: #020617;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.4s;
+        }
+
+        .cta-btn:hover {
+            box-shadow: 0 0 25px #00fff7;
+            transform: translateY(-5px);
+        }
+
+        @keyframes gridShift {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(-400px, -400px);
+            }
+        }
+
+        @keyframes cyberMove {
+            0% {
+                transform: translate(0, 0)
+            }
+
+            100% {
+                transform: translate(-500px, -500px)
+            }
+        }
+
+        h2 {
+            background: linear-gradient(90deg, #00fff7, #22c55e, #00fff7);
+            background-size: 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: titleFlow 6s linear infinite;
+        }
+
+        @keyframes titleFlow {
+            0% {
+                background-position: 0%;
+            }
+
+            100% {
+                background-position: 200%;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="cyber-bg"></div>
+
+    <header class="navbar">
+
+        <div class="logo">
+            <img src="images/logo.png">
+            <span>NovaShyld Technologies</span>
+        </div>
+
+        <nav>
+            <ul>
+
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="internships.html">Internships</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+
+            </ul>
+        </nav>
+
+    </header>
+
+    <section class="about-hero">
+
+        <h1>About NovaShyld Technologies</h1>
+
+        <p>Learn. Build. Secure.</p>
+
+    </section>
+
+
+    <section class="about-container">
+
+        <div class="about-content">
+
+            <h2>Who We Are</h2>
+
+            <p>
+                At NovaShyld Technologies, we are dedicated to strengtheningdigital
+                security and empowering the next generation of cybersecurity professionals.
+                Our missionis to help organizations and individuals stayprotected in an
+                ever-evolving digital landscape.
+            </p>
+
+            <p>
+                We specialize in cybersecurity services, web application security,
+                vulnerability assessment, penetration testing, and cybersecurity
+                training programs. Our team focuses on identifying security weaknesses,
+                protecting digital assets, and helping businesses build resilient and
+                secure systems.
+            </p>
+            <p>
+                In addition to security services, NovaShyld Technologies is committed to
+                developing talent through industry-oriented internship programs and practical
+                cybersecurity training. We provide hands-on experience in areas such as web
+                application security, ethical hacking, and modern security practices, helping
+                aspiring professionals build real-world skills.
+            </p>
+            <p>
+                At NovaShyld Technologies, security is not just a service — it is our commitment
+                to protecting the future of technology.
+            </p>
+
+        </div>
+        <div class="cyber-orb"></div>
+        <div class="cyber-orb"></div>
+        <div class="cyber-orb"></div>
+        <div class="cyber-orb"></div>
+
+
+        <div class="about-services">
+
+            <h2>Our Expertise</h2>
+
+            <ul>
+
+                <li>Web Application Security Testing</li>
+                <li>Vulnerability Assessment & Penetration Testing</li>
+                <li>Ethical Hacking & Security Research</li>
+                <li>Security Consulting</li>
+                <li>Cybersecurity Training Programs</li>
+
+            </ul>
+
+        </div>
+
+    </section>
+
+
+    <!-- TEAM SECTION -->
+
+    <section class="team">
+
+        <h2>OUR LEADERSHIP</h2>
+
+        <div class="team-grid">
+
+            <div class="team-card">
+
+                <img src="images/founder.jpeg">
+
+                <h3>Founder & CEO</h3>
+                <span>NAGARAJU</span>
+
+                <div class="skills">
+                    <p>VAPT</p>
+                    <p>Ethical Hacking</p>
+                    <p>OSCP (Pursuing)</p>
+                </div>
+
+            </div>
+
+            <div class="team-card">
+
+                <img src="images/hr.png">
+
+                <h3>Human Resources</h3>
+                <span>SIVA PRASAD</span>
+
+                <div class="skills">
+                    <p>People Management</p>
+                    <p>Organizing</p>
+                    <p>Negotiation</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="stats">
+
+        <div class="stat-card">
+            <div class="circle" data-value="2"></div>
+            <h3>2+</h3>
+            <p>Security Assessments</p>
+        </div>
+
+        <div class="stat-card">
+            <div class="circle" data-value="10"></div>
+            <h3>10+</h3>
+            <p>Students Trained</p>
+        </div>
+
+        <div class="stat-card">
+            <div class="circle" data-value="2"></div>
+            <h3>2+</h3>
+            <p>Business Clients</p>
+        </div>
+
+        <div class="stat-card">
+            <div class="circle" data-value="5"></div>
+            <h3>5+</h3>
+            <p>Security Experts</p>
+        </div>
+
+    </section>
+    <section class="cta">
+        <h2>Secure Your Digital Future</h2>
+        <p>Partner with NovaShyld Technologies to protect your organization from evolving cyber threats.</p>
+        <a href="contact.html" class="cta-btn">Request Consultation</a>
+    </section>
+
+
+    <footer class="footer">
+
+        <p>© 2026 NovaShyld Technologies | Learn. Build. Secure.</p>
+
+    </footer>
+    <script>
+
+        /* SCROLL REVEAL */
+        const revealElements = document.querySelectorAll("section, .team-card, .stat-card");
+
+        const revealObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                }
+            });
+        }, { threshold: 0.2 });
+
+        revealElements.forEach(el => {
+            el.classList.add("reveal");
+            revealObserver.observe(el);
+        });
+
+        /* FUTURISTIC COUNTER */
+        const counters = document.querySelectorAll(".stat-card h3");
+
+        const counterObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+
+                    const counter = entry.target;
+                    const target = parseInt(counter.innerText);
+                    let count = 0;
+                    const increment = target / 120;
+
+                    function update() {
+                        if (count < target) {
+                            count += increment;
+                            counter.innerText = Math.ceil(count) + "+";
+                            requestAnimationFrame(update);
+                        } else {
+                            counter.innerText = target + "+";
+                        }
+                    }
+
+                    update();
+                    counterObserver.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.8 });
+
+        counters.forEach(counter => {
+            counterObserver.observe(counter);
+        });
+        /* PROGRESS RING ANIMATION */
+        document.querySelectorAll(".circle").forEach(circle => {
+            const value = parseInt(circle.dataset.value);
+            let progress = 0;
+
+            const interval = setInterval(() => {
+                if (progress >= value * 36) {
+                    clearInterval(interval);
+                } else {
+                    progress += 5;
+                    circle.style.background =
+                        `conic-gradient(#00fff7 ${progress}deg, #1e293b ${progress}deg)`;
+                }
+            }, 20);
+        });
+        /* 3D TILT EFFECT */
+        document.querySelectorAll(".team-card").forEach(card => {
+            card.addEventListener("mousemove", e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const rotateX = ((y / rect.height) - 0.5) * 10;
+                const rotateY = ((x / rect.width) - 0.5) * -10;
+
+                card.style.transform =
+                    `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+            });
+
+            card.addEventListener("mouseleave", () => {
+                card.style.transform = "rotateX(0) rotateY(0) scale(1)";
+            });
+        });
+
+    </script>
+
+
+</body>
+
+</html>

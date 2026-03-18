@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>NovaShyld Enterprise Admin</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: Segoe UI, Arial;
+            background: #020617;
+            color: white;
+            display: flex;
+            transition: 0.3s;
+
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #0f172a;
+            padding: 25px;
+            position: fixed;
+            border-right: 1px solid #1e293b;
+            transition: 0.3s;
+        }
+
+        .sidebar.collapsed {
+            width: 70px
+        }
+
+        .sidebar h2 {
+            color: #00eaff;
+            margin-bottom: 40px;
+        }
+
+        .sidebar ul {
+            list-style: none
+        }
+
+        .sidebar ul li {
+            margin-bottom: 20px;
+            cursor: pointer;
+            color: #94a3b8;
+            transition: 0.3s;
+        }
+
+        .sidebar ul li:hover {
+            color: #00eaff
+        }
+
+        /* MAIN */
+
+        .main {
+            margin-left: 250px;
+            padding: 30px;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .sidebar.collapsed+.main {
+            margin-left: 70px
+        }
+
+        /* TOPBAR */
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo img {
+            width: 150px
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center
+        }
+
+        button {
+            padding: 7px 14px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .primary {
+            background: #00eaff;
+            color: #020617
+        }
+
+        .danger {
+            background: #ef4444;
+            color: white
+        }
+
+        .warning {
+            background: #f59e0b;
+            color: black
+        }
+
+        .secondary {
+            background: #334155;
+            color: white
+        }
+
+        .primary:hover {
+            background: #0066ff;
+            color: white
+        }
+
+        .danger:hover {
+            background: #dc2626
+        }
+
+        .warning:hover {
+            background: #d97706;
+            color: white
+        }
+
+        .secondary:hover {
+            background: #475569
+        }
+
+        .clock {
+            font-size: 13px;
+            color: #94a3b8
+        }
+
+        /* CARDS */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: #0f172a;
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid #1e293b;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-color: #00eaff;
+            box-shadow: 0 0 20px rgba(0, 234, 255, 0.2);
+        }
+
+        .card h3 {
+            font-size: 24px;
+            color: #00eaff;
+        }
+
+        /* FILTERS */
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .filters input,
+        .filters select {
+            padding: 8px;
+            border-radius: 15px;
+            border: 1px solid #1e293b;
+            background: #0f172a;
+            color: white;
+        }
+
+        /* TABLE */
+
+        .table-container {
+            background: #0f172a;
+            border-radius: 15px;
+            border: 1px solid #1e293b;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #00eaff;
+            color: #020617;
+            padding: 12px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #1e293b;
+            font-size: 13px;
+        }
+
+        tr:hover {
+            background: rgba(0, 234, 255, 0.05)
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .new {
+            background: #00eaff;
+            color: #020617
+        }
+
+        .read {
+            background: #64748b
+        }
+
+        .investigating {
+            background: #f59e0b;
+            color: black
+        }
+
+        /* PAGINATION */
+
+        .pagination {
+            text-align: center;
+            margin-top: 15px
+        }
+
+        .pagination button {
+            margin: 3px
+        }
+
+        /* MODAL */
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #0f172a;
+            padding: 30px;
+            width: 500px;
+            border-radius: 15px;
+        }
+
+        /* TOAST */
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #00eaff;
+            color: #020617;
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: none;
+        }
+
+        /* LIGHT MODE */
+
+        .light {
+            background: white;
+            color: black
+        }
+
+        .light .sidebar {
+            background: #f1f5f9
+        }
+
+        .light .card {
+            background: white;
+            color: black
+        }
+
+        .light .table-container {
+            background: white;
+            color: black
+        }
+
+        .light th {
+            color: black
+        }
+
+        #threatFeed div {
+            padding: 10px;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        #threatFeed div:hover {
+            background: rgba(0, 234, 255, 0.05);
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="sidebar" id="sidebar">
+        <h2>NovaShyld</h2>
+        <ul>
+            <li onclick="switchView('dashboard')">Dashboard</li>
+            <li onclick="switchView('messages')">Messages</li>
+            <li onclick="exportCSV()">Export CSV</li>
+        </ul>
+    </div>
+
+    <div class="main">
+
+        <div class="topbar">
+            <div class="logo">
+                <img src="images/logo.png">
+                <h2>Enterprise Security Panel</h2>
+            </div>
+            <div class="controls">
+                <span class="clock" id="clock"></span>
+                <button class="secondary" onclick="toggleMode()">Mode</button>
+                <button class="primary" onclick="toggleSidebar()">☰</button>
+            </div>
+        </div>
+
+        <!-- DASHBOARD VIEW -->
+
+        <div id="dashboardView">
+            <!-- THREAT INTELLIGENCE -->
+
+            <div class="card" style="margin-top:25px;">
+                <h3>🛰 Threat Intelligence Feed</h3>
+                <p style="color:#94a3b8;font-size:13px;margin-bottom:10px;">
+                    Latest vulnerabilities from NVD
+                </p>
+
+                <div id="threatFeed" style="font-size:13px;line-height:1.7;"></div>
+            </div>
+            <div class="stats">
+                <div class="card">
+                    <p>Total</p>
+                    <h3 id="totalCount">0</h3>
+                </div>
+                <div class="card">
+                    <p>Unread</p>
+                    <h3 id="unreadCount">0</h3>
+                </div>
+                <div class="card">
+                    <p>Investigating</p>
+                    <h3 id="investigatingCount">0</h3>
+                </div>
+            </div>
+
+            <canvas id="chart" height="100"></canvas>
+        </div>
+
+        <!-- MESSAGES VIEW -->
+
+        <div id="messagesView" style="display:none">
+
+            <div class="filters">
+                <input type="text" id="search" placeholder="Search...">
+                <select id="statusFilter">
+                    <option value="all">All</option>
+                    <option value="new">New</option>
+                    <option value="read">Read</option>
+                    <option value="investigating">Investigating</option>
+                </select>
+                <button class="warning" onclick="bulkDelete()">Bulk Delete</button>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="selectAll"></th>
+                            <th>Ticket</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Topic</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+
+            <div class="pagination" id="pagination"></div>
+
+        </div>
+
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h3>Message</h3>
+            <p id="modalText"></p>
+            <br>
+            <button class="danger" onclick="deleteConfirmed()">Delete</button>
+            <button class="primary" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+
+        let allMessages = [];
+        let deleteTarget = null;
+        let chartInstance = null;
+
+        async function loadMessages() {
+            const res = await fetch("/admin/messages");
+            const data = await res.json();
+            allMessages = data.reverse();
+            allMessages.forEach(m => {
+                m.status = localStorage.getItem(m.ticketID) || "new";
+            });
+            updateStats();
+            renderTable();
+            renderChart();
+        }
+
+        function updateStats() {
+            document.getElementById("totalCount").innerText = allMessages.length;
+            document.getElementById("unreadCount").innerText = allMessages.filter(m => m.status === "new").length;
+            document.getElementById("investigatingCount").innerText = allMessages.filter(m => m.status === "investigating").length;
+        }
+        function exportCSV() {
+
+            let csv = "Ticket,Name,Email,Topic,Message\n";
+
+            allMessages.forEach(m => {
+                csv += `${m.ticketID},${m.name},${m.email},${m.topic},${m.message}\n`;
+            });
+
+            const blob = new Blob([csv], { type: "text/csv" });
+
+            const a = document.createElement("a");
+
+            a.href = URL.createObjectURL(blob);
+
+            a.download = "novashyld_messages.csv";
+
+            a.click();
+
+            showToast("CSV Downloaded");
+
+        }
+
+
+        function renderChart() {
+            const ctx = document.getElementById("chart");
+            if (chartInstance) chartInstance.destroy();
+            chartInstance = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: ["New", "Read", "Investigating"],
+                    datasets: [{
+                        label: "Message Status",
+                        data: [
+                            allMessages.filter(m => m.status === "new").length,
+                            allMessages.filter(m => m.status === "read").length,
+                            allMessages.filter(m => m.status === "investigating").length
+                        ]
+                    }]
+                }
+            });
+        }
+
+
+        function renderTable() {
+            const tbody = document.getElementById("tableBody");
+            tbody.innerHTML = "";
+            const filtered = getFiltered();
+            filtered.forEach(m => {
+                tbody.innerHTML += `
+        <tr>
+        <td><input type="checkbox" class="rowCheck" value="${m.ticketID}"></td>
+        <td>${m.ticketID}</td>
+        <td>${m.name}</td>
+        <td>${m.email}</td>
+        <td>${m.topic}</td>
+        <td><span class="badge ${m.status}" onclick="cycleStatus('${m.ticketID}')">${m.status}</span></td>
+       <td>
+<button class="primary" onclick="viewMessage('${m.ticketID}','${m.message.replace(/'/g, "\\'")}')">View</button>
+
+<button class="secondary" onclick="replyEmail('${m.email}')">
+Reply
+</button>
+
+</td>
+<button class="warning" onclick="copyEmail('${m.email}')">Copy</button>
+<button class="secondary" onclick="downloadMessage('${m.ticketID}','${m.message.replace(/'/g, "\\'")}')">
+Download
+</button>
+        </tr>`;
+            });
+        }
+        function replyEmail(email) {
+            window.location.href = "mailto:" + email;
+        }
+        function copyEmail(email) {
+            navigator.clipboard.writeText(email);
+            showToast("Email copied");
+        }
+        function downloadMessage(ticket, msg) {
+
+            const element = document.createElement("a");
+
+            const file = new Blob([msg], { type: "text/plain" });
+
+            element.href = URL.createObjectURL(file);
+
+            element.download = "message-" + ticket + ".txt";
+
+            document.body.appendChild(element);
+
+            element.click();
+
+        }
+
+        function getFiltered() {
+            const search = document.getElementById("search").value.toLowerCase();
+            const status = document.getElementById("statusFilter").value;
+            return allMessages.filter(m => {
+                const matchSearch = m.ticketID.toLowerCase().includes(search)
+                    || m.name.toLowerCase().includes(search)
+                    || m.email.toLowerCase().includes(search)
+                    || m.topic.toLowerCase().includes(search);
+                const matchStatus = status === "all" || m.status === status;
+                return matchSearch && matchStatus;
+            });
+        }
+
+        function cycleStatus(ticket) {
+            const msg = allMessages.find(m => m.ticketID === ticket);
+            if (msg.status === "new") msg.status = "read";
+            else if (msg.status === "read") msg.status = "investigating";
+            else msg.status = "new";
+            localStorage.setItem(ticket, msg.status);
+            updateStats();
+            renderTable();
+            renderChart();
+        }
+
+        function viewMessage(ticket, msg) {
+            deleteTarget = ticket;
+            document.getElementById("modalText").innerText = msg;
+            document.getElementById("modal").style.display = "flex";
+        }
+
+        function deleteConfirmed() {
+            allMessages = allMessages.filter(m => m.ticketID !== deleteTarget);
+            localStorage.removeItem(deleteTarget);
+            closeModal();
+            showToast("Deleted");
+            updateStats();
+            renderTable();
+            renderChart();
+        }
+
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+
+        function bulkDelete() {
+            const checked = [...document.querySelectorAll(".rowCheck:checked")].map(c => c.value);
+            allMessages = allMessages.filter(m => !checked.includes(m.ticketID));
+            checked.forEach(id => localStorage.removeItem(id));
+            showToast("Bulk Deleted");
+            updateStats();
+            renderTable();
+            renderChart();
+        }
+
+        function switchView(view) {
+            document.getElementById("dashboardView").style.display = view === "dashboard" ? "block" : "none";
+            document.getElementById("messagesView").style.display = view === "messages" ? "block" : "none";
+        }
+
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("collapsed");
+        }
+
+        function toggleMode() {
+            document.body.classList.toggle("light");
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById("toast");
+            t.innerText = msg;
+            t.style.display = "block";
+            setTimeout(() => t.style.display = "none", 3000);
+        }
+
+        function updateClock() {
+            document.getElementById("clock").innerText = new Date().toLocaleString();
+        }
+        setInterval(updateClock, 1000);
+
+        document.getElementById("search").addEventListener("input", renderTable);
+        document.getElementById("statusFilter").addEventListener("change", renderTable);
+
+        document.getElementById("selectAll").addEventListener("change", function () {
+            document.querySelectorAll(".rowCheck").forEach(c => c.checked = this.checked);
+        });
+
+        loadMessages();
+        updateClock();
+        async function loadThreatIntel() {
+
+            try {
+
+                const res = await fetch("https://services.nvd.nist.gov/rest/json/cves/2.0?resultsPerPage=5");
+
+                const data = await res.json();
+
+                const container = document.getElementById("threatFeed");
+
+                container.innerHTML = "";
+
+                data.vulnerabilities.forEach(v => {
+
+                    const cve = v.cve.id;
+
+                    const desc = v.cve.descriptions[0].value.substring(0, 120);
+
+                    container.innerHTML += `
+<div>
+<strong style="color:#00eaff">${cve}</strong><br>
+${desc}...
+</div>
+`;
+
+                });
+
+            }
+            catch {
+
+                document.getElementById("threatFeed").innerHTML = "Threat feed unavailable";
+
+            }
+
+        }
+        loadThreatIntel();
+        setInterval(loadThreatIntel, 600000);
+    </script>
+
+</body>
+
+</html>
