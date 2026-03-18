@@ -484,6 +484,9 @@ font-weight:bold;
             <a href="internships.html" class="btn-secondary">View Internships</a>
 
         </div>
+        <div id="desktop-warning" style="display:none; position:fixed; top:0; left:0; width:100%; background:red; color:white; text-align:center; padding:10px; z-index:9999;">
+    For best experience, please enable Desktop Site in your browser.
+</div>
 
     </section>
 
@@ -606,6 +609,11 @@ if(email && ticket){
 
 }
 
+</script>
+<script>
+if (/Mobi|Android/i.test(navigator.userAgent)) {
+    document.getElementById("desktop-warning").style.display = "block";
+}
 </script>
 
 
