@@ -243,3 +243,6 @@ app.listen(PORT, () => {
 function generateTicketID() {
     return "NS-" + Math.floor(100000 + Math.random() * 900000);
 }
+app.get("/admin-auth-check", adminAuth, (req, res) => {
+    res.json({ success: true });
+});
