@@ -309,6 +309,7 @@
         .light th {
             color: black
         }
+        
 
         #threatFeed div {
             padding: 10px;
@@ -346,6 +347,23 @@
                 <button class="primary" onclick="toggleSidebar()">☰</button>
             </div>
         </div>
+        <div class="card" style="margin-top:25px;">
+    <h3>🎓 Add Certificate</h3>
+
+    <input type="text" id="certName" placeholder="Candidate Name" style="width:100%;margin:5px 0;padding:10px;">
+    
+    <input type="text" id="certTicket" placeholder="Ticket ID (NS-XXXXX)" style="width:100%;margin:5px 0;padding:10px;">
+    
+    <select id="certDomain" style="width:100%;margin:5px 0;padding:10px;">
+    <option value="">Select Domain</option>
+    <option value="Ethical Hacking & Pentesting">Ethical Hacking & Pentesting</option>
+    <option value="Web Application Security">Web Application Security</option>
+    <option value="Network Security">Network Security</option>
+    <option value="Bug Bounty">Bug Bounty</option>
+</select>
+
+    <button class="primary" onclick="addCertificate()">Add Certificate</button>
+</div>
 
         <!-- DASHBOARD VIEW -->
 
@@ -409,6 +427,7 @@
                     <tbody id="tableBody"></tbody>
                 </table>
             </div>
+            
 
             <div class="pagination" id="pagination"></div>
 
@@ -427,6 +446,8 @@
     </div>
 
     <div class="toast" id="toast"></div>
+
+
 
     <script>
 
@@ -472,6 +493,7 @@
             showToast("CSV Downloaded");
 
         }
+        
 
 
         function renderChart() {
@@ -670,7 +692,57 @@ ${desc}...
         }
         loadThreatIntel();
         setInterval(loadThreatIntel, 600000);
+        
     </script>
+    <script>
+async function addCertificate(){
+
+    const name = document.getElementById("certName").value;
+    const ticket = document.getElementById("certTicket").value; // ✅ FIXED NAME
+    const domain = document.getElementById("certDomain").value;
+
+    if(!name || !ticket || !domain){
+        alert("⚠ Please fill all fields");
+        return;
+    }
+
+    try {
+
+        const res = await fetch("/add-certificate", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        
+    },
+    body: JSON.stringify({ 
+        name: name,
+        ticket: ticket,
+        domain: domain
+    })
+});
+
+        const data = await res.json();
+
+        if(data.success){
+            alert("✅ Certificate Added Successfully");
+
+            document.getElementById("certName").value = "";
+            document.getElementById("certTicket").value = "";
+            document.getElementById("certDomain").value = "";
+
+        } else {
+            alert("❌ Error adding certificate");
+        }
+
+    } catch (err){
+        alert("⚠ Server error");
+        console.log(err); // 🔥 DEBUG
+    }
+}
+
+
+
+</script>
 
 </body>
 

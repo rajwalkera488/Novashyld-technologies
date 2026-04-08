@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NovaShyld | Certificate Verification</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background: linear-gradient(135deg,#020617,#0f172a);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* GLOW EFFECT */
+body::before{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    background: radial-gradient(circle,#00eaff33,transparent);
+    top:10%;
+    left:20%;
+    filter:blur(100px);
+}
+
+/* CARD */
+.container{
+    width:500px;
+    padding:40px;
+    border-radius:20px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(20px);
+    border:1px solid rgba(255,255,255,0.1);
+    box-shadow:0 0 50px rgba(0,255,255,0.08);
+    text-align:center;
+}
+
+/* HEADER */
+h2{
+    margin-bottom:20px;
+    color:#00eaff;
+}
+
+/* INPUT */
+input{
+    width:100%;
+    padding:14px;
+    border-radius:10px;
+    border:none;
+    background:rgba(255,255,255,0.08);
+    color:white;
+    margin-top:10px;
+}
+
+input:focus{
+    outline:none;
+    border:1px solid #00eaff;
+}
+
+/* BUTTONS */
+.btn{
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.verify{
+    background: linear-gradient(135deg,#00eaff,#00ff9c);
+    color:black;
+}
+
+.clear{
+    background:#ef4444;
+    color:white;
+}
+
+.btn:hover{
+    transform:scale(1.05);
+}
+
+/* LOADER */
+.loader{
+    display:none;
+    margin-top:15px;
+}
+
+.loader span{
+    display:inline-block;
+    width:8px;
+    height:8px;
+    background:#00eaff;
+    border-radius:50%;
+    margin:0 3px;
+    animation: bounce 0.6s infinite alternate;
+}
+
+.loader span:nth-child(2){animation-delay:0.2s;}
+.loader span:nth-child(3){animation-delay:0.4s;}
+
+@keyframes bounce{
+    to{transform:translateY(-8px);}
+}
+
+/* TABLE */
+.table-container{
+    margin-top:20px;
+    display:none;
+    animation:fadeIn 0.5s ease;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+
+th{
+    background:#00eaff;
+    color:#020617;
+    padding:10px;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #1e293b;
+    font-size:14px;
+}
+
+tr:hover{
+    background:rgba(0,234,255,0.05);
+}
+
+/* STATUS BADGE */
+.badge{
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.valid{
+    background:#22c55e;
+    color:black;
+}
+
+.invalid{
+    background:#ef4444;
+}
+
+/* FOOTER */
+.footer{
+    position:absolute;
+    bottom:20px;
+    font-size:12px;
+    color:#94a3b8;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🔍 Certificate Verification</h2>
+
+<input type="text" id="ticket" placeholder="Enter Ticket ID (NS-XXXXX)">
+
+<button class="btn verify" onclick="verifyCert()">Verify Certificate</button>
+<button class="btn clear" onclick="clearData()">Clear</button>
+
+<div class="loader" id="loader">
+    <span></span><span></span><span></span>
+</div>
+
+<!-- TABLE RESULT -->
+<div class="table-container" id="tableContainer">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Ticket</th>
+                <th>Domain</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="resultTable"></tbody>
+    </table>
+</div>
+
+</div>
+
+<div class="footer">
+© 2026 NovaShyld Technologies
+</div>
+
+<script>
+
+async function verifyCert(){
+
+    const ticket = document.getElementById("ticket").value.trim().toUpperCase();
+    const loader = document.getElementById("loader");
+    const tableContainer = document.getElementById("tableContainer");
+    const table = document.getElementById("resultTable");
+
+    if(ticket === ""){
+        alert("⚠ Enter Ticket ID");
+        return;
+    }
+
+    tableContainer.style.display="none";
+    loader.style.display="block";
+
+    try{
+
+        const res = await fetch(`/verify-certificate/${ticket}`);
+        const data = await res.json();
+
+        loader.style.display="none";
+        table.innerHTML="";
+
+        if(data.valid){
+
+            tableContainer.style.display="block";
+
+            table.innerHTML = `
+                <tr>
+                    <td>${data.name}</td>
+                    <td>${data.ticket}</td>
+                    <td>${data.domain}</td>
+                    <td>${data.date}</td>
+                    <td><span class="badge valid">Verified</span></td>
+                </tr>
+            `;
+
+        } else {
+
+            tableContainer.style.display="block";
+
+            table.innerHTML = `
+                <tr>
+                    <td colspan="5" style="text-align:center;color:#ef4444;">
+                        ❌ Invalid Certificate
+                    </td>
+                </tr>
+            `;
+        }
+
+    } catch(err){
+        loader.style.display="none";
+        alert("⚠ Server Error");
+        console.log(err);
+    }
+}
+
+/* CLEAR FUNCTION */
+function clearData(){
+    document.getElementById("ticket").value="";
+    document.getElementById("tableContainer").style.display="none";
+}
+
+</script>
+
+</body>
+</html>
