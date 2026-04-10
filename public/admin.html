@@ -450,51 +450,22 @@
 
 
     <script>
-        
 
         let allMessages = [];
         let deleteTarget = null;
         let chartInstance = null;
-        async function checkAuth() {
-    try {
-        const res = await fetch("/admin-auth-check");
-
-        if (!res.ok) {
-            throw new Error("Not authorized");
-        }
-
-    } catch (err) {
-        document.body.innerHTML = `
-            <h1 style="color:red;text-align:center;margin-top:100px;">
-                🚫 Access Denied
-            </h1>
-        `;
-    }
-}
-
-// 🔥 CALL THIS FIRST
-checkAuth();
 
         async function loadMessages() {
-
-    const res = await fetch("/admin/messages");
-
-    if (!res.ok) {
-        document.body.innerHTML = "<h1 style='color:red;text-align:center;'>Unauthorized</h1>";
-        return;
-    }
-
-    const data = await res.json();
-    allMessages = data.reverse();
-
-    allMessages.forEach(m => {
-        m.status = localStorage.getItem(m.ticketID) || "new";
-    });
-
-    updateStats();
-    renderTable();
-    renderChart();
-}
+            const res = await fetch("/admin/messages");
+            const data = await res.json();
+            allMessages = data.reverse();
+            allMessages.forEach(m => {
+                m.status = localStorage.getItem(m.ticketID) || "new";
+            });
+            updateStats();
+            renderTable();
+            renderChart();
+        }
 
         function updateStats() {
             document.getElementById("totalCount").innerText = allMessages.length;
