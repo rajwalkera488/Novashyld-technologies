@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>NovaShyld | Certificate Verification</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 
+/* ===== GLOBAL ===== */
 *{
     margin:0;
     padding:0;
@@ -19,161 +19,191 @@
 
 body{
     min-height:100vh;
-    background: linear-gradient(135deg,#020617,#0f172a);
+    background: #020617;
     color:white;
     display:flex;
     justify-content:center;
     align-items:center;
+    overflow:hidden;
 }
 
-/* GLOW EFFECT */
+/* ===== CYBER GRID BACKGROUND ===== */
 body::before{
     content:"";
     position:absolute;
-    width:500px;
-    height:500px;
-    background: radial-gradient(circle,#00eaff33,transparent);
-    top:10%;
-    left:20%;
-    filter:blur(100px);
+    width:100%;
+    height:100%;
+    background:
+    linear-gradient(rgba(0,234,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,234,255,0.05) 1px, transparent 1px);
+    background-size:40px 40px;
+    z-index:0;
 }
 
-/* CARD */
+/* ===== GLOW ===== */
+body::after{
+    content:"";
+    position:absolute;
+    width:400px;
+    height:400px;
+    background:#00eaff;
+    filter:blur(120px);
+    opacity:0.2;
+    top:20%;
+    left:30%;
+}
+
+/* ===== MAIN CARD ===== */
 .container{
-    width:500px;
+    width:520px;
     padding:40px;
-    border-radius:20px;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(20px);
-    border:1px solid rgba(255,255,255,0.1);
-    box-shadow:0 0 50px rgba(0,255,255,0.08);
+    border-radius:25px;
+    background:rgba(255,255,255,0.04);
+    backdrop-filter:blur(25px);
+    border:1px solid rgba(0,234,255,0.2);
+    box-shadow:0 0 60px rgba(0,234,255,0.08);
     text-align:center;
+    z-index:2;
+}
+
+/* ===== LOGO ===== */
+.logo{
+    width:180px;
+    margin-bottom:15px;
 }
 
 /* HEADER */
 h2{
-    margin-bottom:20px;
-    color:#00eaff;
+    font-size:22px;
+    color:#38bdf8;
+}
+
+.sub{
+    font-size:13px;
+    color:#94a3b8;
+    margin-bottom:25px;
 }
 
 /* INPUT */
 input{
     width:100%;
     padding:14px;
-    border-radius:10px;
+    border-radius:12px;
     border:none;
     background:rgba(255,255,255,0.08);
     color:white;
     margin-top:10px;
+    transition:0.3s;
 }
 
 input:focus{
     outline:none;
     border:1px solid #00eaff;
+    box-shadow:0 0 15px #00eaff;
 }
 
-/* BUTTONS */
+/* BUTTON */
 .btn{
     width:100%;
     padding:14px;
     margin-top:15px;
     border:none;
-    border-radius:10px;
+    border-radius:12px;
     cursor:pointer;
     font-weight:bold;
+    transition:0.3s;
 }
 
 .verify{
-    background: linear-gradient(135deg,#00eaff,#00ff9c);
+    background:linear-gradient(135deg,#00eaff,#3b82f6);
     color:black;
 }
 
 .clear{
     background:#ef4444;
-    color:white;
 }
 
 .btn:hover{
     transform:scale(1.05);
+    box-shadow:0 0 20px #00eaff;
 }
 
 /* LOADER */
 .loader{
     display:none;
-    margin-top:15px;
+    margin-top:20px;
 }
 
 .loader span{
     display:inline-block;
-    width:8px;
-    height:8px;
+    width:10px;
+    height:10px;
     background:#00eaff;
     border-radius:50%;
-    margin:0 3px;
-    animation: bounce 0.6s infinite alternate;
+    margin:0 4px;
+    animation:jump 0.6s infinite alternate;
 }
 
-.loader span:nth-child(2){animation-delay:0.2s;}
-.loader span:nth-child(3){animation-delay:0.4s;}
-
-@keyframes bounce{
-    to{transform:translateY(-8px);}
+@keyframes jump{
+    to{transform:translateY(-10px);}
 }
 
-/* TABLE */
-.table-container{
-    margin-top:20px;
+/* RESULT CARD */
+.result{
     display:none;
+    margin-top:20px;
+    padding:20px;
+    border-radius:15px;
+    background:rgba(0,0,0,0.4);
+    border:1px solid rgba(255,255,255,0.1);
+    text-align:left;
     animation:fadeIn 0.5s ease;
 }
 
-table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:10px;
-}
-
-th{
-    background:#00eaff;
-    color:#020617;
-    padding:10px;
-}
-
-td{
-    padding:10px;
-    border-bottom:1px solid #1e293b;
+.row{
+    margin:8px 0;
     font-size:14px;
 }
 
-tr:hover{
-    background:rgba(0,234,255,0.05);
-}
-
-/* STATUS BADGE */
+/* BADGES */
 .badge{
-    padding:4px 10px;
+    padding:5px 12px;
     border-radius:20px;
     font-size:12px;
     font-weight:bold;
 }
 
-.valid{
-    background:#22c55e;
-    color:black;
+.valid{ background:#22c55e; color:black; }
+.invalid{ background:#ef4444; }
+
+/* DOMAIN COLORS */
+.domain{
+    padding:4px 10px;
+    border-radius:20px;
+    font-weight:bold;
 }
 
-.invalid{
-    background:#ef4444;
+.ethical{background:#22c55e;}
+.web{background:#3b82f6;}
+.network{background:#f59e0b; color:black;}
+.bug{background:#ef4444;}
+
+/* ERROR */
+.error{
+    margin-top:10px;
+    color:#ef4444;
+    font-size:13px;
 }
 
 /* FOOTER */
 .footer{
     position:absolute;
-    bottom:20px;
+    bottom:15px;
     font-size:12px;
-    color:#94a3b8;
+    color:#64748b;
 }
 
+/* ANIMATION */
 @keyframes fadeIn{
     from{opacity:0; transform:translateY(20px);}
     to{opacity:1; transform:translateY(0);}
@@ -186,102 +216,100 @@ tr:hover{
 
 <div class="container">
 
-<h2>🔍 Certificate Verification</h2>
+
+<h2>Certificate Verification</h2>
+<p class="sub">Securely verify NovaShyld certificates</p>
 
 <input type="text" id="ticket" placeholder="Enter Ticket ID (NS-XXXXX)">
 
 <button class="btn verify" onclick="verifyCert()">Verify Certificate</button>
 <button class="btn clear" onclick="clearData()">Clear</button>
 
+<div class="error" id="errorMsg"></div>
+
 <div class="loader" id="loader">
-    <span></span><span></span><span></span>
+<span></span><span></span><span></span>
 </div>
 
-<!-- TABLE RESULT -->
-<div class="table-container" id="tableContainer">
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Ticket</th>
-                <th>Domain</th>
-                <th>Date</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody id="resultTable"></tbody>
-    </table>
-</div>
+<!-- RESULT -->
+<div class="result" id="resultBox"></div>
 
 </div>
 
-<div class="footer">
-© 2026 NovaShyld Technologies
-</div>
+<div class="footer">© 2026 NovaShyld Technologies</div>
 
 <script>
 
+function getDomainClass(domain){
+
+    switch(domain){
+        case "Ethical Hacking & Pentesting": return "ethical";
+        case "Web Application Security": return "web";
+        case "Web Development": return "webdev";
+        case "Network Security": return "network";
+        case "Bug Bounty": return "bug";
+        case "VAPT": return "vapt";
+        default: return "bug";
+    }
+}
+
 async function verifyCert(){
 
-    const ticket = document.getElementById("ticket").value.trim().toUpperCase();
-    const loader = document.getElementById("loader");
-    const tableContainer = document.getElementById("tableContainer");
-    const table = document.getElementById("resultTable");
+    let ticket = document.getElementById("ticket").value.trim().toUpperCase();
+    let loader = document.getElementById("loader");
+    let resultBox = document.getElementById("resultBox");
+    let errorMsg = document.getElementById("errorMsg");
 
-    if(ticket === ""){
-        alert("⚠ Enter Ticket ID");
+    errorMsg.innerText = "";
+    resultBox.style.display="none";
+
+    if(!/^NS-\d{5,6}$/.test(ticket)){
+        errorMsg.innerText = "⚠ Invalid Ticket Format (Use NS-XXXXX)";
         return;
     }
 
-    tableContainer.style.display="none";
     loader.style.display="block";
 
     try{
-
-        const res = await fetch(`/verify-certificate/${ticket}`);
-        const data = await res.json();
+        let res = await fetch(`/verify-certificate/${ticket}`);
+        let data = await res.json();
 
         loader.style.display="none";
-        table.innerHTML="";
 
         if(data.valid){
 
-            tableContainer.style.display="block";
+            let domainClass = getDomainClass(data.domain);
 
-            table.innerHTML = `
-                <tr>
-                    <td>${data.name}</td>
-                    <td>${data.ticket}</td>
-                    <td>${data.domain}</td>
-                    <td>${data.date}</td>
-                    <td><span class="badge valid">Verified</span></td>
-                </tr>
+            resultBox.innerHTML = `
+                <div class="row"><b>Name:</b> ${data.name}</div>
+                <div class="row"><b>Ticket:</b> ${data.ticket}</div>
+                <div class="row"><b>Domain:</b> <span class="domain ${domainClass}">${data.domain}</span></div>
+                <div class="row"><b>Date:</b> ${data.date}</div>
+                <div class="row"><b>Status:</b> <span class="badge valid">Verified</span></div>
             `;
 
         } else {
 
-            tableContainer.style.display="block";
-
-            table.innerHTML = `
-                <tr>
-                    <td colspan="5" style="text-align:center;color:#ef4444;">
-                        ❌ Invalid Certificate
-                    </td>
-                </tr>
+            resultBox.innerHTML = `
+                <div class="row" style="color:#ef4444;">
+                ❌ Invalid Certificate
+                </div>
             `;
         }
 
+        resultBox.style.display="block";
+
     } catch(err){
         loader.style.display="none";
-        alert("⚠ Server Error");
+        errorMsg.innerText = "⚠ Server Error";
         console.log(err);
     }
 }
 
-/* CLEAR FUNCTION */
 function clearData(){
     document.getElementById("ticket").value="";
-    document.getElementById("tableContainer").style.display="none";
+    document.getElementById("resultBox").style.display="none";
+    document.getElementById("errorMsg").innerText="";
 }
 
 </script>
