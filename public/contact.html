@@ -326,6 +326,45 @@
         .contact-btn:hover::before {
             left: 100%;
         }
+        /* COPY BUTTON */
+.copy-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #00eaff, #0ea5e9);
+    color: #020617;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 0 12px rgba(0,234,255,0.5);
+}
+
+.copy-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #00eaff;
+}
+
+/* CLOSE BUTTON */
+.close-btn {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #020617;
+    color: #00eaff;
+    border: 1px solid #00eaff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    background: #00eaff;
+    color: #020617;
+}
+.ticket-highlight {
+    color: #facc15;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(250,204,21,0.7);
+}
 
 
         /* RESPONSE TEXT */
@@ -444,16 +483,17 @@ document.getElementById("contactForm").addEventListener("submit", async function
 
     const form = document.getElementById("contactForm");
 
+    const name = document.getElementById("name").value;
+
     const data = {
-        name: document.getElementById("name").value,
+        name: name,
         email: document.getElementById("email").value,
         topic: document.getElementById("topic").value,
         message: document.getElementById("message").value
     };
-     // 🔵 SHOW WAIT MESSAGE
-    document.getElementById("response").innerText = "⏳ You will recive your Ticket Id to your mail with in 24 hours ";
+
     document.querySelector(".contact-btn").disabled = true;
-    document.querySelector(".contact-btn").innerText = "Message sent successfully";
+    document.querySelector(".contact-btn").innerText = "Sending...";
 
     try {
         const response = await fetch("/send-message", {
@@ -464,33 +504,55 @@ document.getElementById("contactForm").addEventListener("submit", async function
 
         const result = await response.json();
 
-        // Show ticket ID in popup if available
-        if (result.ticketId) {
-            document.getElementById("ticketIdText").innerText = result.ticketId;
-            document.getElementById("ticketPopup").style.display = "block";
-        }
+        // ✅ SHOW POPUP ONLY AFTER RECEIVING TICKET ID
+       if (result.ticketId) {
+    currentTicketID = result.ticketId;
 
-        document.getElementById("response").innerText = result.message;
+document.getElementById("ticketIdText").innerHTML =
+    name + ", your Ticket ID is: <span class='ticket-highlight'>" 
+    + result.ticketId + 
+    "</span><br><br>⚠️ Please save this Ticket ID for future reference.";
+} else {
+    document.getElementById("ticketIdText").innerText =
+        "❌ Something went wrong. Please try again.";
+}
 
-        if (result.message === "Message sent successfully") {
-            form.reset();
-        }
+// ✅ ALWAYS SHOW POPUP
+document.getElementById("ticketPopup").style.display = "block";
+
+// ✅ CLEAR FORM AFTER POPUP
+form.reset();
 
     } catch {
-        document.getElementById("response").innerText = "Server error. Try again.";
+        alert("Server error. Try again.");
     }
+
+    document.querySelector(".contact-btn").disabled = false;
+document.querySelector(".contact-btn").innerText = "Send Message";
 });
+</script>
+<script>
+function copyTicket() {
+    navigator.clipboard.writeText(currentTicketID);
+}
 </script>
 <!-- Ticket ID Popup -->
 <div id="ticketPopup" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);
-    background: rgba(2,6,23,0.95); color:#00eaff; padding:25px 35px; border-radius:12px; text-align:center;
+    background: rgba(2,6,23,0.95); color:#00eaff; padding:30px 35px; border-radius:14px; text-align:center;
     box-shadow:0 0 30px #00eaff; z-index:2000; font-weight:600; font-size:18px;">
-    Your Ticket ID: <span id="ticketIdText"></span>
+
+    <div id="ticketIdText" style="line-height:1.6; margin-bottom:20px;"></div>
+
+    <button onclick="copyTicket()" class="copy-btn">
+        Copy Ticket ID
+    </button>
+
     <br><br>
-    <button onclick="document.getElementById('ticketPopup').style.display='none'" 
-        style="padding:8px 18px; border:none; border-radius:8px; background:#00eaff; color:#020617; cursor:pointer; font-weight:500;">
+
+    <button onclick="document.getElementById('ticketPopup').style.display='none'" class="close-btn">
         Close
     </button>
+
 </div>
 
 </body>

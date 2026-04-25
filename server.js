@@ -182,7 +182,7 @@ app.post("/send-message", async (req, res) => {
     }
 
     try {
-
+        // ✅ ONLY ADMIN MAIL (optional)
         await transporter.sendMail({
             from: process.env.EMAIL,
             to: process.env.EMAIL,
@@ -190,20 +190,15 @@ app.post("/send-message", async (req, res) => {
             text: message
         });
 
-        await transporter.sendMail({
-            from: process.env.EMAIL,
-            to: email,
-            subject: `Your Ticket ${ticketID}`,
-            text: `Your ticket ID is ${ticketID}`
-        });
-
-        res.json({ message: "Message sent", ticketId: ticketID });
-
     } catch (error) {
         console.log("MAIL ERROR:", error);
-        res.status(500).json({ message: "Mail failed" });
     }
 
+    // ✅ ALWAYS RETURN TICKET ID (MOST IMPORTANT)
+    res.json({
+        message: "Message stored successfully",
+        ticketId: ticketID
+    });
 });
 
 /* =========================
