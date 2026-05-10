@@ -181,20 +181,7 @@ app.post("/send-message", async (req, res) => {
         console.log("SAVE ERROR:", err);
     }
 
-    try {
-        // ✅ ONLY ADMIN MAIL (optional)
-        await transporter.sendMail({
-            from: process.env.EMAIL,
-            to: process.env.EMAIL,
-            subject: `New Message ${ticketID}`,
-            text: message
-        });
-
-    } catch (error) {
-        console.log("MAIL ERROR:", error);
-    }
-
-    // ✅ ALWAYS RETURN TICKET ID (MOST IMPORTANT)
+    // ✅ INSTANT RESPONSE
     res.json({
         message: "Message stored successfully",
         ticketId: ticketID
