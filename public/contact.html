@@ -31,10 +31,10 @@
             position: fixed;
             width: 200%;
             height: 200%;
-            background: radial-gradient(#0ea5e9 1px, transparent 1px);
+            background: radial-gradient(#0891b2 1px, transparent 1px);
             background-size: 40px 40px;
             animation: gridMove 30s linear infinite;
-            opacity: 0.1;
+            opacity: 0.12;
             z-index: -2;
         }
 
@@ -55,17 +55,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 80px;
-            border-bottom: 1px solid #1e293b;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             padding: 18px 70px;
             background: #020617;
-            border-bottom: 1px solid #1e293b;
+            border-bottom: 1px solid #134e4a;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -95,7 +87,7 @@
             left: 0;
             width: 0%;
             height: 2px;
-            background: #00eaff;
+            background: #06b6d4;
             transition: .3s;
         }
 
@@ -122,16 +114,16 @@
             max-width: 460px;
             padding: 45px;
 
-            background: rgba(2, 6, 23, .7);
+            background: linear-gradient(165deg, rgba(8, 47, 73, .55) 0%, rgba(2, 6, 23, .85) 65%);
             border-radius: 16px;
 
             backdrop-filter: blur(15px);
 
-            border: 1px solid rgba(255, 255, 255, .08);
+            border: 1px solid rgba(34, 211, 238, .15);
 
             box-shadow:
-                0 0 40px rgba(0, 234, 255, .15),
-                inset 0 0 30px rgba(0, 234, 255, .05);
+                0 0 50px rgba(8, 145, 178, .2),
+                inset 0 0 30px rgba(8, 145, 178, .08);
 
             animation: floatCard 6s ease-in-out infinite;
 
@@ -147,8 +139,8 @@
             content: "";
             position: absolute;
             inset: -2px;
-            background: linear-gradient(45deg, #00eaff, #0ea5e9, #00eaff);
-            opacity: .15;
+            background: linear-gradient(45deg, #0e7490, #155e75, #06b6d4);
+            opacity: .18;
             filter: blur(12px);
             z-index: -1;
         }
@@ -178,16 +170,20 @@
         .contact-logo {
             height: 95px;
             margin-bottom: 10px;
-            filter: drop-shadow(0 0 15px #00eaff);
+            filter: drop-shadow(0 0 15px #0891b2);
         }
 
         .contact-header h2 {
             font-size: 24px;
             margin-bottom: 5px;
+            background: linear-gradient(90deg, #67e8f9, #06b6d4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .contact-header p {
-            color: #94a3b8;
+            color: #7dd3fc;
             font-size: 14px;
         }
 
@@ -208,21 +204,21 @@
         .input-group select {
             padding: 12px;
             border-radius: 8px;
-            border: 1px solid #1e293b;
-            background: #020617;
+            border: 1px solid #155e75;
+            background: #041520;
             color: white;
             outline: none;
             transition: 0.3s;
         }
 
         .input-group select:focus {
-            border-color: #00eaff;
-            box-shadow: 0 0 12px rgba(0, 234, 255, 0.4);
+            border-color: #06b6d4;
+            box-shadow: 0 0 12px rgba(6, 182, 212, 0.45);
         }
 
         .input-group label {
             font-size: 14px;
-            color: #94a3b8;
+            color: #7dd3fc;
             margin-bottom: 5px;
         }
 
@@ -233,9 +229,9 @@
 
             border-radius: 8px;
 
-            border: 1px solid #1e293b;
+            border: 1px solid #155e75;
 
-            background: #020617;
+            background: #041520;
 
             color: white;
 
@@ -251,9 +247,9 @@
         .input-group input:focus,
         .input-group textarea:focus {
 
-            border-color: #00eaff;
+            border-color: #06b6d4;
 
-            box-shadow: 0 0 15px rgba(0, 234, 255, .4);
+            box-shadow: 0 0 15px rgba(6, 182, 212, .45);
 
             transform: scale(1.02);
 
@@ -277,11 +273,11 @@
 
             border-radius: 8px;
 
-            background: linear-gradient(90deg, #00eaff, #0ea5e9);
+            background: linear-gradient(90deg, #0e7490, #06b6d4);
 
-            color: black;
+            color: #02131a;
 
-            font-weight: 600;
+            font-weight: 700;
 
             cursor: pointer;
 
@@ -296,7 +292,7 @@
 
             transform: scale(1.06);
 
-            box-shadow: 0 0 20px #00eaff;
+            box-shadow: 0 0 25px #06b6d4;
 
         }
 
@@ -326,75 +322,266 @@
         .contact-btn:hover::before {
             left: 100%;
         }
+
         /* COPY BUTTON */
-.copy-btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    background: linear-gradient(90deg, #00eaff, #0ea5e9);
-    color: #020617;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-    box-shadow: 0 0 12px rgba(0,234,255,0.5);
-}
+        .copy-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #0e7490, #06b6d4);
+            color: #02131a;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 12px rgba(6, 182, 212, 0.5);
+        }
 
-.copy-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px #00eaff;
-}
+        .copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #06b6d4;
+        }
 
-/* CLOSE BUTTON */
-.close-btn {
-    padding: 8px 18px;
-    border: none;
-    border-radius: 8px;
-    background: #020617;
-    color: #00eaff;
-    border: 1px solid #00eaff;
-    cursor: pointer;
-    transition: 0.3s;
-}
+        /* CLOSE BUTTON */
+        .close-btn {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 8px;
+            background: #041520;
+            color: #67e8f9;
+            border: 1px solid #0e7490;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-.close-btn:hover {
-    background: #00eaff;
-    color: #020617;
-}
-.ticket-highlight {
-    color: #facc15;
-    font-weight: 700;
-    text-shadow: 0 0 10px rgba(250,204,21,0.7);
-}
-/* DOWNLOAD BUTTON */
-.download-btn {
-    margin-top: 10px;
-    padding: 10px 20px;
+        .close-btn:hover {
+            background: #0e7490;
+            color: #02131a;
+        }
 
-    border: none;
-    border-radius: 8px;
+        /* DOWNLOAD BUTTON */
+        .download-btn {
+            margin-top: 10px;
+            padding: 10px 20px;
 
-    background: linear-gradient(90deg, #22c55e, #16a34a);
-    color: #020617;
+            border: none;
+            border-radius: 8px;
 
-    font-weight: 600;
-    cursor: pointer;
+            background: linear-gradient(90deg, #0d9488, #0e7490);
+            color: #02131a;
 
-    transition: 0.3s;
-    box-shadow: 0 0 12px rgba(34,197,94,0.5);
-}
+            font-weight: 700;
+            cursor: pointer;
 
-.download-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px #22c55e;
-}
+            transition: 0.3s;
+            box-shadow: 0 0 12px rgba(13, 148, 136, 0.5);
+        }
+
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #0d9488;
+        }
 
 
         /* RESPONSE TEXT */
 
         #response {
             margin-top: 15px;
-            color: #00eaff;
+            color: #06b6d4;
             text-align: center;
+        }
+
+        /* ===========================
+           TICKET POPUP (boarding-pass style)
+        =========================== */
+
+        .ticket-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .ticket-overlay.show {
+            display: flex;
+        }
+
+        .ticket-card {
+            width: 100%;
+            max-width: 380px;
+            background: linear-gradient(180deg, #06212e 0%, #041520 100%);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow:
+                0 0 0 1px rgba(6, 182, 212, 0.3),
+                0 25px 60px rgba(0, 0, 0, 0.6),
+                0 0 55px rgba(6, 182, 212, 0.22);
+            animation: ticketPrint 0.5s cubic-bezier(.2, .8, .2, 1.1);
+            position: relative;
+        }
+
+        @keyframes ticketPrint {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.94);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* TICKET STUB — brand header */
+
+        .ticket-stub {
+            background: linear-gradient(135deg, #06b6d4 0%, #0e7490 100%);
+            padding: 22px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .ticket-stub .stub-brand {
+            color: #02131a;
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: .3px;
+        }
+
+        .ticket-stub .stub-tag {
+            color: rgba(2, 19, 26, 0.75);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(2, 19, 26, 0.15);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        /* PERFORATED TEAR LINE */
+
+        .ticket-perforation {
+            position: relative;
+            height: 0;
+            border-top: 2px dashed rgba(6, 182, 212, 0.4);
+            margin: 0 0;
+        }
+
+        .ticket-perforation::before,
+        .ticket-perforation::after {
+            content: "";
+            position: absolute;
+            top: -12px;
+            width: 24px;
+            height: 24px;
+            background: #020617;
+            border-radius: 50%;
+        }
+
+        .ticket-perforation::before {
+            left: -12px;
+        }
+
+        .ticket-perforation::after {
+            right: -12px;
+        }
+
+        /* TICKET BODY */
+
+        .ticket-body {
+            padding: 30px 28px 26px;
+            text-align: left;
+        }
+
+        .ticket-greeting {
+            color: #7dd3fc;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .ticket-name {
+            color: #fff;
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 22px;
+        }
+
+        .ticket-id-label {
+            color: #7dd3fc;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .ticket-id-value {
+            font-family: 'Courier New', monospace;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #22d3ee;
+            text-shadow: 0 0 20px rgba(34, 211, 238, 0.6);
+            margin-bottom: 22px;
+            word-break: break-all;
+        }
+
+        .ticket-warning {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            background: rgba(6, 182, 212, 0.08);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 10px;
+            padding: 12px 14px;
+            color: #a5f3fc;
+            font-size: 12px;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .ticket-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .ticket-actions .close-btn {
+            grid-column: 1 / -1;
+        }
+
+        .ticket-actions button {
+            width: 100%;
+        }
+
+        /* small toast confirming copy */
+
+        .copy-toast {
+            position: absolute;
+            top: -46px;
+            right: 50%;
+            transform: translateX(50%) translateY(-10px);
+            background: #0d9488;
+            color: #02131a;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: .3s ease;
+            white-space: nowrap;
+            box-shadow: 0 4px 14px rgba(13, 148, 136, 0.45);
+        }
+
+        .copy-toast.show {
+            opacity: 1;
+            transform: translateX(50%) translateY(0);
         }
 
 
@@ -406,11 +593,11 @@
 
             padding: 25px;
 
-            color: #64748b;
+            color: #475569;
 
             font-size: 14px;
 
-            border-top: 1px solid #1e293b;
+            border-top: 1px solid #134e4a;
 
             margin-top: 40px;
 
@@ -499,150 +686,170 @@
         © 2026 NovaShyld Technologies | Learn. Build. Secure.
     </footer>
 
-<script>
-document.getElementById("contactForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
+    <!-- Ticket ID Popup -->
+    <div id="ticketPopup" class="ticket-overlay">
 
-    const form = document.getElementById("contactForm");
+        <div class="ticket-card">
 
-    const name = document.getElementById("name").value;
+            <span class="copy-toast" id="copyToast">Copied!</span>
 
-    const data = {
-        name: name,
-        email: document.getElementById("email").value,
-        topic: document.getElementById("topic").value,
-        message: document.getElementById("message").value
-    };
+            <div class="ticket-stub">
+                <span class="stub-brand">NovaShyld Technologies</span>
+                <span class="stub-tag">Access Ticket</span>
+            </div>
 
-    document.querySelector(".contact-btn").disabled = true;
-    document.querySelector(".contact-btn").innerText = "Sending...";
+            <div class="ticket-perforation"></div>
 
-    try {
-        const response = await fetch("/send-message", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
+            <div class="ticket-body">
+
+                <div class="ticket-greeting" id="ticketGreeting"></div>
+                <div class="ticket-name" id="ticketName"></div>
+
+                <div class="ticket-id-label">Your Ticket ID</div>
+                <div class="ticket-id-value" id="ticketIdValue">—</div>
+
+                <div class="ticket-warning" id="ticketWarning">
+                    <span>⚠️</span>
+                    <span>Save this Ticket ID — you'll need it to track your application.</span>
+                </div>
+
+                <div class="ticket-actions">
+                    <button onclick="copyTicket()" class="copy-btn">Copy ID</button>
+                    <button class="download-btn" onclick="downloadTicket()">Download PDF</button>
+                    <button onclick="document.getElementById('ticketPopup').classList.remove('show')" class="close-btn">Close</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        let currentTicketID = "";
+
+        document.getElementById("contactForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const form = document.getElementById("contactForm");
+
+            const name = document.getElementById("name").value;
+
+            const data = {
+                name: name,
+                email: document.getElementById("email").value,
+                topic: document.getElementById("topic").value,
+                message: document.getElementById("message").value
+            };
+
+            document.querySelector(".contact-btn").disabled = true;
+            document.querySelector(".contact-btn").innerText = "Sending...";
+
+            try {
+                const response = await fetch("/send-message", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                // ✅ SHOW POPUP ONLY AFTER RECEIVING TICKET ID
+                if (result.ticketId) {
+                    currentTicketID = result.ticketId;
+
+                    document.getElementById("ticketGreeting").innerText = "Thanks, " + name + "!";
+                    document.getElementById("ticketName").innerText = "Your application has been received.";
+                    document.getElementById("ticketIdValue").innerText = result.ticketId;
+                    document.getElementById("ticketWarning").style.display = "flex";
+                } else {
+                    document.getElementById("ticketGreeting").innerText = "❌ Something went wrong";
+                    document.getElementById("ticketName").innerText = "Please try again.";
+                    document.getElementById("ticketIdValue").innerText = "—";
+                    document.getElementById("ticketWarning").style.display = "none";
+                }
+
+                // ✅ ALWAYS SHOW POPUP
+                document.getElementById("ticketPopup").classList.add("show");
+
+                // ✅ CLEAR FORM AFTER POPUP
+                form.reset();
+
+            } catch {
+                alert("Server error. Try again.");
+            }
+
+            document.querySelector(".contact-btn").disabled = false;
+            document.querySelector(".contact-btn").innerText = "Send Message";
         });
 
-        const result = await response.json();
+        function copyTicket() {
+            navigator.clipboard.writeText(currentTicketID);
 
-        // ✅ SHOW POPUP ONLY AFTER RECEIVING TICKET ID
-       if (result.ticketId) {
-    currentTicketID = result.ticketId;
+            const toast = document.getElementById("copyToast");
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 1500);
+        }
+    </script>
 
-document.getElementById("ticketIdText").innerHTML =
-    name + ", your Ticket ID is: <span class='ticket-highlight'>" 
-    + result.ticketId + 
-    "</span><br><br>⚠️ Please save this Ticket ID for future reference.";
-} else {
-    document.getElementById("ticketIdText").innerText =
-        "❌ Something went wrong. Please try again.";
-}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        async function downloadTicket() {
 
-// ✅ ALWAYS SHOW POPUP
-document.getElementById("ticketPopup").style.display = "block";
+            const { jsPDF } = window.jspdf;
 
-// ✅ CLEAR FORM AFTER POPUP
-form.reset();
+            const ticketID = document.getElementById("ticketIdValue").innerText || "N/A";
+            const nameMatch = (document.getElementById("ticketGreeting").innerText || "Thanks, User!")
+                .replace("Thanks, ", "").replace("!", "");
 
-    } catch {
-        alert("Server error. Try again.");
-    }
+            const doc = new jsPDF();
 
-    document.querySelector(".contact-btn").disabled = false;
-document.querySelector(".contact-btn").innerText = "Send Message";
-});
-</script>
-<script>
-function copyTicket() {
-    navigator.clipboard.writeText(currentTicketID);
-}
-</script>
-<!-- Ticket ID Popup -->
-<div id="ticketPopup" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);
-    background: rgba(2,6,23,0.95); color:#00eaff; padding:30px 35px; border-radius:14px; text-align:center;
-    box-shadow:0 0 30px #00eaff; z-index:2000; font-weight:600; font-size:18px;">
+            // ===== BACKGROUND =====
+            doc.setFillColor(2, 6, 23); // dark bg
+            doc.rect(0, 0, 210, 297, "F");
 
-    <div id="ticketIdText" style="line-height:1.6; margin-bottom:20px;"></div>
+            // ===== TITLE =====
+            doc.setTextColor(6, 182, 212);
+            doc.setFontSize(22);
+            doc.text("NovaShyld Technologies", 105, 30, { align: "center" });
 
-    <button onclick="copyTicket()" class="copy-btn">
-        Copy Ticket ID
-    </button>
-    <button class="download-btn" onclick="downloadTicket()">
-    Download Ticket
-</button>
+            // ===== SUBTITLE =====
+            doc.setFontSize(12);
+            doc.setTextColor(148, 163, 184);
+            doc.text("Official Ticket Confirmation", 105, 38, { align: "center" });
 
-    <br><br>
+            // ===== BOX =====
+            doc.setDrawColor(6, 182, 212);
+            doc.rect(20, 60, 170, 80);
 
-    <button onclick="document.getElementById('ticketPopup').style.display='none'" class="close-btn">
-        Close
-    </button>
+            // ===== NAME =====
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(14);
+            doc.text(`Name: ${nameMatch}`, 30, 80);
 
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
-async function downloadTicket() {
+            // ===== TICKET ID (BIG) =====
+            doc.setTextColor(13, 148, 136);
+            doc.setFontSize(28);
+            doc.text(ticketID, 105, 110, { align: "center" });
 
-    const { jsPDF } = window.jspdf;
+            // ===== WARNING =====
+            doc.setFontSize(11);
+            doc.setTextColor(250, 204, 21);
+            doc.text("IMPORTANT", 105, 125, { align: "center" });
 
-    const nameText = document.getElementById("ticketIdText").innerText;
+            doc.setFontSize(10);
+            doc.setTextColor(200, 200, 200);
+            doc.text("Save this Ticket ID for future reference", 105, 135, { align: "center" });
 
-    // Extract only Ticket ID (NS-XXXXX)
-    const ticketMatch = nameText.match(/NS-\d+/);
-    const ticketID = ticketMatch ? ticketMatch[0] : "N/A";
+            // ===== FOOTER =====
+            doc.setFontSize(10);
+            doc.setTextColor(148, 163, 184);
+            doc.text("NovaShyld Technologies | Learn. Build. Secure.", 105, 270, { align: "center" });
 
-    const nameMatch = nameText.split(",")[0] || "User";
-
-    const doc = new jsPDF();
-
-    // ===== BACKGROUND =====
-    doc.setFillColor(2, 6, 23); // dark bg
-    doc.rect(0, 0, 210, 297, "F");
-
-    // ===== TITLE =====
-    doc.setTextColor(0, 234, 255);
-    doc.setFontSize(22);
-    doc.text("NovaShyld Technologies", 105, 30, { align: "center" });
-
-    // ===== SUBTITLE =====
-    doc.setFontSize(12);
-    doc.setTextColor(148, 163, 184);
-    doc.text("Official Ticket Confirmation", 105, 38, { align: "center" });
-
-    // ===== BOX =====
-    doc.setDrawColor(0, 234, 255);
-    doc.rect(20, 60, 170, 80);
-
-    // ===== NAME =====
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(14);
-    doc.text(`Name: ${nameMatch}`, 30, 80);
-
-    // ===== TICKET ID (BIG) =====
-    doc.setTextColor(34, 197, 94);
-    doc.setFontSize(28);
-    doc.text(ticketID, 105, 110, { align: "center" });
-
-    // ===== WARNING =====
-    doc.setFontSize(11);
-    doc.setTextColor(250, 204, 21);
-   doc.setFontSize(11);
-doc.setTextColor(250, 204, 21);
-doc.text("IMPORTANT", 105, 125, { align: "center" });
-
-doc.setFontSize(10);
-doc.setTextColor(200, 200, 200);
-doc.text("Save this Ticket ID for future reference", 105, 135, { align: "center" });
-
-    // ===== FOOTER =====
-    doc.setFontSize(10);
-    doc.setTextColor(148, 163, 184);
-    doc.text("NovaShyld Technologies | Learn. Build. Secure.", 105, 270, { align: "center" });
-
-    // ===== DOWNLOAD =====
-    doc.save(`NovaShyld Tech_Ticket_${ticketID}.pdf`);
-}
-</script>
+            // ===== DOWNLOAD =====
+            doc.save(`NovaShyld Tech_Ticket_${ticketID}.pdf`);
+        }
+    </script>
 
 </body>
 

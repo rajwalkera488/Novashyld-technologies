@@ -10,214 +10,456 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* GLOBAL */
+        /* ===========================
+           GLOBAL — Clean Slate Theme (matches index.html / services.html)
+        =========================== */
+
+        :root {
+            --bg: #0a0e14;
+            --bg-elevated: #11151c;
+            --steel: #2a3140;
+            --steel-line: #232a36;
+            --primary: #3b82f6;
+            --primary-bright: #60a5fa;
+            --primary-deep: #1d4ed8;
+            --accent-soft: #93c5fd;
+            --text-dim: #9aa4b2;
+            --text: #e8eaed;
+            --alert: #ff1f3d;
+            --alert-soft: #ff4d4d;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-x: hidden;
+        }
 
         body {
             margin: 0;
             font-family: 'Poppins', sans-serif;
-            background: #020617;
-            color: white;
+            background: var(--bg);
+            color: var(--text);
             overflow-x: hidden;
         }
 
-        /* MATRIX BACKGROUND */
+        /* BACKGROUND ANIMATION — soft drifting particle network (matches index.html mood, calmer than matrix rain) */
 
         canvas {
             position: fixed;
             top: 0;
             left: 0;
             z-index: -1;
+            opacity: 0.5;
         }
 
-        /* NAVBAR */
+        /* ===========================
+           NAVBAR
+        =========================== */
 
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 60px;
-            border-bottom: 1px solid #1e293b;
+            padding: 14px 60px;
+            background: rgba(10, 14, 20, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--steel-line);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
         }
 
         .logo img {
-            height: 90px;
+            height: 48px;
         }
 
         nav ul {
             display: flex;
+            align-items: center;
             list-style: none;
             gap: 25px;
+            margin: 0;
+            padding: 0;
         }
 
         nav ul li a {
             text-decoration: none;
-            color: white;
+            color: var(--text);
             font-weight: 500;
+            font-size: 14.5px;
+            position: relative;
+            transition: .3s;
+            white-space: nowrap;
+        }
+
+        nav ul li a::after {
+            content: "";
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--primary-bright);
             transition: .3s;
         }
 
         nav ul li a:hover {
-            color: #00ffff;
+            color: var(--primary-bright);
         }
 
-        /* HERO */
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* HAMBURGER (hidden on desktop) */
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: 1px solid var(--steel-line);
+            border-radius: 6px;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 16px;
+            height: 2px;
+            background: var(--primary-bright);
+            margin: 0 auto;
+            transition: .3s;
+        }
+
+        .menu-toggle.open span:nth-child(1) {
+            transform: translateY(6px) rotate(45deg);
+        }
+
+        .menu-toggle.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.open span:nth-child(3) {
+            transform: translateY(-6px) rotate(-45deg);
+        }
+
+        /* ===========================
+           HERO
+        =========================== */
 
         .hero {
             text-align: center;
-            padding: 120px 20px;
+            padding: 110px 20px 80px;
+            position: relative;
+            z-index: 2;
         }
 
         .hero h1 {
-            font-size: 54px;
-            background: linear-gradient(90deg, #00ffff, #00fff7);
+            font-family: 'Orbitron', 'Poppins', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--accent-soft));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            padding: 0 10px;
         }
 
         .hero p {
-            color: #94a3b8;
-            font-size: 18px;
+            color: var(--text-dim);
+            font-size: 17px;
+            max-width: 560px;
+            margin: 0 auto;
+            line-height: 1.6;
         }
 
-        /* INTERNSHIP GRID */
+        /* ===========================
+           STATS
+        =========================== */
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            padding: 50px 20px 70px;
+            text-align: center;
+            flex-wrap: wrap;
+        }
+
+        .stat-box h2 {
+            font-family: 'Orbitron', 'Poppins', sans-serif;
+            font-size: 38px;
+            color: var(--primary-bright);
+            margin: 0 0 6px;
+        }
+
+        .stat-box p {
+            color: var(--text-dim);
+            margin: 0;
+            font-size: 14px;
+        }
+
+        /* ===========================
+           APPLICATION NOTE
+        =========================== */
+
+        .application-note {
+            margin: 0 auto 50px;
+            padding: 26px 30px;
+            max-width: 700px;
+            width: calc(100% - 40px);
+
+            background: rgba(11, 15, 22, 0.85);
+            backdrop-filter: blur(10px);
+
+            border: 1px solid rgba(250, 204, 21, 0.3);
+            border-radius: 12px;
+
+            box-shadow: 0 0 25px rgba(250, 204, 21, 0.12);
+        }
+
+        .application-note h3 {
+            color: #facc15;
+            margin-bottom: 12px;
+            font-size: 17px;
+            text-shadow: 0 0 10px rgba(250, 204, 21, 0.5);
+        }
+
+        .application-note p {
+            color: #cbd5f5;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .application-note strong {
+            color: var(--primary-bright);
+        }
+
+        /* ===========================
+           INTERNSHIP CARD — alert theme (kept distinct on purpose)
+        =========================== */
 
         .services {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 35px;
-            padding: 80px;
+            padding: 20px 20px 100px;
+            max-width: 560px;
+            margin: 0 auto;
         }
-
-        /* CARD */
 
         .card {
-            background: #020617;
-            border: 1px solid #1e293b;
-            border-radius: 14px;
-            padding: 35px;
-            transition: .4s;
+            background: linear-gradient(160deg, #1a0508 0%, #0d0304 70%);
+            border: 1px solid rgba(255, 31, 61, 0.35);
+            border-radius: 4px;
+            padding: 0;
+            transition: .4s ease;
             position: relative;
             overflow: hidden;
+            clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+            box-shadow:
+                0 0 0 1px rgba(255, 31, 61, 0.08) inset,
+                0 20px 40px rgba(0, 0, 0, 0.5);
         }
 
-        /* GLOW BORDER */
+        .card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -60%;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(100deg,
+                    transparent,
+                    rgba(255, 31, 61, 0.12),
+                    transparent);
+            transform: skewX(-15deg);
+            animation: scanSweep 4.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scanSweep {
+            0% {
+                left: -60%;
+            }
+
+            60% {
+                left: 130%;
+            }
+
+            100% {
+                left: 130%;
+            }
+        }
 
         .card::before {
             content: "";
             position: absolute;
             inset: -2px;
-            background: linear-gradient(45deg, #00ffff, #00ffff, #00ffff);
+            background: linear-gradient(45deg, var(--alert), #7f0e1c, var(--alert));
             opacity: 0;
             transition: .4s;
             z-index: -1;
-            filter: blur(10px);
+            filter: blur(14px);
         }
 
         .card:hover::before {
-            opacity: 1;
+            opacity: .85;
         }
 
         .card:hover {
-            transform: translateY(-12px) scale(1.03);
+            transform: translateY(-10px);
+            border-color: rgba(255, 31, 61, 0.7);
         }
 
-        /* CARD TEXT */
+        .alert-strip {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 12px 20px;
+            background: rgba(255, 31, 61, 0.12);
+            border-bottom: 1px solid rgba(255, 31, 61, 0.35);
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--alert-soft);
+        }
+
+        .alert-strip .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--alert);
+            box-shadow: 0 0 8px var(--alert), 0 0 16px var(--alert);
+            animation: pulseDot 1.4s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        .alert-strip .tag {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @keyframes pulseDot {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: .4;
+                transform: scale(0.8);
+            }
+        }
+
+        .card-body {
+            padding: 30px 35px 35px;
+        }
 
         .card h3 {
             font-size: 22px;
             margin-bottom: 10px;
+            color: #fff;
+            letter-spacing: .3px;
         }
 
         .card p {
-            color: #94a3b8;
+            color: #d8b4ba;
             font-size: 14px;
             line-height: 1.6;
         }
 
-        /* SKILLS */
-
         .skills {
-            margin-top: 15px;
-            margin-bottom: 20px;
+            margin-top: 18px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .skills span {
-            display: inline-block;
-            background: #0f172a;
-            border: 1px solid #1e293b;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 31, 61, 0.08);
+            border: 1px solid rgba(255, 31, 61, 0.4);
+            color: #ffb3bd;
             padding: 6px 12px;
-            margin: 4px;
             font-size: 12px;
-            border-radius: 20px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
         }
 
-        /* APPLY BUTTON */
+        .skills span::before {
+            content: "▹";
+            color: var(--alert);
+        }
 
         .apply-btn {
-            display: inline-block;
-            padding: 10px 22px;
-            background: #00ffff;
-            color: black;
-            font-weight: 600;
-            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 26px;
+            background: var(--alert);
+            color: #0d0304;
+            font-weight: 700;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            font-size: 13px;
+            border-radius: 4px;
             text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
             transition: .3s;
+            width: 100%;
+            justify-content: center;
         }
 
         .apply-btn:hover {
-            background: #00ffff;
-            transform: scale(1.05);
+            background: #fff;
+            color: var(--alert);
+            box-shadow: 0 0 20px rgba(255, 31, 61, 0.7);
+            transform: scale(1.02);
         }
 
-        /* FLOATING CARD ANIMATION */
+        /* ===========================
+           SCROLL PROGRESS BAR
+        =========================== */
 
-        @keyframes float {
-            0% {
-                transform: translateY(0)
-            }
-
-            50% {
-                transform: translateY(-8px)
-            }
-
-            100% {
-                transform: translateY(0)
-            }
-        }
-
-        /* SCROLL PROGRESS BAR */
         .progress-bar {
             position: fixed;
             top: 0;
             left: 0;
-            height: 4px;
+            height: 3px;
             width: 0%;
-            background: linear-gradient(90deg, #00ffff, #22c55e);
+            background: linear-gradient(90deg, var(--primary), var(--primary-bright));
             z-index: 9999;
-        }
-
-        .card {
-            animation: float 5s ease-in-out infinite;
-        }
-
-        .card:nth-child(2) {
-            animation-delay: 1s;
-        }
-
-        .card:nth-child(3) {
-            animation-delay: 2s;
         }
 
         /* SCROLL REVEAL */
@@ -233,372 +475,416 @@
             transform: translateY(0);
         }
 
-        /* FOOTER */
+        /* ===========================
+           FOOTER
+        =========================== */
 
         footer {
             text-align: center;
-            padding: 30px;
-            border-top: 1px solid #1e293b;
+            padding: 28px;
+            border-top: 1px solid var(--steel-line);
             color: #64748b;
+            font-size: 14px;
         }
 
-        .application-note {
-            background: linear-gradient(135deg, #0f172a, #020617);
-            border: 1px solid #00eaff;
-            padding: 25px;
-            margin-bottom: 30px;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0, 234, 255, 0.3);
-            color: #e2e8f0;
-        }
-
-        .application-note h3 {
-            color: #00eaff;
-            margin-bottom: 15px;
-        }
-
-        .application-note p {
-            margin-bottom: 10px;
-            line-height: 1.6;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            padding: 60px;
-            text-align: center;
-        }
-
-        .stat-box h2 {
-            font-size: 42px;
-            color: #00ffff;
-        }
-
-        .stat-box p {
-            color: #94a3b8;
-        }
+        /* ===========================
+           MODAL
+        =========================== */
 
         .modal {
             display: none;
             position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+
+            background: rgba(10, 14, 20, 0.85);
+            backdrop-filter: blur(8px);
+
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
 
         .modal-content {
-            background: #0f172a;
-            padding: 30px;
-            border-radius: 10px;
+            background: rgba(11, 15, 22, 0.95);
+            padding: 35px;
+            border-radius: 16px;
             text-align: center;
+
+            width: 100%;
+            max-width: 400px;
+
             position: relative;
+            overflow: hidden;
+
+            border: 1px solid rgba(59, 130, 246, 0.25);
+
+            box-shadow:
+                0 0 40px rgba(59, 130, 246, 0.2),
+                inset 0 0 25px rgba(59, 130, 246, 0.05);
+
+            animation: popupFade 0.4s ease;
+        }
+
+        .modal-content::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border-radius: 16px;
+
+            background: linear-gradient(45deg, var(--primary), var(--primary-deep), var(--primary));
+            opacity: 0.15;
+
+            filter: blur(12px);
+            z-index: -1;
+        }
+
+        @keyframes popupFade {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-content h3 {
+            color: var(--primary-bright);
+            margin-bottom: 18px;
+            font-size: 19px;
+
+            text-shadow: 0 0 14px rgba(96, 165, 250, 0.5);
         }
 
         .modal-content input {
-            padding: 10px;
-            margin: 10px 0;
-            width: 80%;
-        }
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
 
-        .close {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            cursor: pointer;
-            font-size: 20px;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background: #0f172a;
-            padding: 30px;
             border-radius: 10px;
-            text-align: center;
+            border: 1px solid var(--steel-line);
+
+            background: var(--bg);
+            color: white;
+
+            outline: none;
+            transition: 0.3s;
+            font-size: 15px;
+        }
+
+        .modal-content input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .modal-content button {
+            width: 100%;
+            padding: 13px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: linear-gradient(90deg, var(--primary), var(--primary-deep));
+            color: #02131a;
+
+            font-weight: 700;
+            letter-spacing: 0.5px;
+
+            cursor: pointer;
+            transition: 0.3s;
+
             position: relative;
+            overflow: hidden;
         }
 
-        .modal-content input {
-            padding: 10px;
-            margin: 10px 0;
-            width: 80%;
+        .modal-content button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+
+            width: 100%;
+            height: 100%;
+
+            background: linear-gradient(120deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.4),
+                    transparent);
+
+            transition: 0.6s;
+        }
+
+        .modal-content button:hover::before {
+            left: 100%;
+        }
+
+        .modal-content button:hover {
+            transform: scale(1.04);
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
         }
 
         .close {
             position: absolute;
-            top: 10px;
+            top: 12px;
             right: 15px;
+
+            font-size: 22px;
+            color: var(--primary-bright);
             cursor: pointer;
-            font-size: 20px;
+
+            transition: 0.3s;
         }
 
-        /* MODAL BACKGROUND */
-/* ===== MODAL BACKGROUND ===== */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    background: rgba(2, 6, 23, 0.85);
-    backdrop-filter: blur(8px);
-
-    justify-content: center;
-    align-items: center;
-}
-
-/* ===== MODAL BOX ===== */
-.modal-content {
-    background: rgba(2, 6, 23, 0.95);
-    padding: 35px 35px;
-    border-radius: 16px;
-    text-align: center;
-
-    width: 90%;
-    max-width: 400px;
-
-    position: relative;
-    overflow: hidden;
-
-    border: 1px solid rgba(0, 234, 255, 0.2);
-
-    box-shadow:
-        0 0 40px rgba(0, 234, 255, 0.25),
-        inset 0 0 25px rgba(0, 234, 255, 0.05);
-
-    animation: popupFade 0.4s ease;
-}
-
-/* 🔥 GLOW BORDER ANIMATION */
-.modal-content::before {
-    content: "";
-    position: absolute;
-    inset: -2px;
-    border-radius: 16px;
-
-    background: linear-gradient(45deg, #00eaff, #0ea5e9, #00eaff);
-    opacity: 0.15;
-
-    filter: blur(12px);
-    z-index: -1;
-}
-
-/* ===== ANIMATION ===== */
-@keyframes popupFade {
-    from {
-        opacity: 0;
-        transform: scale(0.8) translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-/* ===== TITLE ===== */
-.modal-content h3 {
-    color: #00eaff;
-    margin-bottom: 18px;
-    font-size: 20px;
-
-    text-shadow:
-        0 0 10px rgba(0, 234, 255, 0.8),
-        0 0 20px rgba(0, 234, 255, 0.4);
-}
-
-/* ===== INPUT FIELD ===== */
-.modal-content input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 18px;
-
-    border-radius: 10px;
-    border: 1px solid #1e293b;
-
-    background: #020617;
-    color: white;
-
-    outline: none;
-    transition: 0.3s;
-}
-
-.modal-content input:focus {
-    border-color: #00eaff;
-    box-shadow: 0 0 15px rgba(0, 234, 255, 0.5);
-    transform: scale(1.02);
-}
-
-/* ===== BUTTON ===== */
-.modal-content button {
-    width: 100%;
-    padding: 13px;
-
-    border: none;
-    border-radius: 10px;
-
-    background: linear-gradient(90deg, #00eaff, #0ea5e9);
-    color: #020617;
-
-    font-weight: 600;
-    letter-spacing: 0.5px;
-
-    cursor: pointer;
-    transition: 0.3s;
-
-    position: relative;
-    overflow: hidden;
-}
-
-/* ✨ BUTTON SHINE EFFECT */
-.modal-content button::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-
-    width: 100%;
-    height: 100%;
-
-    background: linear-gradient(
-        120deg,
-        transparent,
-        rgba(255,255,255,0.5),
-        transparent
-    );
-
-    transition: 0.6s;
-}
-
-.modal-content button:hover::before {
-    left: 100%;
-}
-
-.modal-content button:hover {
-    transform: scale(1.06);
-    box-shadow: 0 0 25px #00eaff;
-}
-
-/* ===== CLOSE BUTTON ===== */
-.close {
-    position: absolute;
-    top: 12px;
-    right: 15px;
-
-    font-size: 22px;
-    color: #00eaff;
-    cursor: pointer;
-
-    transition: 0.3s;
-}
-
-.close:hover {
-    color: #f87171;
-    transform: scale(1.3) rotate(90deg);
-}
-
-        .close {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            cursor: pointer;
-            font-size: 20px;
+        .close:hover {
+            color: var(--alert-soft);
+            transform: scale(1.3) rotate(90deg);
         }
-        .application-note {
-    margin: 40px auto;
-    padding: 25px 30px;
-    max-width: 700px;
 
-    background: rgba(250, 204, 21, 0.05); /* soft yellow tint */
-    border: 1px solid rgba(250, 204, 21, 0.3);
-    border-radius: 12px;
-
-    box-shadow: 0 0 20px rgba(250, 204, 21, 0.15);
-}
-
-/* Heading */
-.application-note h3 {
-    color: #facc15;
-    margin-bottom: 12px;
-    text-shadow: 0 0 10px rgba(250, 204, 21, 0.7);
-}
-
-/* Paragraph text */
-.application-note p {
-    color: #cbd5f5;
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 10px;
-}
-
-/* Highlight important words */
-.application-note strong {
-    color: #22c55e; /* neon green highlight */
-}
-
-.application-note {
-    margin: 40px auto;
-    padding: 25px 30px;
-    max-width: 700px;
-
-    background: rgba(2, 6, 23, 0.85); /* 🔥 dark glass */
-    backdrop-filter: blur(10px);
-
-    border: 1px solid rgba(250, 204, 21, 0.3);
-    border-radius: 12px;
-
-    box-shadow: 0 0 25px rgba(250, 204, 21, 0.2);
-}
-        
+        /* ===========================
+           BACK TO TOP BUTTON
+        =========================== */
 
         #topBtn {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            padding: 10px 15px;
+            width: 46px;
+            height: 46px;
             border-radius: 50%;
             border: none;
-            background: #00ffff;
+            background: linear-gradient(135deg, var(--primary), var(--primary-deep));
+            color: #02131a;
+            font-size: 18px;
             cursor: pointer;
             display: none;
+            box-shadow: 0 0 18px rgba(59, 130, 246, 0.45);
+            transition: .3s;
+            z-index: 800;
         }
-    </style>
+
+        #topBtn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* ===========================
+           RESPONSIVE — TABLET (≤1024px)
+        =========================== */
+
+        @media (max-width: 1024px) {
+
+            .navbar {
+                padding: 14px 30px;
+            }
+
+            nav ul {
+                gap: 16px;
+            }
+
+            nav ul li a {
+                font-size: 13.5px;
+            }
+
+            .hero {
+                padding: 90px 20px 60px;
+            }
+        }
+
+        /* ===========================
+           RESPONSIVE — MOBILE (≤768px)
+        =========================== */
+
+        @media (max-width: 768px) {
+
+            .navbar {
+                padding: 12px 18px;
+                flex-wrap: wrap;
+            }
+
+            .logo img {
+                height: 38px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            nav {
+                width: 100%;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                gap: 0;
+                margin-top: 14px;
+                border-top: 1px solid var(--steel-line);
+                padding-top: 10px;
+            }
+
+            nav ul.open {
+                display: flex;
+            }
+
+            nav ul li {
+                width: 100%;
+                padding: 10px 4px;
+                border-bottom: 1px solid rgba(35, 42, 54, 0.6);
+            }
+
+            nav ul li:last-child {
+                border-bottom: none;
+            }
+
+            nav ul li a {
+                display: block;
+                font-size: 15px;
+            }
+
+            /* HERO */
+
+            .hero {
+                padding: 60px 16px 40px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+                line-height: 1.3;
+            }
+
+            .hero p {
+                font-size: 14.5px;
+            }
+
+            /* STATS */
+
+            .stats {
+                gap: 16px;
+                padding: 30px 16px 50px;
+                flex-wrap: wrap;
+            }
+
+            .stat-box {
+                width: calc(50% - 8px);
+            }
+
+            .stat-box h2 {
+                font-size: 28px;
+            }
+
+            .stat-box p {
+                font-size: 12.5px;
+            }
+
+            /* APPLICATION NOTE */
+
+            .application-note {
+                padding: 20px 20px;
+                margin-bottom: 36px;
+            }
+
+            .application-note h3 {
+                font-size: 15.5px;
+            }
+
+            .application-note p {
+                font-size: 13.5px;
+            }
+
+            /* CARD */
+
+            .services {
+                padding: 10px 16px 70px;
+            }
+
+            .card-body {
+                padding: 24px 24px 28px;
+            }
+
+            .card h3 {
+                font-size: 19px;
+            }
+
+            .alert-strip {
+                padding: 10px 16px;
+                font-size: 10px;
+            }
+
+            /* MODAL */
+
+            .modal-content {
+                padding: 28px 22px;
+            }
+
+            /* BACK TO TOP */
+
+            #topBtn {
+                width: 42px;
+                height: 42px;
+                bottom: 18px;
+                right: 18px;
+                font-size: 16px;
+            }
+        }
+
+        /* ===========================
+           RESPONSIVE — SMALL MOBILE (≤420px)
+        =========================== */
+
+        @media (max-width: 420px) {
+
+            .logo span {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 25px;
+            }
+
+            .stat-box {
+                width: 100%;
+            }
+        }
     </style>
 
 </head>
 
 <body>
     <div class="progress-bar" id="progressBar"></div>
-    <canvas id="matrix"></canvas>
+    <canvas id="particles"></canvas>
 
     <header class="navbar">
 
         <div class="logo">
-            <img src="images/logo.png">
-            NovaShyld Technologies
+            <img src="images/logo.png" alt="NovaShyld Technologies logo">
+            <span>NovaShyld Technologies</span>
         </div>
 
-        <nav>
-            <ul>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
 
+        <nav>
+            <ul id="navList">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="services.html">Services</a></li>
                 <li><a href="internships.html">Internships</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
-
             </ul>
         </nav>
 
@@ -607,11 +893,12 @@
 
     <section class="hero reveal">
 
-        <h1>Cybersecurity Internship Programs</h1>
+        <h1>Cybersecurity Internship Program</h1>
 
         <p>Gain real-world cybersecurity skills and hands-on industry experience.</p>
 
     </section>
+
     <section class="stats">
         <div class="stat-box">
             <h2 class="counter" data-target="40">0</h2>
@@ -626,145 +913,57 @@
             <p>Success Rate %</p>
         </div>
     </section>
-    <div class="application-note">
-    <h3>⚠ Important Before Applying</h3>
 
-    <p>
-        Before applying for the internship, you must first visit our 
-        <strong>Contact</strong> page and submit your details.
-    </p>
+    <div class="application-note reveal">
+        <h3>⚠ Important Before Applying</h3>
 
-    <p>
-        Once you click <strong>Send Message</strong>, your unique 
-        <strong>Ticket ID</strong> will be generated instantly and displayed on the screen.
-    </p>
+        <p>
+            Before applying for the internship, you must first visit our
+            <strong>Contact</strong> page and submit your details.
+        </p>
 
-    <p>
-        After receiving your Ticket ID, return to this page and use it to complete your internship application.
-    </p>
+        <p>
+            Once you click <strong>Send Message</strong>, your unique
+            <strong>Ticket ID</strong> will be generated instantly and displayed on the screen.
+        </p>
 
-    <p>
-        ⚠ Please make sure to save your Ticket ID for future reference.
-    </p>
-</div>
+        <p>
+            After receiving your Ticket ID, return to this page and use it to complete your internship application.
+        </p>
+
+        <p>
+            ⚠ Please make sure to save your Ticket ID for future reference.
+        </p>
     </div>
-    <div class="modal" id="tokenModal">
-        <div class="modal-content">
-            <h3>Enter Your Internship Ticket ID</h3>
-            <input type="text" id="tokenInput" placeholder="Enter Ticket ID">
-            <button onclick="verifyToken()">Verify & Continue</button>
-            <span onclick="closeModal()" class="close">&times;</span>
-        </div>
-    </div>
-
 
     <section class="services">
 
         <div class="card reveal">
 
-            <h3>Ethical Hacking & Penetration Testing</h3>
-
-            <p>Learn professional penetration testing techniques used by security experts to identify vulnerabilities.
-            </p>
-
-            <div class="skills">
-                <span>Kali Linux</span>
-                <span>Metasploit</span>
-                <span>Nmap</span>
-                <span>Burp Suite</span>
+            <div class="alert-strip">
+                <span class="tag"><span class="dot"></span> LIVE OPENING</span>
+                <span>ID: NS-CSA-01</span>
             </div>
 
-            <button class="apply-btn" onclick="openModal()">Apply Now</button>
+            <div class="card-body">
 
-        </div>
+                <h3>Cybersecurity Analyst Intern</h3>
 
+                <p>Learn how cybersecurity analysts monitor, detect, and respond to real-world security threats
+                    across networks and applications.</p>
 
-        <div class="card reveal">
+                <div class="skills">
+                    <span>Threat Detection</span>
+                    <span>SIEM Tools</span>
+                    <span>Vulnerability Assessment</span>
+                    <span>Incident Response</span>
+                </div>
 
-            <h3>Web Application Security</h3>
+                <button class="apply-btn" onclick="openModal()">Apply Now →</button>
 
-            <p>Understand OWASP vulnerabilities, bug bounty techniques, and modern web attack methods.</p>
-
-            <div class="skills">
-                <span>SQL Injection</span>
-                <span>XSS</span>
-                <span>Burp Suite</span>
-                <span>OWASP Top 10</span>
             </div>
 
-            <button class="apply-btn" onclick="openModal()">Apply Now</button>
-
         </div>
-
-
-        <div class="card reveal">
-
-            <h3>Network Security</h3>
-
-            <p>Learn network scanning, vulnerability detection, firewall bypass techniques, and infrastructure
-                protection.</p>
-
-            <div class="skills">
-                <span>Nmap</span>
-                <span>Wireshark</span>
-                <span>Firewalls</span>
-                <span>Network Defense</span>
-            </div>
-            <button class="apply-btn" onclick="openModal()">Apply Now</button>
-
-        </div>
-        <div class="card reveal">
-
-    <h3>Bug Bounty</h3>
-
-    <p>Learn how to identify real-world vulnerabilities and earn rewards by practicing bug hunting techniques.</p>
-
-    <div class="skills">
-        <span>Recon</span>
-        <span>Burp Suite</span>
-        <span>OWASP Top 10</span>
-        <span>Reporting</span>
-    </div>
-
-    <button class="apply-btn" onclick="openModal()">Apply Now</button>
-    
-    
-
-</div>
-<div class="card reveal">
-
-    <h3>VAPT</h3>
-
-    <p>Learn how to perform Vulnerability Assessment and Penetration Testing to identify and secure real-world systems.</p>
-
-    <div class="skills">
-        <span>Reconnaissance</span>
-        <span>Vulnerability Scanning</span>
-        <span>Exploitation</span>
-        <span>Reporting</span>
-    </div>
-
-    <button class="apply-btn" onclick="openModal()">Apply Now</button>
-
-</div>
-<div class="card reveal">
-    
-
-    <h3>Web Development</h3>
-
-    <p>Learn to design and develop responsive websites and modern web applications using industry-standard technologies.</p>
-
-    <div class="skills">
-        <span>HTML</span>
-        <span>CSS</span>
-        <span>JavaScript</span>
-        <span>React</span>
-    </div>
-
-    <button class="apply-btn" onclick="openModal()">Apply Now</button>
-
-</div>
-
 
     </section>
 
@@ -774,6 +973,17 @@
         © 2026 NovaShyld Technologies | Learn. Build. Secure.
 
     </footer>
+
+    <div class="modal" id="tokenModal">
+        <div class="modal-content">
+            <h3>Enter Your Internship Ticket ID</h3>
+            <input type="text" id="tokenInput" placeholder="Enter Ticket ID">
+            <button onclick="verifyToken()">Verify &amp; Continue</button>
+            <span onclick="closeModal()" class="close">&times;</span>
+        </div>
+    </div>
+
+    <button id="topBtn" aria-label="Back to top">↑</button>
 
 
     <script>
@@ -797,195 +1007,109 @@
             }
 
         }
-        function openModal() {
-            document.getElementById("tokenModal").style.display = "flex";
-        }
-
-        function closeModal() {
-            document.getElementById("tokenModal").style.display = "none";
-        }
-
-        function verifyToken() {
-            const token = document.getElementById("tokenInput").value;
-
-            if (token.length > 5) {
-                window.open("https://docs.google.com/forms/d/e/1FAIpQLScW4D98xruEnvsVp_rBsWDHSYdCdTnzmdMLbe8COw8sLViMLg/viewform?usp=dialog", "_blank");
-            } else {
-                alert("Invalid Token ID");
-            }
-        }
-        function openModal() {
-            document.getElementById("tokenModal").style.display = "flex";
-        }
-
-        function closeModal() {
-            document.getElementById("tokenModal").style.display = "none";
-        }
-
-        function verifyToken() {
-            const token = document.getElementById("tokenInput").value;
-
-            if (token.length > 5) {
-                window.open("https://docs.google.com/forms/d/e/1FAIpQLScW4D98xruEnvsVp_rBsWDHSYdCdTnzmdMLbe8COw8sLViMLg/viewform?usp=dialog", "_blank");
-            } else {
-                alert("Invalid Token ID");
-            }
-        }
-        function openModal() {
-            document.getElementById("tokenModal").style.display = "flex";
-        }
-
-        function closeModal() {
-            document.getElementById("tokenModal").style.display = "none";
-        }
-
-        function verifyToken() {
-            const token = document.getElementById("tokenInput").value;
-
-            if (token.length > 5) {
-                window.open("https://docs.google.com/forms/d/e/1FAIpQLScW4D98xruEnvsVp_rBsWDHSYdCdTnzmdMLbe8COw8sLViMLg/viewform?usp=dialog", "_blank");
-            } else {
-                alert("Invalid Token ID");
-            }
-        }
-
 
         window.addEventListener("scroll", reveal);
+        reveal();
 
+        /* MODAL CONTROLS */
 
-        /* MATRIX ANIMATION */
+        function openModal() {
+            document.getElementById("tokenModal").style.display = "flex";
+        }
 
-        /* MATRIX ANIMATION FIXED & IMPROVED */
+        function closeModal() {
+            document.getElementById("tokenModal").style.display = "none";
+        }
 
-        const canvas = document.getElementById("matrix");
+        function verifyToken() {
+            const token = document.getElementById("tokenInput").value;
+
+            if (token.length > 5) {
+                window.open("https://docs.google.com/forms/d/e/1FAIpQLScW4D98xruEnvsVp_rBsWDHSYdCdTnzmdMLbe8COw8sLViMLg/viewform?usp=dialog", "_blank");
+            } else {
+                alert("Invalid Token ID");
+            }
+        }
+
+        /* BACKGROUND ANIMATION — drifting particle network (matches index.html mood) */
+
+        const canvas = document.getElementById("particles");
         const ctx = canvas.getContext("2d");
+
+        let particles = [];
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
 
+        function initParticles() {
+            const density = window.innerWidth < 768 ? 50 : 90;
+            particles = [];
+            for (let i = 0; i < density; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3
+                });
+            }
+        }
+
         resizeCanvas();
-        window.addEventListener("resize", resizeCanvas);
+        initParticles();
 
-        const letters = "01";
-        const fontSize = 14;
-        let columns = canvas.width / fontSize;
-
-        let drops = [];
-
-        function initMatrix() {
-            columns = canvas.width / fontSize;
-            drops = [];
-            for (let x = 0; x < columns; x++) {
-                drops[x] = 1;
-            }
-        }
-
-        initMatrix();
-        window.addEventListener("resize", initMatrix);
-
-        function drawMatrix() {
-
-            ctx.fillStyle = "rgba(2,6,23,0.08)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = "#22c55e";
-            ctx.font = fontSize + "px monospace";
-
-            for (let i = 0; i < drops.length; i++) {
-
-                const text = letters[Math.floor(Math.random() * letters.length)];
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-
-                drops[i]++;
-            }
-        }
-
-        setInterval(drawMatrix, 35);
-        /* COUNTER ANIMATION */
-
-        const counters = document.querySelectorAll('.counter');
-
-        counters.forEach(counter => {
-            counter.innerText = '0';
-
-            const updateCounter = () => {
-                const target = +counter.getAttribute('data-target');
-                const c = +counter.innerText;
-                const increment = target / 100;
-
-                if (c < target) {
-                    counter.innerText = `${Math.ceil(c + increment)}`;
-                    setTimeout(updateCounter, 20);
-                } else {
-                    counter.innerText = target;
-                }
-            };
-
-            updateCounter();
-            const topBtn = document.getElementById("topBtn");
-
-            window.onscroll = function () {
-                let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                let scrolled = (winScroll / height) * 100;
-                document.getElementById("progressBar").style.width = scrolled + "%";
-
-                if (winScroll > 300) {
-                    topBtn.style.display = "block";
-                } else {
-                    topBtn.style.display = "none";
-                }
-            };
-
-            topBtn.onclick = function () {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            };
+        window.addEventListener("resize", () => {
+            resizeCanvas();
+            initParticles();
         });
 
-        for (let x = 0; x < columns; x++) {
-            drops[x] = 1;
-        }
+        function drawParticles() {
 
-        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = "rgba(2,6,23,0.05)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
 
-            ctx.fillStyle = "#22c55e";
-            ctx.font = fontSize + "px monospace";
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
-            for (let i = 0; i < drops.length; i++) {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 1.6, 0, Math.PI * 2);
+                ctx.fillStyle = "#3b82f6";
+                ctx.fill();
+            });
 
-                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
 
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
 
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
+                    if (dist < 120) {
+                        ctx.strokeStyle = `rgba(59,130,246,${0.15 * (1 - dist / 120)})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
                 }
-
-                drops[i]++;
-
             }
 
+            requestAnimationFrame(drawParticles);
         }
 
-        setInterval(draw, 35);
+        drawParticles();
 
-    </script>
-    <script>
-        /* ADVANCED COUNTER ANIMATION */
+        /* COUNTER ANIMATION (triggers when visible) */
 
         document.addEventListener("DOMContentLoaded", () => {
 
             const counters = document.querySelectorAll(".counter");
-            const speed = 200; // lower = faster
+            const speed = 200;
 
             const animateCounter = (counter) => {
 
@@ -1012,7 +1136,6 @@
                 update();
             };
 
-            /* Trigger only when visible */
             const observer = new IntersectionObserver((entries, observer) => {
 
                 entries.forEach(entry => {
@@ -1031,24 +1154,45 @@
             });
 
         });
+
+        /* SCROLL PROGRESS BAR + BACK TO TOP */
+
+        window.onscroll = function () {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("progressBar").style.width = scrolled + "%";
+
+            const topBtn = document.getElementById("topBtn");
+            if (winScroll > 300) {
+                topBtn.style.display = "block";
+            } else {
+                topBtn.style.display = "none";
+            }
+        };
+
+        document.getElementById("topBtn").onclick = function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        /* MOBILE HAMBURGER MENU */
+
+        const menuToggle = document.getElementById("menuToggle");
+        const navList = document.getElementById("navList");
+
+        menuToggle.addEventListener("click", () => {
+            navList.classList.toggle("open");
+            menuToggle.classList.toggle("open");
+        });
+
+        navList.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", () => {
+                navList.classList.remove("open");
+                menuToggle.classList.remove("open");
+            });
+        });
+
     </script>
-    <div class="modal" id="tokenModal">
-        <div class="modal-content">
-            <h3>Enter Your Internship Token ID</h3>
-            <input type="text" id="tokenInput" placeholder="Enter Token ID">
-            <button onclick="verifyToken()">Verify & Continue</button>
-            <span onclick="closeModal()" class="close">&times;</span>
-        </div>
-    </div>
-    <div class="modal" id="tokenModal">
-        <div class="modal-content">
-            <h3>Enter Your Internship Token ID</h3>
-            <input type="text" id="tokenInput" placeholder="Enter Token ID">
-            <button onclick="verifyToken()">Verify & Continue</button>
-            <span onclick="closeModal()" class="close">&times;</span>
-        </div>
-    </div>
-    <button id="topBtn">↑</button>
 
 </body>
 

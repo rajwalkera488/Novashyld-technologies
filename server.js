@@ -86,7 +86,6 @@ app.get("/admin/messages", adminAuth, (req, res) => {
 app.post("/add-certificate", adminAuth, async (req, res) => {
 
     try {
-        const { name, ticket, domain } = req.body;
 
         let certs = [];
 
@@ -96,12 +95,15 @@ try {
     certs = [];
 }
 
-        certs.push({
-            name,
-            ticket,
-            domain,
-            date: new Date().toLocaleDateString()
-        });
+        const { name, ticket, domain, date } = req.body;
+
+certs.push({
+name,
+ticket,
+domain,
+date
+});
+
 
         fs.writeFileSync(CERT_FILE, JSON.stringify(certs, null, 2));
 
@@ -223,8 +225,31 @@ app.listen(PORT, () => {
 ========================= */
 
 function generateTicketID() {
-    return "NS-" + Math.floor(100000 + Math.random() * 900000);
+
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const numbers = "0123456789";
+
+let ticket = "NS-";
+
+// 2 random letters
+for (let i = 0; i < 2; i++) {
+    ticket += letters.charAt(
+        Math.floor(Math.random() * letters.length)
+    );
 }
+
+// 4 random numbers
+for (let i = 0; i < 4; i++) {
+    ticket += numbers.charAt(
+        Math.floor(Math.random() * numbers.length)
+    );
+}
+
+return ticket;
+
+}
+
+
 app.get("/admin-auth-check", adminAuth, (req, res) => {
     res.json({ success: true });
 });
