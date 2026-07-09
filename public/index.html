@@ -2,71 +2,97 @@
 <html lang="en">
 
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>NovaShyld Technologies</title>
+    <title>NovaShyld Technologies | Advanced Cybersecurity</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+
         /* ===========================
-           GLOBAL — Defensive Security Theme
+           ROOT — matches site palette
         =========================== */
 
         :root {
-            --bg: #030712;
-            --bg-elevated: #0b1424;
-            --steel: #1e3a5f;
-            --steel-line: #1e293b;
-            --primary: #0ea5e9;
-            --primary-bright: #38bdf8;
-            --secure: #22c55e;
-            --text-dim: #94a3b8;
-            --text: #e2e8f0;
+            --bg:             #0a0e14;
+            --bg-elevated:    #11151c;
+            --steel-line:     #1e2a3a;
+            --primary:        #3b82f6;
+            --primary-bright: #60a5fa;
+            --primary-deep:   #1d4ed8;
+            --accent-soft:    #93c5fd;
+            --success:        #22c55e;
+            --text:           #e8eaed;
+            --text-dim:       #9aa4b2;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        /* ===========================
+           RESET
+        =========================== */
 
-        html {
-            overflow-x: hidden;
-        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        #shield3d {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
 
         body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: 'Poppins', Arial, sans-serif;
             background: var(--bg);
             color: var(--text);
             overflow-x: hidden;
         }
 
         /* ===========================
-           STATUS BAR (logged-in intern)
+           LOGGED-IN USER BAR
         =========================== */
 
         #userBar {
-            background: var(--secure);
+            background: var(--success);
             color: #02130a;
             padding: 10px;
             font-weight: 700;
             text-align: center;
             display: none;
-            letter-spacing: .3px;
             font-size: 13.5px;
+            letter-spacing: .3px;
+        }
+
+        /* ===========================
+           CANVAS BACKGROUNDS
+        =========================== */
+
+        #hexCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        #particleCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.45;
+        }
+
+        /* ===========================
+           SCROLL PROGRESS BAR
+        =========================== */
+
+        #progressBar {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-bright));
+            z-index: 9999;
+            transition: width .1s;
         }
 
         /* ===========================
@@ -74,60 +100,50 @@
         =========================== */
 
         .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 60px;
-            background: rgba(3, 7, 18, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--steel-line);
             position: sticky;
             top: 0;
             z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 13px 60px;
+            background: rgba(10,14,20,.88);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--steel-line);
         }
 
         .nav-left {
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 16px;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 18px;
-            font-weight: bold;
+            font-size: 17px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .logo img {
-            height: 48px;
-        }
-
-       .admin-btn {
+        .logo img { height: 46px; }
+.admin-link {
     font-size: 11px;
-    color: transparent;
+    color: var(--text-dim);
     text-decoration: none;
-
-    background: transparent;
     border: 1px solid transparent;
-
-    padding: 4px 10px;
+    padding: 3px 9px;
     border-radius: 4px;
     font-weight: 500;
     transition: .25s;
-    white-space: nowrap;
 
+    /* Invisible but still clickable */
     opacity: 0;
-
-    /* Still clickable */
     pointer-events: auto;
-
-    /* Hide text selection */
-    user-select: none;
 }
 
-        .admin-btn:hover {
+        .admin-link:hover {
             color: var(--primary-bright);
             border-color: var(--primary);
         }
@@ -136,94 +152,69 @@
             display: flex;
             align-items: center;
             list-style: none;
-            gap: 25px;
-            margin: 0;
-            padding: 0;
+            gap: 24px;
         }
 
         nav ul li a {
             text-decoration: none;
-            color: var(--text);
+            color: var(--text-dim);
             font-weight: 500;
-            font-size: 14.5px;
+            font-size: 14px;
             position: relative;
-            transition: 0.3s;
+            transition: .25s;
             white-space: nowrap;
         }
 
         nav ul li a::after {
             content: "";
             position: absolute;
-            bottom: -6px;
-            left: 0;
-            width: 0%;
-            height: 2px;
+            bottom: -5px; left: 0;
+            width: 0%; height: 2px;
             background: var(--primary-bright);
             transition: .3s;
         }
 
-        nav ul li a:hover {
-            color: var(--primary-bright);
-        }
+        nav ul li a:hover { color: var(--primary-bright); }
+        nav ul li a:hover::after { width: 100%; }
 
-        nav ul li a:hover::after {
-            width: 100%;
-        }
-
-        /* live status badge in navbar */
-
-        .status-badge {
+        .sys-badge {
             display: flex;
             align-items: center;
-            gap: 7px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--secure);
-            background: rgba(34, 197, 94, 0.08);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            padding: 5px 12px;
+            gap: 6px;
+            font-size: 11.5px;
+            color: var(--success);
+            background: rgba(34,197,94,.08);
+            border: 1px solid rgba(34,197,94,.28);
+            padding: 4px 12px;
             border-radius: 20px;
             white-space: nowrap;
         }
 
-        .status-dot {
-            width: 7px;
-            height: 7px;
+        .sys-dot {
+            width: 6px; height: 6px;
             border-radius: 50%;
-            background: var(--secure);
-            box-shadow: 0 0 8px var(--secure);
-            animation: statusPulse 1.8s ease-in-out infinite;
+            background: var(--success);
+            box-shadow: 0 0 7px var(--success);
+            animation: sysPulse 1.8s ease-in-out infinite;
         }
 
-        @keyframes statusPulse {
-
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: .5;
-                transform: scale(.75);
-            }
+        @keyframes sysPulse {
+            0%,100% { opacity:1; transform:scale(1); }
+            50%      { opacity:.4; transform:scale(.75); }
         }
 
-        .token-display {
+        #tokenDisplay {
+            font-size: 12.5px;
             color: var(--primary-bright);
             font-weight: 600;
-            font-size: 13px;
         }
-
-        /* HAMBURGER (hidden on desktop) */
 
         .menu-toggle {
             display: none;
             flex-direction: column;
             justify-content: center;
             gap: 5px;
-            width: 32px;
-            height: 32px;
+            width: 32px; height: 32px;
             background: transparent;
             border: 1px solid var(--steel-line);
             border-radius: 6px;
@@ -233,163 +224,190 @@
 
         .menu-toggle span {
             display: block;
-            width: 16px;
-            height: 2px;
+            width: 16px; height: 2px;
             background: var(--primary-bright);
             margin: 0 auto;
             transition: .3s;
         }
 
-        .menu-toggle.open span:nth-child(1) {
-            transform: translateY(6px) rotate(45deg);
-        }
-
-        .menu-toggle.open span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .menu-toggle.open span:nth-child(3) {
-            transform: translateY(-6px) rotate(-45deg);
-        }
+        .menu-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+        .menu-toggle.open span:nth-child(2) { opacity: 0; }
+        .menu-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
         /* ===========================
-           HERO SECTION
+           HERO
         =========================== */
 
         .hero {
             text-align: center;
-            padding: 110px 20px 90px;
+            padding: 130px 20px 100px;
             position: relative;
             z-index: 2;
         }
 
-        /* radar / perimeter scan ring behind the logo */
-
-        .hero-logo {
+        .hero-logo-wrap {
             position: relative;
-            display: flex;
+            display: inline-flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 30px;
-            height: 260px;
+            margin-bottom: 36px;
         }
 
-        .radar-ring {
+        .ring {
             position: absolute;
             border-radius: 50%;
-            border: 1px solid rgba(14, 165, 233, 0.25);
-            animation: radarPulse 3.2s ease-out infinite;
+            border: 1px solid rgba(59,130,246,.22);
+            animation: ringExpand 3.6s ease-out infinite;
         }
 
-        .radar-ring.r1 {
-            width: 180px;
-            height: 180px;
-            animation-delay: 0s;
+        .ring.r1 { width: 160px; height: 160px; animation-delay: 0s; }
+        .ring.r2 { width: 160px; height: 160px; animation-delay: 1.2s; }
+        .ring.r3 { width: 160px; height: 160px; animation-delay: 2.4s; }
+
+        @keyframes ringExpand {
+            0%   { width:130px; height:130px; opacity:.8; border-color:rgba(96,165,250,.55); }
+            100% { width:340px; height:340px; opacity:0;  border-color:rgba(96,165,250,0);   }
         }
 
-        .radar-ring.r2 {
-            width: 180px;
-            height: 180px;
-            animation-delay: 1.05s;
+        .orbit {
+            position: absolute;
+            width: 180px; height: 180px;
+            border-radius: 50%;
+            border: 1.5px dashed rgba(59,130,246,.3);
+            animation: orbitSpin 18s linear infinite;
         }
 
-        .radar-ring.r3 {
-            width: 180px;
-            height: 180px;
-            animation-delay: 2.1s;
+        .orbit::after {
+            content: "";
+            position: absolute;
+            width: 8px; height: 8px;
+            background: var(--primary-bright);
+            border-radius: 50%;
+            top: -4px; left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px var(--primary-bright);
         }
 
-        @keyframes radarPulse {
-            0% {
-                width: 140px;
-                height: 140px;
-                opacity: .7;
-                border-color: rgba(56, 189, 248, .55);
-            }
+        @keyframes orbitSpin { to { transform: rotate(360deg); } }
 
-            100% {
-                width: 320px;
-                height: 320px;
-                opacity: 0;
-                border-color: rgba(56, 189, 248, 0);
-            }
-        }
-
-        .hero-logo img {
+        .hero-logo-img {
             position: relative;
-            width: 190px;
-            height: auto;
-            filter: drop-shadow(0 0 18px rgba(14, 165, 233, 0.6));
-            animation: logoFloat 4s ease-in-out infinite;
+            width: 150px; height: auto;
+            filter: drop-shadow(0 0 20px rgba(59,130,246,.55));
+            animation: logoFloat 4.5s ease-in-out infinite;
             z-index: 2;
         }
 
         @keyframes logoFloat {
-            0% {
-                transform: translateY(0px);
-            }
+            0%,100% { transform: translateY(0); }
+            50%      { transform: translateY(-12px); }
+        }
 
-            50% {
-                transform: translateY(-10px);
-            }
-
-            100% {
-                transform: translateY(0px);
-            }
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11.5px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--primary-bright);
+            background: rgba(59,130,246,.1);
+            border: 1px solid rgba(59,130,246,.3);
+            padding: 5px 16px;
+            border-radius: 20px;
+            margin-bottom: 22px;
         }
 
         .hero h1 {
-            font-family: 'Orbitron', Arial, sans-serif;
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            letter-spacing: .5px;
-            min-height: 54px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 52px;
+            font-weight: 900;
+            line-height: 1.12;
+            margin-bottom: 18px;
             padding: 0 10px;
+            background: linear-gradient(135deg,
+                var(--text)           0%,
+                var(--primary-bright) 50%,
+                var(--text)           100%);
+            background-size: 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: headingShimmer 7s linear infinite;
         }
 
-        .hero h1 .cursor {
-            display: inline-block;
-            width: 3px;
-            background: var(--primary-bright);
-            margin-left: 4px;
-            animation: blink 0.9s steps(1) infinite;
-        }
-
-        @keyframes blink {
-
-            0%,
-            49% {
-                opacity: 1;
-            }
-
-            50%,
-            100% {
-                opacity: 0;
-            }
+        @keyframes headingShimmer {
+            0%   { background-position: 0%; }
+            100% { background-position: 200%; }
         }
 
         .hero p {
             color: var(--text-dim);
             font-size: 17px;
-            max-width: 620px;
-            margin: 0 auto 34px;
-            line-height: 1.6;
+            max-width: 560px;
+            margin: 0 auto 36px;
+            line-height: 1.65;
             padding: 0 10px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            background: var(--primary-bright);
+            margin-left: 3px;
+            animation: cursorBlink .85s steps(1) infinite;
+            vertical-align: baseline;
+        }
+
+        @keyframes cursorBlink {
+            0%,49% { opacity:1; }
+            50%,100%{ opacity:0; }
         }
 
         .hero-buttons {
             display: flex;
             justify-content: center;
-            gap: 18px;
+            gap: 16px;
             flex-wrap: wrap;
             padding: 0 16px;
         }
 
-        .btn-primary,
+        .btn-primary {
+            padding: 13px 30px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-deep));
+            color: #02131a;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 14.5px;
+            transition: .3s;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: .3px;
+        }
+
+        .btn-primary::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,.3), transparent);
+            transition: .5s;
+        }
+
+        .btn-primary:hover::before { left: 100%; }
+        .btn-primary:hover {
+            box-shadow: 0 0 28px rgba(59,130,246,.5);
+            transform: translateY(-2px);
+        }
+
         .btn-secondary {
-            padding: 13px 28px;
-            border-radius: 6px;
+            padding: 13px 30px;
+            border: 1px solid var(--primary);
+            color: var(--primary-bright);
+            background: transparent;
+            border-radius: 8px;
             font-weight: 700;
             text-decoration: none;
             font-size: 14.5px;
@@ -397,42 +415,176 @@
             letter-spacing: .3px;
         }
 
-        .btn-primary {
-            background: linear-gradient(90deg, #0ea5e9, #0284c7);
-            color: #02131a;
-            box-shadow: 0 0 18px rgba(14, 165, 233, 0.35);
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 0 28px rgba(14, 165, 233, 0.6);
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            border: 1px solid var(--primary);
-            color: var(--primary-bright);
-            background: transparent;
-        }
-
         .btn-secondary:hover {
-            background: rgba(14, 165, 233, 0.1);
+            background: rgba(59,130,246,.1);
             transform: translateY(-2px);
         }
+
+        .scroll-hint {
+            margin-top: 52px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-dim);
+            font-size: 11.5px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            animation: fadeIn 2s ease 1.5s both;
+        }
+
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+        .scroll-arrow {
+            width: 22px; height: 22px;
+            border-right: 2px solid var(--primary-bright);
+            border-bottom: 2px solid var(--primary-bright);
+            transform: rotate(45deg);
+            animation: scrollBounce 1.6s ease-in-out infinite;
+        }
+
+        @keyframes scrollBounce {
+            0%,100% { transform:rotate(45deg) translateY(0); }
+            50%      { transform:rotate(45deg) translateY(6px); }
+        }
+
+        /* ===========================
+           TICKER
+        =========================== */
+
+        .ticker {
+            overflow: hidden;
+            border-top: 1px solid var(--steel-line);
+            border-bottom: 1px solid var(--steel-line);
+            background: rgba(11,15,22,.6);
+            padding: 12px 0;
+            position: relative;
+            z-index: 3;
+        }
+
+        .ticker-inner {
+            display: flex;
+            white-space: nowrap;
+            animation: tickerScroll 30s linear infinite;
+        }
+
+        .ticker-inner span {
+            display: inline-block;
+            padding: 0 36px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-dim);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .ticker-inner span::before {
+            content: "◆";
+            color: var(--primary);
+            margin-right: 14px;
+            font-size: 8px;
+        }
+
+        @keyframes tickerScroll {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+
+        /* ===========================
+           STATS
+        =========================== */
+
+        .stats {
+            padding: 80px 60px;
+            background: var(--bg-elevated);
+            border-top: 1px solid var(--steel-line);
+            border-bottom: 1px solid var(--steel-line);
+            position: relative;
+            z-index: 3;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            border: 1px solid var(--steel-line);
+            background: var(--bg);
+            padding: 32px 28px;
+            border-radius: 14px;
+            width: 210px;
+            text-align: center;
+            transition: .35s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0;
+            transition: .35s;
+        }
+
+        .stat:hover {
+            border-color: rgba(59,130,246,.5);
+            transform: translateY(-8px);
+            box-shadow: 0 14px 36px rgba(59,130,246,.15);
+        }
+
+        .stat:hover::before { opacity: 1; }
+
+        .stat h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 38px;
+            color: var(--primary-bright);
+            margin-bottom: 6px;
+        }
+
+        .stat p { color: var(--text-dim); font-size: 13.5px; }
 
         /* ===========================
            SERVICES
         =========================== */
 
         .services {
-            padding: 70px 60px 90px;
+            padding: 90px 60px;
             text-align: center;
+            position: relative;
+            z-index: 3;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 14px;
+        }
+
+        .section-label::before {
+            content: "";
+            display: block;
+            width: 28px; height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
         }
 
         .services h2 {
-            font-family: 'Orbitron', Arial, sans-serif;
+            font-family: 'Orbitron', sans-serif;
             font-size: 30px;
-            margin-bottom: 50px;
-            letter-spacing: .3px;
+            color: var(--text);
+            margin-bottom: 52px;
         }
 
         .service-container {
@@ -445,105 +597,66 @@
         .card {
             background: var(--bg-elevated);
             border: 1px solid var(--steel-line);
-            border-radius: 10px;
-            padding: 32px 28px;
+            border-radius: 14px;
+            padding: 34px 28px;
             width: 280px;
-            transition: .35s;
+            text-align: left;
+            transition: .4s;
             position: relative;
+            overflow: hidden;
         }
 
         .card::before {
             content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--primary), transparent);
             opacity: 0;
-            transition: .35s;
+            transition: .4s;
         }
 
         .card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(14, 165, 233, 0.5);
-            box-shadow: 0 14px 34px rgba(14, 165, 233, 0.18);
+            transform: translateY(-10px);
+            border-color: rgba(59,130,246,.45);
+            box-shadow: 0 18px 40px rgba(59,130,246,.16);
         }
 
-        .card:hover::before {
-            opacity: 1;
+        .card:hover::before { opacity: 1; }
+
+        .card-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+            display: block;
+            filter: drop-shadow(0 0 8px rgba(59,130,246,.4));
         }
 
         .card h3 {
+            font-size: 18px;
             margin-bottom: 10px;
             color: var(--text);
-            font-size: 18px;
         }
 
         .card p {
             color: var(--text-dim);
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        /* ===========================
-           STATS
-        =========================== */
-
-        .stats {
-            padding: 70px 60px;
-            text-align: center;
-            background: var(--bg-elevated);
-            border-top: 1px solid var(--steel-line);
-            border-bottom: 1px solid var(--steel-line);
-        }
-
-        .stats-container {
-            display: flex;
-            justify-content: center;
-            gap: 36px;
-            flex-wrap: wrap;
-        }
-
-        .stat {
-            border: 1px solid var(--steel-line);
-            background: var(--bg);
-            padding: 28px;
-            border-radius: 10px;
-            width: 190px;
-            transition: .3s;
-        }
-
-        .stat:hover {
-            border-color: rgba(14, 165, 233, 0.5);
-            box-shadow: 0 0 22px rgba(14, 165, 233, 0.22);
-            transform: translateY(-6px);
-        }
-
-        .stat h3 {
-            font-family: 'Orbitron', Arial, sans-serif;
-            font-size: 34px;
-            color: var(--primary-bright);
-            margin: 0 0 6px;
-        }
-
-        .stat p {
-            color: var(--text-dim);
-            margin: 0;
             font-size: 13.5px;
+            line-height: 1.65;
         }
 
         /* ===========================
-           SCANNER SECTION
+           SCANNER
         =========================== */
 
         .scanner-section {
             padding: 90px 20px;
             text-align: center;
+            position: relative;
+            z-index: 3;
+            background: linear-gradient(180deg, transparent, rgba(11,15,22,.7), transparent);
         }
 
         .scanner-title {
-            font-family: 'Orbitron', Arial, sans-serif;
+            font-family: 'Orbitron', sans-serif;
             font-size: 30px;
             color: var(--text);
             margin-bottom: 12px;
@@ -551,87 +664,83 @@
             display: inline-block;
         }
 
-        .scanner-title .highlight {
+        .highlight {
             color: var(--primary-bright);
-            text-shadow: 0 0 14px rgba(56, 189, 248, .6);
+            text-shadow: 0 0 16px rgba(96,165,250,.5);
         }
 
         .scanner-title::after {
             content: "";
             position: absolute;
-            left: 0;
-            bottom: -12px;
-            width: 100%;
-            height: 2px;
+            left: 0; bottom: -12px;
+            width: 100%; height: 2px;
             background: linear-gradient(90deg, transparent, var(--primary-bright), transparent);
             animation: scanline 3s linear infinite;
         }
 
         @keyframes scanline {
-            0% {
-                transform: translateX(-100%);
-            }
-
-            100% {
-                transform: translateX(100%);
-            }
+            0%   { transform: translateX(-100%); }
+            100% { transform: translateX(100%);  }
         }
 
         .scanner-subtitle {
             color: var(--text-dim);
-            margin: 24px 0 30px;
-            font-size: 15.5px;
+            font-size: 15px;
+            margin: 28px 0 30px;
         }
 
         .scanner-box {
             background: var(--bg-elevated);
             border: 1px solid var(--steel-line);
-            padding: 40px;
+            padding: 36px 36px 28px;
             width: 100%;
-            max-width: 620px;
+            max-width: 640px;
             margin: 0 auto;
-            border-radius: 12px;
+            border-radius: 16px;
+            text-align: left;
         }
 
         .scanner-input-row {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
-            justify-content: center;
         }
 
         .scanner-box input {
             flex: 1;
-            min-width: 220px;
-            padding: 12px 14px;
-            border-radius: 6px;
+            min-width: 200px;
+            padding: 13px 15px;
+            border-radius: 9px;
             border: 1px solid var(--steel-line);
             background: var(--bg);
             color: var(--text);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
             outline: none;
             transition: .3s;
-            font-size: 14px;
         }
 
         .scanner-box input:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 12px rgba(14, 165, 233, 0.35);
+            box-shadow: 0 0 14px rgba(59,130,246,.28);
         }
 
         .scanner-box button {
-            padding: 12px 22px;
-            background: linear-gradient(90deg, #0ea5e9, #0284c7);
+            padding: 13px 22px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-deep));
             border: none;
-            border-radius: 6px;
+            border-radius: 9px;
             cursor: pointer;
             font-weight: 700;
             color: #02131a;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
             transition: .3s;
             white-space: nowrap;
         }
 
         .scanner-box button:hover {
-            box-shadow: 0 0 18px rgba(14, 165, 233, 0.5);
+            box-shadow: 0 0 20px rgba(59,130,246,.45);
         }
 
         .scan-progress {
@@ -639,79 +748,129 @@
             height: 8px;
             background: var(--steel-line);
             border-radius: 5px;
-            margin-top: 22px;
+            margin-top: 20px;
             overflow: hidden;
         }
 
         #scanBar {
             width: 0%;
             height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secure));
+            background: linear-gradient(90deg, var(--primary), var(--success));
             box-shadow: 0 0 10px var(--primary);
-            transition: width 0.5s;
+            transition: width .5s;
         }
 
         .scan-results {
-            margin-top: 20px;
-            background: #000;
+            margin-top: 18px;
+            background: #000d12;
             padding: 16px;
-            border-radius: 6px;
+            border-radius: 8px;
             font-family: 'Courier New', monospace;
-            color: var(--secure);
+            color: var(--success);
             height: 200px;
             overflow-y: auto;
-            text-align: left;
-            border: 1px solid rgba(14, 165, 233, 0.4);
-            box-shadow: inset 0 0 18px rgba(14, 165, 233, 0.12);
-            letter-spacing: .3px;
+            border: 1px solid rgba(59,130,246,.3);
+            box-shadow: inset 0 0 20px rgba(59,130,246,.08);
+            letter-spacing: .4px;
             font-size: 13.5px;
             word-break: break-word;
         }
 
         /* ===========================
-           FLOATING UI
+           CTA STRIP
+        =========================== */
+
+        .cta-strip {
+            margin: 0 60px 90px;
+            padding: 52px 50px;
+            background: linear-gradient(135deg,
+                rgba(17,21,28,.9) 0%,
+                rgba(29,78,216,.12) 60%,
+                rgba(17,21,28,.9) 100%);
+            border: 1px solid rgba(59,130,246,.22);
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 28px;
+            flex-wrap: wrap;
+            position: relative;
+            overflow: hidden;
+            z-index: 3;
+        }
+
+        .cta-strip::before {
+            content: "";
+            position: absolute;
+            width: 400px; height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(59,130,246,.12), transparent 70%);
+            right: -100px; top: -120px;
+            filter: blur(40px);
+            pointer-events: none;
+        }
+
+        .cta-strip h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .cta-strip p {
+            color: var(--text-dim);
+            font-size: 14.5px;
+            max-width: 460px;
+            line-height: 1.65;
+        }
+
+        .cta-strip a { flex-shrink: 0; }
+
+        /* ===========================
+           CHATBOT
         =========================== */
 
         .chatbot-button {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            bottom: 30px; right: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-deep));
             color: #02131a;
             font-size: 22px;
-            width: 58px;
-            height: 58px;
+            width: 58px; height: 58px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 0 22px rgba(14, 165, 233, 0.5);
+            box-shadow: 0 0 24px rgba(59,130,246,.5);
             z-index: 999;
             transition: .3s;
         }
 
-        .chatbot-button:hover {
-            transform: scale(1.08);
+        .chatbot-button:hover { transform: scale(1.1); }
+
+        /* ===========================
+           FOOTER
+        =========================== */
+
+        footer {
+            text-align: center;
+            padding: 28px;
+            border-top: 1px solid var(--steel-line);
+            color: #64748b;
+            font-size: 14px;
+            position: relative;
+            z-index: 3;
         }
 
-        .login-btn {
-            background: var(--primary);
-            color: #02131a;
-            padding: 8px 16px;
-            border-radius: 5px;
-            font-weight: 700;
-        }
-
-        .login-btn:hover {
-            background: var(--primary-bright);
-        }
+        /* ===========================
+           DESKTOP WARNING
+        =========================== */
 
         #desktop-warning {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             width: 100%;
             background: #b91c1c;
             color: white;
@@ -722,74 +881,52 @@
         }
 
         /* ===========================
-           FOOTER
+           SCROLL REVEAL
         =========================== */
 
-        footer {
-            text-align: center;
-            padding: 25px;
-            border-top: 1px solid var(--steel-line);
-            color: #64748b;
-            margin-top: 0;
-            font-size: 14px;
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: .9s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* ===========================
-           RESPONSIVE — TABLET (≤1024px)
+           RESPONSIVE — TABLET
         =========================== */
 
         @media (max-width: 1024px) {
 
-            .navbar {
-                padding: 14px 30px;
-            }
+            .navbar { padding: 13px 28px; }
 
-            nav ul {
-                gap: 16px;
-            }
+            nav ul { gap: 16px; }
 
-            nav ul li a {
-                font-size: 13.5px;
-            }
-
-            .hero {
-                padding: 90px 20px 70px;
-            }
+            .hero h1 { font-size: 40px; }
 
             .services,
-            .stats {
-                padding: 60px 30px;
-            }
+            .stats { padding: 70px 30px; }
+
+            .cta-strip { margin: 0 30px 70px; padding: 40px 36px; }
         }
 
         /* ===========================
-           RESPONSIVE — MOBILE (≤768px)
+           RESPONSIVE — MOBILE
         =========================== */
 
         @media (max-width: 768px) {
 
-            /* NAVBAR → collapsible */
+            .navbar { padding: 12px 18px; flex-wrap: wrap; }
 
-            .navbar {
-                padding: 12px 18px;
-                flex-wrap: wrap;
-            }
+            .logo { font-size: 15px; }
+            .logo img { height: 38px; }
 
-            .logo span {
-                font-size: 15px;
-            }
+            .menu-toggle { display: flex; }
 
-            .logo img {
-                height: 38px;
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-
-            nav {
-                width: 100%;
-            }
+            nav { width: 100%; }
 
             nav ul {
                 display: none;
@@ -802,225 +939,123 @@
                 padding-top: 10px;
             }
 
-            nav ul.open {
-                display: flex;
-            }
+            nav ul.open { display: flex; }
 
             nav ul li {
                 width: 100%;
                 padding: 10px 4px;
-                border-bottom: 1px solid rgba(30, 41, 59, 0.6);
+                border-bottom: 1px solid rgba(30,42,58,.6);
             }
 
-            nav ul li:last-child {
-                border-bottom: none;
-            }
+            nav ul li:last-child { border-bottom: none; }
 
-            nav ul li a {
-                display: block;
-                font-size: 15px;
-            }
+            nav ul li a { display: block; font-size: 15px; }
 
-            .status-badge {
-                margin: 4px 0;
-            }
+            .sys-badge { display: none; }
 
-            /* HERO */
+            .hero { padding: 70px 16px 60px; }
 
-            .hero {
-                padding: 70px 16px 50px;
-            }
+            .hero h1 { font-size: 28px; }
 
-            .hero-logo {
-                height: 190px;
-                margin-bottom: 20px;
-            }
+            .hero p { font-size: 14.5px; }
 
-            .radar-ring.r1,
-            .radar-ring.r2,
-            .radar-ring.r3 {
-                width: 130px;
-                height: 130px;
-            }
+            .ring.r1,.ring.r2,.ring.r3 { width: 120px; height: 120px; }
 
-            @keyframes radarPulse {
-                0% {
-                    width: 100px;
-                    height: 100px;
-                    opacity: .7;
-                    border-color: rgba(56, 189, 248, .55);
-                }
+            .orbit { width: 145px; height: 145px; }
 
-                100% {
-                    width: 220px;
-                    height: 220px;
-                    opacity: 0;
-                    border-color: rgba(56, 189, 248, 0);
-                }
-            }
+            .hero-logo-img { width: 110px; }
 
-            .hero-logo img {
-                width: 130px;
-            }
-
-            .hero h1 {
-                font-size: 26px;
-                min-height: 64px;
-                line-height: 1.3;
-            }
-
-            .hero p {
-                font-size: 14.5px;
-                margin-bottom: 26px;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                width: 100%;
-                gap: 12px;
-            }
+            .hero-buttons { flex-direction: column; padding: 0; }
 
             .btn-primary,
-            .btn-secondary {
-                width: 100%;
-                text-align: center;
-                padding: 13px 20px;
-            }
+            .btn-secondary { width: 100%; text-align: center; }
 
-            /* SERVICES */
+            .stats { padding: 50px 18px; }
 
-            .services {
-                padding: 50px 18px 60px;
-            }
-
-            .services h2 {
-                font-size: 24px;
-                margin-bottom: 32px;
-            }
-
-            .service-container {
-                flex-direction: column;
-                align-items: center;
-                gap: 18px;
-            }
-
-            .card {
-                width: 100%;
-                max-width: 360px;
-                padding: 26px 22px;
-            }
-
-            /* STATS */
-
-            .stats {
-                padding: 50px 18px;
-            }
-
-            .stats-container {
-                gap: 16px;
-            }
+            .stats-container { gap: 16px; }
 
             .stat {
                 width: calc(50% - 8px);
-                min-width: 0;
-                padding: 20px 14px;
+                padding: 22px 14px;
             }
 
-            .stat h3 {
-                font-size: 26px;
-            }
+            .stat h3 { font-size: 28px; }
 
-            .stat p {
-                font-size: 12px;
-            }
+            .services { padding: 50px 18px; }
 
-            /* SCANNER */
+            .services h2 { font-size: 24px; margin-bottom: 36px; }
 
-            .scanner-section {
-                padding: 60px 16px;
-            }
+            .service-container { flex-direction: column; align-items: center; }
 
-            .scanner-title {
-                font-size: 22px;
-            }
+            .card { width: 100%; max-width: 380px; }
 
-            .scanner-subtitle {
-                font-size: 14px;
-            }
+            .scanner-section { padding: 60px 16px; }
 
-            .scanner-box {
-                padding: 22px 18px;
-            }
+            .scanner-title { font-size: 22px; }
 
-            .scanner-input-row {
-                flex-direction: column;
-            }
+            .scanner-box { padding: 22px 18px; }
+
+            .scanner-input-row { flex-direction: column; }
 
             .scanner-box input,
-            .scanner-box button {
-                width: 100%;
+            .scanner-box button { width: 100%; min-width: unset; }
+
+            .cta-strip {
+                margin: 0 18px 60px;
+                padding: 34px 26px;
+                flex-direction: column;
+                text-align: center;
             }
 
-            .scan-results {
-                height: 170px;
-                font-size: 12.5px;
-            }
+            .cta-strip h2 { font-size: 20px; }
 
-            /* FLOATING UI */
+            .cta-strip .btn-primary { width: 100%; text-align: center; }
 
             .chatbot-button {
-                width: 50px;
-                height: 50px;
+                width: 50px; height: 50px;
                 font-size: 19px;
-                bottom: 18px;
-                right: 18px;
+                bottom: 18px; right: 18px;
             }
         }
-
-        /* ===========================
-           RESPONSIVE — SMALL MOBILE (≤420px)
-        =========================== */
 
         @media (max-width: 420px) {
 
-            .logo span {
-                display: none;
-                /* keep just the icon on very small screens */
-            }
+            .logo span { display: none; }
 
-            .hero h1 {
-                font-size: 22px;
-            }
+            .hero h1 { font-size: 23px; }
 
-            .stat {
-                width: 100%;
-            }
+            .hero-eyebrow { font-size: 10px; }
+
+            .stat { width: 100%; }
         }
+
     </style>
 
 </head>
 
 <body>
 
+    <div id="progressBar"></div>
     <div id="userBar"></div>
+    <div id="desktop-warning">For best experience, please enable Desktop Site in your browser.</div>
 
-    <div id="shield3d"></div>
+    <canvas id="hexCanvas"></canvas>
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- NAVBAR -->
 
     <header class="navbar">
 
         <div class="nav-left">
-            <a href="admin.html" class="admin-btn">Admin</a>
-
+            <a href="admin.html" class="admin-link">Admin</a>
             <div class="logo">
-                <img src="images/logo.png" alt="NovaShyld Technologies logo">
+                <img src="images/logo.png" alt="NovaShyld Technologies">
                 <span>NovaShyld Technologies</span>
             </div>
         </div>
 
         <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </button>
 
         <nav>
@@ -1030,96 +1065,153 @@
                 <li><a href="internships.html">Internships</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="certificate_verify.html">🔍 Verify Certificate</a></li>
+                <li><a href="certificate_verify.html">🔍 Verify</a></li>
                 <li>
-                    <span class="status-badge">
-                        <span class="status-dot"></span>
+                    <span class="sys-badge">
+                        <span class="sys-dot"></span>
                         Systems Secure
                     </span>
                 </li>
-                <li><span id="tokenDisplay" class="token-display"></span></li>
+                <li><span id="tokenDisplay"></span></li>
             </ul>
         </nav>
+
     </header>
 
-    <div id="desktop-warning">
-        For best experience, please enable Desktop Site in your browser.
-    </div>
+    <!-- HERO -->
 
     <section class="hero">
 
-        <div class="hero-logo">
-            <span class="radar-ring r1"></span>
-            <span class="radar-ring r2"></span>
-            <span class="radar-ring r3"></span>
-            <img src="images/logo.png" alt="NovaShyld Technologies Logo">
+        <div class="hero-eyebrow">🛡️ Trusted Cybersecurity Partner</div>
+
+        <div class="hero-logo-wrap">
+            <span class="ring r1"></span>
+            <span class="ring r2"></span>
+            <span class="ring r3"></span>
+            <span class="orbit"></span>
+            <img src="images/logo.png" class="hero-logo-img" alt="NovaShyld Technologies Logo">
         </div>
 
         <h1><span id="typing"></span><span class="cursor">&nbsp;</span></h1>
 
-        <p>Protecting businesses through ethical hacking, VAPT, and web application security — defense built on real-world offensive expertise.</p>
+        <p>
+            Protecting businesses through ethical hacking, VAPT, and web application security —
+            defense built on real-world offensive expertise.
+        </p>
 
         <div class="hero-buttons">
-            <a href="services.html" class="btn-primary">Explore Services</a>
-            <a href="internships.html" class="btn-secondary">View Internships</a>
+            <a href="services.html" class="btn-primary">Explore Services →</a>
+            <a href="internships.html" class="btn-secondary">View Internship</a>
+        </div>
+
+        <div class="scroll-hint">
+            <span>Scroll</span>
+            <span class="scroll-arrow"></span>
         </div>
 
     </section>
 
-    <section class="stats">
+    <!-- TICKER -->
+
+    <div class="ticker">
+        <div class="ticker-inner">
+            <span>Ethical Hacking</span>
+            <span>VAPT</span>
+            <span>Web Application Security</span>
+            <span>Threat Detection</span>
+            <span>Incident Response</span>
+            <span>OWASP Top 10</span>
+            <span>Network Security</span>
+            <span>Bug Bounty</span>
+            <span>Penetration Testing</span>
+            <span>Security Consulting</span>
+            <span>Cybersecurity Training</span>
+            <!-- duplicate for seamless loop -->
+            <span>Ethical Hacking</span>
+            <span>VAPT</span>
+            <span>Web Application Security</span>
+            <span>Threat Detection</span>
+            <span>Incident Response</span>
+            <span>OWASP Top 10</span>
+            <span>Network Security</span>
+            <span>Bug Bounty</span>
+            <span>Penetration Testing</span>
+            <span>Security Consulting</span>
+            <span>Cybersecurity Training</span>
+        </div>
+    </div>
+
+    <!-- STATS -->
+
+    <section class="stats reveal">
         <div class="stats-container">
             <div class="stat">
-                <h3>40+</h3>
+                <h3 class="counter" data-target="40">0</h3>
                 <p>Students Trained</p>
             </div>
             <div class="stat">
-                <h3>2+</h3>
+                <h3 class="counter" data-target="2">0</h3>
                 <p>Projects Completed</p>
             </div>
             <div class="stat">
-                <h3>95%</h3>
-                <p>Client Satisfaction</p>
+                <h3 class="counter" data-target="95">0</h3>
+                <p>Success Rate %</p>
+            </div>
+            <div class="stat">
+                <h3 class="counter" data-target="5">0</h3>
+                <p>Core Services</p>
             </div>
         </div>
     </section>
 
-    <section class="services">
+    <!-- SERVICES -->
+
+    <section class="services reveal">
+
+        <div class="section-label">What We Do</div>
         <h2>Our Core Services</h2>
+
         <div class="service-container">
 
             <div class="card">
+                <span class="card-icon">🔐</span>
+                <h3>Web App Security</h3>
+                <p>In-depth OWASP Top 10 testing, SQL injection, XSS, auth bypass, and session security audits.</p>
+            </div>
+
+            <div class="card">
+                <span class="card-icon">🛡️</span>
+                <h3>VAPT</h3>
+                <p>Complete vulnerability assessment and penetration testing across networks and applications.</p>
+            </div>
+
+            <div class="card">
+                <span class="card-icon">💻</span>
                 <h3>Ethical Hacking</h3>
                 <p>Simulated real-world attacks to uncover security gaps before malicious actors do.</p>
             </div>
 
-            <div class="card">
-                <h3>VAPT</h3>
-                <p>Vulnerability assessment and penetration testing across networks and applications.</p>
-            </div>
-
-            <div class="card">
-                <h3>Web App Security</h3>
-                <p>In-depth testing for OWASP Top 10 risks, secure coding gaps, and misconfigurations.</p>
-            </div>
-
         </div>
+
     </section>
 
-    <section class="scanner-section">
+    <!-- SCANNER -->
+
+    <section class="scanner-section reveal">
 
         <h2 class="scanner-title">
             Real-Time <span class="highlight">Vulnerability Scanner</span>
         </h2>
 
         <p class="scanner-subtitle">
-            Test how attackers scan a website for vulnerabilities.
+            Simulate how attackers scan a target for security weaknesses.
         </p>
 
         <div class="scanner-box">
 
             <div class="scanner-input-row">
                 <input type="text" id="target" placeholder="Enter website (example.com)">
-                <button onclick="startScan()">Start Security Scan</button>
+                <button onclick="startScan()">Start Scan</button>
             </div>
 
             <div class="scan-progress">
@@ -1132,118 +1224,292 @@
 
     </section>
 
+    <!-- CTA STRIP -->
+
+    <div class="cta-strip reveal">
+        <div>
+            <h2>Ready to Secure Your Business?</h2>
+            <p>
+                Partner with NovaShyld Technologies to identify vulnerabilities before
+                attackers do — and build a resilient security posture.
+            </p>
+        </div>
+        <a href="contact.html" class="btn-primary">Get in Touch →</a>
+    </div>
+
+    <!-- CHATBOT -->
     <div class="chatbot-button" onclick="openChat()">💬</div>
 
+    <!-- FOOTER -->
     <footer>
         <p>© 2026 NovaShyld Technologies | Learn. Build. Secure.</p>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="js/shield3d.js"></script>
-
     <script>
-        const text = "Advanced Cybersecurity Solutions";
-        let i = 0;
 
-        function typingEffect() {
-            if (i < text.length) {
-                document.getElementById("typing").innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typingEffect, 60);
+        /* HEX GRID BACKGROUND */
+
+        const hexCanvas = document.getElementById("hexCanvas");
+        const hCtx      = hexCanvas.getContext("2d");
+
+        function resizeHex() {
+            hexCanvas.width  = window.innerWidth;
+            hexCanvas.height = window.innerHeight;
+        }
+
+        resizeHex();
+        window.addEventListener("resize", resizeHex);
+
+        const HEX_SIZE = 38;
+        const HEX_GAP  = 5;
+        let   hexOffset = 0;
+
+        function hexPath(cx, cy, size) {
+            hCtx.beginPath();
+            for (let i = 0; i < 6; i++) {
+                const angle = Math.PI / 3 * i - Math.PI / 6;
+                const x = cx + size * Math.cos(angle);
+                const y = cy + size * Math.sin(angle);
+                i === 0 ? hCtx.moveTo(x, y) : hCtx.lineTo(x, y);
+            }
+            hCtx.closePath();
+        }
+
+        function drawHexGrid() {
+            hCtx.clearRect(0, 0, hexCanvas.width, hexCanvas.height);
+            const s    = HEX_SIZE;
+            const w    = Math.sqrt(3) * s;
+            const h    = 2 * s;
+            const cols = Math.ceil(hexCanvas.width  / w) + 2;
+            const rows = Math.ceil(hexCanvas.height / (h * .75)) + 2;
+
+            for (let row = -1; row < rows; row++) {
+                for (let col = -1; col < cols; col++) {
+                    const off = col % 2 === 0 ? 0 : h * .75 / 2;
+                    const cx  = col * w + (hexOffset % w) - w;
+                    const cy  = row * h * .75 + off + (hexOffset % (h * .75)) * .5 - h;
+                    const dx  = cx - hexCanvas.width  / 2;
+                    const dy  = cy - hexCanvas.height / 2;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    const maxD = Math.sqrt(hexCanvas.width*hexCanvas.width + hexCanvas.height*hexCanvas.height) * .55;
+                    const alpha = Math.max(0, 1 - dist/maxD) * .28;
+                    if (alpha < .01) continue;
+                    hexPath(cx, cy, s - HEX_GAP);
+                    hCtx.strokeStyle = `rgba(59,130,246,${alpha})`;
+                    hCtx.lineWidth   = 1;
+                    hCtx.stroke();
+                }
             }
         }
 
-        typingEffect();
-    </script>
+        function animateHex() {
+            hexOffset += .18;
+            drawHexGrid();
+            requestAnimationFrame(animateHex);
+        }
 
-    <script>
-        function startScan() {
+        animateHex();
 
-            const target = document.getElementById("target").value.trim();
-            const results = document.getElementById("results");
-            const bar = document.getElementById("scanBar");
+        /* PARTICLE NETWORK */
 
-            results.innerHTML = "";
-            bar.style.width = "0%";
+        const pCanvas = document.getElementById("particleCanvas");
+        const pCtx    = pCanvas.getContext("2d");
+        let   pts     = [];
 
-            if (target === "") {
-                results.innerHTML = "> Please enter a website to scan.";
-                return;
+        function resizeP() {
+            pCanvas.width  = window.innerWidth;
+            pCanvas.height = window.innerHeight;
+        }
+
+        function initPts() {
+            const n = window.innerWidth < 768 ? 45 : 85;
+            pts = [];
+            for (let i = 0; i < n; i++) {
+                pts.push({
+                    x:  Math.random() * pCanvas.width,
+                    y:  Math.random() * pCanvas.height,
+                    vx: (Math.random() - .5) * .3,
+                    vy: (Math.random() - .5) * .3,
+                    r:  Math.random() * 1.4 + .5
+                });
             }
+        }
 
+        resizeP(); initPts();
+        window.addEventListener("resize", () => { resizeP(); initPts(); });
+
+        function drawParticles() {
+            pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+            pts.forEach(p => {
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0 || p.x > pCanvas.width)  p.vx *= -1;
+                if (p.y < 0 || p.y > pCanvas.height)  p.vy *= -1;
+                pCtx.beginPath();
+                pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                pCtx.fillStyle = "#3b82f6";
+                pCtx.fill();
+            });
+            for (let i = 0; i < pts.length; i++) {
+                for (let j = i+1; j < pts.length; j++) {
+                    const dx   = pts[i].x - pts[j].x;
+                    const dy   = pts[i].y - pts[j].y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < 120) {
+                        pCtx.strokeStyle = `rgba(59,130,246,${.14*(1-dist/120)})`;
+                        pCtx.lineWidth   = 1;
+                        pCtx.beginPath();
+                        pCtx.moveTo(pts[i].x, pts[i].y);
+                        pCtx.lineTo(pts[j].x, pts[j].y);
+                        pCtx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(drawParticles);
+        }
+
+        drawParticles();
+
+        /* TYPING EFFECT */
+
+        const words = [
+            "Advanced Cybersecurity Solutions",
+            "Real-World Penetration Testing",
+            "Ethical Hacking Experts",
+            "Defend. Detect. Respond."
+        ];
+
+        let wIdx = 0, cIdx = 0, deleting = false;
+        const typingEl = document.getElementById("typing");
+
+        function type() {
+            const word    = words[wIdx];
+            typingEl.innerHTML = word.substring(0, cIdx);
+            let speed = deleting ? 42 : 68;
+            if (!deleting && cIdx === word.length) { speed = 1800; deleting = true; }
+            else if (deleting && cIdx === 0) { deleting = false; wIdx = (wIdx+1) % words.length; speed = 400; }
+            cIdx += deleting ? -1 : 1;
+            setTimeout(type, speed);
+        }
+
+        type();
+
+        /* SCROLL PROGRESS */
+
+        window.addEventListener("scroll", () => {
+            const s = document.body.scrollTop || document.documentElement.scrollTop;
+            const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            document.getElementById("progressBar").style.width = (s/h*100) + "%";
+        });
+
+        /* SCROLL REVEAL */
+
+        const revealEls = document.querySelectorAll(".reveal");
+        const revealObs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add("active");
+                    revealObs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        revealEls.forEach(el => revealObs.observe(el));
+
+        /* COUNTER ANIMATION */
+
+        const counterEls = document.querySelectorAll(".counter");
+        const counterObs = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const el     = entry.target;
+                const target = +el.getAttribute("data-target");
+                const isPct  = el.parentElement.textContent.includes("%");
+                let count    = 0;
+                const inc    = target / 180;
+                function tick() {
+                    if (count < target) { count += inc; el.innerText = Math.ceil(count); requestAnimationFrame(tick); }
+                    else { el.innerText = isPct ? target+"%" : target+"+"; }
+                }
+                tick();
+                counterObs.unobserve(el);
+            });
+        }, { threshold: 0.6 });
+
+        counterEls.forEach(el => counterObs.observe(el));
+
+        /* SCANNER */
+
+        function startScan() {
+            const target  = document.getElementById("target").value.trim();
+            const results = document.getElementById("results");
+            const bar     = document.getElementById("scanBar");
+            results.innerHTML = "";
+            bar.style.width   = "0%";
+            if (!target) { results.innerHTML = "> Please enter a website to scan."; return; }
             const steps = [
                 "> Initializing NovaShyld Scanner...",
-                "> Resolving DNS...",
-                "> Detecting server IP...",
+                "> Resolving DNS for " + target + "...",
+                "> Detecting server IP and headers...",
                 "> Scanning open ports...",
-                "> Testing SQL Injection...",
-                "> Testing Cross Site Scripting...",
+                "> Testing SQL Injection vectors...",
+                "> Testing Cross-Site Scripting (XSS)...",
+                "> Checking for auth vulnerabilities...",
                 "> Generating vulnerability report...",
                 "> Scan completed ✔"
             ];
-
-            let step = 0;
-
-            function runScan() {
-
-                if (step < steps.length) {
-
-                    results.innerHTML += steps[step] + "<br>";
-
-                    let progress = ((step + 1) / steps.length) * 100;
-                    bar.style.width = progress + "%";
-
-                    results.scrollTop = results.scrollHeight;
-
-                    step++;
-
-                    setTimeout(runScan, 900);
-
+            let i = 0;
+            function run() {
+                if (i < steps.length) {
+                    results.innerHTML += steps[i] + "<br>";
+                    bar.style.width    = ((i+1)/steps.length*100) + "%";
+                    results.scrollTop  = results.scrollHeight;
+                    i++;
+                    setTimeout(run, 900);
                 }
-
             }
-
-            runScan();
-
+            run();
         }
-    </script>
 
-    <script>
-        const email = sessionStorage.getItem("internEmail");
-        const ticket = sessionStorage.getItem("internTicket");
+        /* LOGGED-IN BAR */
 
-        if (email && ticket) {
+        const sessEmail  = sessionStorage.getItem("internEmail");
+        const sessTicket = sessionStorage.getItem("internTicket");
+        if (sessEmail && sessTicket) {
             const bar = document.getElementById("userBar");
             bar.style.display = "block";
-            bar.innerHTML = `Logged in: ${email} | Ticket ID: ${ticket}`;
+            bar.innerHTML = `Logged in: ${sessEmail} | Ticket ID: ${sessTicket}`;
         }
-    </script>
 
-    <script>
+        /* MOBILE WARNING */
+
         if (/Mobi|Android/i.test(navigator.userAgent)) {
             document.getElementById("desktop-warning").style.display = "block";
         }
-    </script>
 
-    <script>
-        // Mobile hamburger menu toggle
+        /* HAMBURGER */
+
         const menuToggle = document.getElementById("menuToggle");
-        const navList = document.getElementById("navList");
+        const navList    = document.getElementById("navList");
 
         menuToggle.addEventListener("click", () => {
             navList.classList.toggle("open");
             menuToggle.classList.toggle("open");
         });
 
-        // close menu after tapping a link (mobile UX)
         navList.querySelectorAll("a").forEach(link => {
             link.addEventListener("click", () => {
                 navList.classList.remove("open");
                 menuToggle.classList.remove("open");
             });
         });
+
+        /* CHATBOT STUB */
+
+        function openChat() {
+            alert("NovaShyld AI assistant coming soon!");
+        }
+
     </script>
 
 </body>
-
 </html>
