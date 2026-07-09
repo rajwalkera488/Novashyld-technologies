@@ -117,17 +117,19 @@
             align-items: center;
             gap: 16px;
         }
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+}
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 17px;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .logo img { height: 46px; }
+.logo img {
+    height: 80px;   /* Increased from 46px */
+    width: auto;
+}
 .admin-link {
     font-size: 11px;
     color: var(--text-dim);
@@ -1037,8 +1039,6 @@
 
     <div id="progressBar"></div>
     <div id="userBar"></div>
-    <div id="desktop-warning">For best experience, please enable Desktop Site in your browser.</div>
-
     <canvas id="hexCanvas"></canvas>
     <canvas id="particleCanvas"></canvas>
 
