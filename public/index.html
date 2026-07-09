@@ -1488,20 +1488,31 @@
 
         /* HAMBURGER */
 
-        const menuToggle = document.getElementById("menuToggle");
-        const navList    = document.getElementById("navList");
+       const menuToggle = document.getElementById("menuToggle");
+const navList = document.getElementById("navList");
 
-        menuToggle.addEventListener("click", () => {
-            navList.classList.toggle("open");
-            menuToggle.classList.toggle("open");
-        });
+if (menuToggle && navList) {
 
-        navList.querySelectorAll("a").forEach(link => {
-            link.addEventListener("click", () => {
-                navList.classList.remove("open");
-                menuToggle.classList.remove("open");
-            });
-        });
+    menuToggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        navList.classList.toggle("open");
+        menuToggle.classList.toggle("open");
+    });
+
+    document.addEventListener("click", function (e) {
+
+        if (!navList.contains(e.target) && !menuToggle.contains(e.target)) {
+
+            navList.classList.remove("open");
+            menuToggle.classList.remove("open");
+
+        }
+
+    });
+
+}
 
         /* CHATBOT STUB */
 
