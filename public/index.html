@@ -13,10 +13,6 @@
 
     <style>
 
-        /* ===========================
-           ROOT — matches site palette
-        =========================== */
-
         :root {
             --bg:             #0a0e14;
             --bg-elevated:    #11151c;
@@ -30,10 +26,6 @@
             --text-dim:       #9aa4b2;
         }
 
-        /* ===========================
-           RESET
-        =========================== */
-
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         html { scroll-behavior: smooth; overflow-x: hidden; }
@@ -45,10 +37,6 @@
             overflow-x: hidden;
         }
 
-        /* ===========================
-           LOGGED-IN USER BAR
-        =========================== */
-
         #userBar {
             background: var(--success);
             color: #02130a;
@@ -57,12 +45,9 @@
             text-align: center;
             display: none;
             font-size: 13.5px;
-            letter-spacing: .3px;
         }
 
-        /* ===========================
-           CANVAS BACKGROUNDS
-        =========================== */
+        /* ── CANVAS BACKGROUNDS ── */
 
         #hexCanvas {
             position: fixed;
@@ -81,33 +66,44 @@
             opacity: 0.45;
         }
 
-        /* ===========================
-           SCROLL PROGRESS BAR
-        =========================== */
+        /* ── PROGRESS BAR ── */
 
         #progressBar {
             position: fixed;
             top: 0; left: 0;
-            height: 3px;
-            width: 0%;
+            height: 3px; width: 0%;
             background: linear-gradient(90deg, var(--primary), var(--primary-bright));
             z-index: 9999;
-            transition: width .1s;
+            pointer-events: none;
         }
 
-        /* ===========================
-           NAVBAR
-        =========================== */
+        /* ── DESKTOP WARNING ── CRITICAL: pointer-events none so it never blocks taps ── */
+
+        #desktop-warning {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            background: #b91c1c;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 13.5px;
+            z-index: 500;
+            pointer-events: none;   /* ← NEVER blocks clicks/taps underneath */
+        }
+
+        /* ── NAVBAR ── */
 
         .navbar {
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 1000;          /* above everything */
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 13px 60px;
-            background: rgba(10,14,20,.88);
+            background: rgba(10,14,20,.9);
             backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--steel-line);
         }
@@ -115,39 +111,31 @@
         .nav-left {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
         }
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 17px;
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-}
 
-.logo img {
-    height: 80px;   /* Increased from 46px */
-    width: auto;
-}
-.admin-link {
-    font-size: 11px;
-    color: var(--text-dim);
-    text-decoration: none;
-    border: 1px solid transparent;
-    padding: 3px 9px;
-    border-radius: 4px;
-    font-weight: 500;
-    transition: .25s;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 17px;
+            font-weight: 600;
+        }
 
-    /* Invisible but still clickable */
-    opacity: 0;
-    pointer-events: auto;
-}
+        .logo img { height: 46px; }
 
-        .admin-link:hover {
-            color: var(--primary-bright);
-            border-color: var(--primary);
+        /* Admin link — invisible but clickable */
+        .admin-link {
+            opacity: 0;
+            pointer-events: auto;
+            font-size: 11px;
+            color: transparent;
+            text-decoration: none;
+            padding: 3px 9px;
+            border-radius: 4px;
+            width: 1px;
+            overflow: hidden;
+            display: inline-block;
         }
 
         nav ul {
@@ -211,34 +199,42 @@
             font-weight: 600;
         }
 
+        /* ── HAMBURGER ──
+           display:none on desktop, display:flex in mobile media query.
+           z-index ensures it is ALWAYS on top of everything. */
+
         .menu-toggle {
             display: none;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
             gap: 5px;
-            width: 32px; height: 32px;
-            background: transparent;
-            border: 1px solid var(--steel-line);
-            border-radius: 6px;
+            width: 38px; height: 38px;   /* slightly larger tap target */
+            background: rgba(59,130,246,.1);
+            border: 1px solid rgba(59,130,246,.35);
+            border-radius: 8px;
             cursor: pointer;
             padding: 0;
+            position: relative;
+            z-index: 1100;              /* above navbar, above everything */
+            flex-shrink: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .menu-toggle span {
             display: block;
-            width: 16px; height: 2px;
+            width: 18px; height: 2px;
             background: var(--primary-bright);
-            margin: 0 auto;
+            border-radius: 2px;
             transition: .3s;
+            pointer-events: none;       /* spans don't capture, button does */
         }
 
-        .menu-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-        .menu-toggle.open span:nth-child(2) { opacity: 0; }
-        .menu-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+        .menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .menu-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-        /* ===========================
-           HERO
-        =========================== */
+        /* ── HERO ── */
 
         .hero {
             text-align: center;
@@ -262,9 +258,9 @@
             animation: ringExpand 3.6s ease-out infinite;
         }
 
-        .ring.r1 { width: 160px; height: 160px; animation-delay: 0s; }
-        .ring.r2 { width: 160px; height: 160px; animation-delay: 1.2s; }
-        .ring.r3 { width: 160px; height: 160px; animation-delay: 2.4s; }
+        .ring.r1 { width:160px; height:160px; animation-delay:0s; }
+        .ring.r2 { width:160px; height:160px; animation-delay:1.2s; }
+        .ring.r3 { width:160px; height:160px; animation-delay:2.4s; }
 
         @keyframes ringExpand {
             0%   { width:130px; height:130px; opacity:.8; border-color:rgba(96,165,250,.55); }
@@ -273,7 +269,7 @@
 
         .orbit {
             position: absolute;
-            width: 180px; height: 180px;
+            width:180px; height:180px;
             border-radius: 50%;
             border: 1.5px dashed rgba(59,130,246,.3);
             animation: orbitSpin 18s linear infinite;
@@ -282,10 +278,10 @@
         .orbit::after {
             content: "";
             position: absolute;
-            width: 8px; height: 8px;
+            width:8px; height:8px;
             background: var(--primary-bright);
             border-radius: 50%;
-            top: -4px; left: 50%;
+            top:-4px; left:50%;
             transform: translateX(-50%);
             box-shadow: 0 0 10px var(--primary-bright);
         }
@@ -328,10 +324,7 @@
             line-height: 1.12;
             margin-bottom: 18px;
             padding: 0 10px;
-            background: linear-gradient(135deg,
-                var(--text)           0%,
-                var(--primary-bright) 50%,
-                var(--text)           100%);
+            background: linear-gradient(135deg, var(--text) 0%, var(--primary-bright) 50%, var(--text) 100%);
             background-size: 200%;
             -webkit-background-clip: text;
             background-clip: text;
@@ -386,23 +379,19 @@
             transition: .3s;
             position: relative;
             overflow: hidden;
-            letter-spacing: .3px;
         }
 
         .btn-primary::before {
             content: "";
             position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
+            top:0; left:-100%;
+            width:100%; height:100%;
             background: linear-gradient(120deg, transparent, rgba(255,255,255,.3), transparent);
             transition: .5s;
         }
 
-        .btn-primary:hover::before { left: 100%; }
-        .btn-primary:hover {
-            box-shadow: 0 0 28px rgba(59,130,246,.5);
-            transform: translateY(-2px);
-        }
+        .btn-primary:hover::before { left:100%; }
+        .btn-primary:hover { box-shadow: 0 0 28px rgba(59,130,246,.5); transform: translateY(-2px); }
 
         .btn-secondary {
             padding: 13px 30px;
@@ -414,13 +403,9 @@
             text-decoration: none;
             font-size: 14.5px;
             transition: .3s;
-            letter-spacing: .3px;
         }
 
-        .btn-secondary:hover {
-            background: rgba(59,130,246,.1);
-            transform: translateY(-2px);
-        }
+        .btn-secondary:hover { background: rgba(59,130,246,.1); transform: translateY(-2px); }
 
         .scroll-hint {
             margin-top: 52px;
@@ -438,7 +423,7 @@
         @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
         .scroll-arrow {
-            width: 22px; height: 22px;
+            width:22px; height:22px;
             border-right: 2px solid var(--primary-bright);
             border-bottom: 2px solid var(--primary-bright);
             transform: rotate(45deg);
@@ -450,9 +435,7 @@
             50%      { transform:rotate(45deg) translateY(6px); }
         }
 
-        /* ===========================
-           TICKER
-        =========================== */
+        /* ── TICKER ── */
 
         .ticker {
             overflow: hidden;
@@ -492,9 +475,7 @@
             to   { transform: translateX(-50%); }
         }
 
-        /* ===========================
-           STATS
-        =========================== */
+        /* ── STATS ── */
 
         .stats {
             padding: 80px 60px;
@@ -527,33 +508,20 @@
         .stat::before {
             content: "";
             position: absolute;
-            top: 0; left: 0; right: 0;
+            top:0; left:0; right:0;
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--primary), transparent);
             opacity: 0;
             transition: .35s;
         }
 
-        .stat:hover {
-            border-color: rgba(59,130,246,.5);
-            transform: translateY(-8px);
-            box-shadow: 0 14px 36px rgba(59,130,246,.15);
-        }
-
+        .stat:hover { border-color:rgba(59,130,246,.5); transform:translateY(-8px); box-shadow:0 14px 36px rgba(59,130,246,.15); }
         .stat:hover::before { opacity: 1; }
 
-        .stat h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 38px;
-            color: var(--primary-bright);
-            margin-bottom: 6px;
-        }
+        .stat h3 { font-family:'Orbitron',sans-serif; font-size:38px; color:var(--primary-bright); margin-bottom:6px; }
+        .stat p   { color:var(--text-dim); font-size:13.5px; }
 
-        .stat p { color: var(--text-dim); font-size: 13.5px; }
-
-        /* ===========================
-           SERVICES
-        =========================== */
+        /* ── SERVICES ── */
 
         .services {
             padding: 90px 60px;
@@ -611,43 +579,21 @@
         .card::before {
             content: "";
             position: absolute;
-            top: 0; left: 0; right: 0;
+            top:0; left:0; right:0;
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--primary), transparent);
             opacity: 0;
             transition: .4s;
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(59,130,246,.45);
-            box-shadow: 0 18px 40px rgba(59,130,246,.16);
-        }
-
+        .card:hover { transform:translateY(-10px); border-color:rgba(59,130,246,.45); box-shadow:0 18px 40px rgba(59,130,246,.16); }
         .card:hover::before { opacity: 1; }
 
-        .card-icon {
-            font-size: 32px;
-            margin-bottom: 16px;
-            display: block;
-            filter: drop-shadow(0 0 8px rgba(59,130,246,.4));
-        }
+        .card-icon { font-size:32px; margin-bottom:16px; display:block; filter:drop-shadow(0 0 8px rgba(59,130,246,.4)); }
+        .card h3   { font-size:18px; margin-bottom:10px; color:var(--text); }
+        .card p    { color:var(--text-dim); font-size:13.5px; line-height:1.65; }
 
-        .card h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: var(--text);
-        }
-
-        .card p {
-            color: var(--text-dim);
-            font-size: 13.5px;
-            line-height: 1.65;
-        }
-
-        /* ===========================
-           SCANNER
-        =========================== */
+        /* ── SCANNER ── */
 
         .scanner-section {
             padding: 90px 20px;
@@ -666,16 +612,13 @@
             display: inline-block;
         }
 
-        .highlight {
-            color: var(--primary-bright);
-            text-shadow: 0 0 16px rgba(96,165,250,.5);
-        }
+        .highlight { color:var(--primary-bright); text-shadow:0 0 16px rgba(96,165,250,.5); }
 
         .scanner-title::after {
             content: "";
             position: absolute;
-            left: 0; bottom: -12px;
-            width: 100%; height: 2px;
+            left:0; bottom:-12px;
+            width:100%; height:2px;
             background: linear-gradient(90deg, transparent, var(--primary-bright), transparent);
             animation: scanline 3s linear infinite;
         }
@@ -685,11 +628,7 @@
             100% { transform: translateX(100%);  }
         }
 
-        .scanner-subtitle {
-            color: var(--text-dim);
-            font-size: 15px;
-            margin: 28px 0 30px;
-        }
+        .scanner-subtitle { color:var(--text-dim); font-size:15px; margin:28px 0 30px; }
 
         .scanner-box {
             background: var(--bg-elevated);
@@ -702,11 +641,7 @@
             text-align: left;
         }
 
-        .scanner-input-row {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+        .scanner-input-row { display:flex; gap:10px; flex-wrap:wrap; }
 
         .scanner-box input {
             flex: 1;
@@ -722,10 +657,7 @@
             transition: .3s;
         }
 
-        .scanner-box input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 14px rgba(59,130,246,.28);
-        }
+        .scanner-box input:focus { border-color:var(--primary); box-shadow:0 0 14px rgba(59,130,246,.28); }
 
         .scanner-box button {
             padding: 13px 22px;
@@ -741,13 +673,10 @@
             white-space: nowrap;
         }
 
-        .scanner-box button:hover {
-            box-shadow: 0 0 20px rgba(59,130,246,.45);
-        }
+        .scanner-box button:hover { box-shadow:0 0 20px rgba(59,130,246,.45); }
 
         .scan-progress {
-            width: 100%;
-            height: 8px;
+            width:100%; height:8px;
             background: var(--steel-line);
             border-radius: 5px;
             margin-top: 20px;
@@ -755,8 +684,7 @@
         }
 
         #scanBar {
-            width: 0%;
-            height: 100%;
+            width:0%; height:100%;
             background: linear-gradient(90deg, var(--primary), var(--success));
             box-shadow: 0 0 10px var(--primary);
             transition: width .5s;
@@ -773,22 +701,16 @@
             overflow-y: auto;
             border: 1px solid rgba(59,130,246,.3);
             box-shadow: inset 0 0 20px rgba(59,130,246,.08);
-            letter-spacing: .4px;
             font-size: 13.5px;
             word-break: break-word;
         }
 
-        /* ===========================
-           CTA STRIP
-        =========================== */
+        /* ── CTA STRIP ── */
 
         .cta-strip {
             margin: 0 60px 90px;
             padding: 52px 50px;
-            background: linear-gradient(135deg,
-                rgba(17,21,28,.9) 0%,
-                rgba(29,78,216,.12) 60%,
-                rgba(17,21,28,.9) 100%);
+            background: linear-gradient(135deg, rgba(17,21,28,.9) 0%, rgba(29,78,216,.12) 60%, rgba(17,21,28,.9) 100%);
             border: 1px solid rgba(59,130,246,.22);
             border-radius: 20px;
             display: flex;
@@ -804,41 +726,27 @@
         .cta-strip::before {
             content: "";
             position: absolute;
-            width: 400px; height: 400px;
+            width:400px; height:400px;
             border-radius: 50%;
             background: radial-gradient(circle, rgba(59,130,246,.12), transparent 70%);
-            right: -100px; top: -120px;
+            right:-100px; top:-120px;
             filter: blur(40px);
             pointer-events: none;
         }
 
-        .cta-strip h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 24px;
-            color: var(--text);
-            margin-bottom: 10px;
-        }
+        .cta-strip h2 { font-family:'Orbitron',sans-serif; font-size:24px; color:var(--text); margin-bottom:10px; }
+        .cta-strip p  { color:var(--text-dim); font-size:14.5px; max-width:460px; line-height:1.65; }
+        .cta-strip a  { flex-shrink: 0; }
 
-        .cta-strip p {
-            color: var(--text-dim);
-            font-size: 14.5px;
-            max-width: 460px;
-            line-height: 1.65;
-        }
-
-        .cta-strip a { flex-shrink: 0; }
-
-        /* ===========================
-           CHATBOT
-        =========================== */
+        /* ── CHATBOT ── */
 
         .chatbot-button {
             position: fixed;
-            bottom: 30px; right: 30px;
+            bottom:30px; right:30px;
             background: linear-gradient(135deg, var(--primary), var(--primary-deep));
             color: #02131a;
             font-size: 22px;
-            width: 58px; height: 58px;
+            width:58px; height:58px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -851,9 +759,7 @@
 
         .chatbot-button:hover { transform: scale(1.1); }
 
-        /* ===========================
-           FOOTER
-        =========================== */
+        /* ── FOOTER ── */
 
         footer {
             text-align: center;
@@ -865,42 +771,14 @@
             z-index: 3;
         }
 
-        /* ===========================
-           DESKTOP WARNING
-        =========================== */
+        /* ── REVEAL ── */
 
-      #desktop-warning {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    background: #b91c1c;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    z-index: 9999;
-    font-size: 13.5px;
-    pointer-events: none;   /* ← THIS was blocking all taps */
-}
+        .reveal { opacity:0; transform:translateY(40px); transition:.9s ease; }
+        .reveal.active { opacity:1; transform:translateY(0); }
 
-        /* ===========================
-           SCROLL REVEAL
-        =========================== */
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: .9s ease;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ===========================
+        /* ===================================================
            RESPONSIVE — TABLET
-        =========================== */
+        =================================================== */
 
         @media (max-width: 1024px) {
 
@@ -910,26 +788,38 @@
 
             .hero h1 { font-size: 40px; }
 
-            .services,
-            .stats { padding: 70px 30px; }
+            .services, .stats { padding: 70px 30px; }
 
             .cta-strip { margin: 0 30px 70px; padding: 40px 36px; }
         }
 
-        /* ===========================
+        /* ===================================================
            RESPONSIVE — MOBILE
-        =========================== */
+           ALL hamburger logic lives here and nowhere else
+        =================================================== */
 
         @media (max-width: 768px) {
 
-            .navbar { padding: 12px 18px; flex-wrap: wrap; }
+            /* NAVBAR — wraps to two rows */
+            .navbar {
+                padding: 12px 18px;
+                flex-wrap: wrap;
+                gap: 0;
+            }
 
             .logo { font-size: 15px; }
             .logo img { height: 38px; }
 
-            .menu-toggle { display: flex; }
+            /* HAMBURGER — shown on mobile */
+            .menu-toggle {
+                display: flex !important;   /* !important defeats any specificity race */
+            }
 
-            nav { width: 100%; }
+            /* NAV — full width second row, hidden by default */
+            nav {
+                width: 100%;
+                order: 3;                   /* pushes nav below the logo+button row */
+            }
 
             nav ul {
                 display: none;
@@ -937,98 +827,76 @@
                 align-items: flex-start;
                 width: 100%;
                 gap: 0;
-                margin-top: 14px;
-                border-top: 1px solid var(--steel-line);
+                margin-top: 10px;
                 padding-top: 10px;
+                border-top: 1px solid var(--steel-line);
+                background: rgba(10,14,20,.98);
             }
 
-            nav ul.open { display: flex; }
+            nav ul.open {
+                display: flex;
+            }
 
             nav ul li {
                 width: 100%;
-                padding: 10px 4px;
-                border-bottom: 1px solid rgba(30,42,58,.6);
+                padding: 13px 6px;
+                border-bottom: 1px solid rgba(30,42,58,.5);
             }
 
             nav ul li:last-child { border-bottom: none; }
 
-            nav ul li a { display: block; font-size: 15px; }
+            nav ul li a {
+                display: block;
+                font-size: 16px;
+                color: var(--text);
+            }
 
             .sys-badge { display: none; }
 
+            /* HERO */
             .hero { padding: 70px 16px 60px; }
-
             .hero h1 { font-size: 28px; }
-
             .hero p { font-size: 14.5px; }
 
-            .ring.r1,.ring.r2,.ring.r3 { width: 120px; height: 120px; }
-
-            .orbit { width: 145px; height: 145px; }
-
+            .ring.r1,.ring.r2,.ring.r3 { width:120px; height:120px; }
+            .orbit { width:145px; height:145px; }
             .hero-logo-img { width: 110px; }
 
-            .hero-buttons { flex-direction: column; padding: 0; }
+            .hero-buttons { flex-direction:column; padding:0; }
+            .btn-primary, .btn-secondary { width:100%; text-align:center; }
 
-            .btn-primary,
-            .btn-secondary { width: 100%; text-align: center; }
-
+            /* STATS */
             .stats { padding: 50px 18px; }
-
             .stats-container { gap: 16px; }
-
-            .stat {
-                width: calc(50% - 8px);
-                padding: 22px 14px;
-            }
-
+            .stat { width: calc(50% - 8px); padding: 22px 14px; }
             .stat h3 { font-size: 28px; }
 
+            /* SERVICES */
             .services { padding: 50px 18px; }
-
             .services h2 { font-size: 24px; margin-bottom: 36px; }
+            .service-container { flex-direction:column; align-items:center; }
+            .card { width:100%; max-width:380px; }
 
-            .service-container { flex-direction: column; align-items: center; }
-
-            .card { width: 100%; max-width: 380px; }
-
+            /* SCANNER */
             .scanner-section { padding: 60px 16px; }
-
             .scanner-title { font-size: 22px; }
-
             .scanner-box { padding: 22px 18px; }
-
             .scanner-input-row { flex-direction: column; }
+            .scanner-box input, .scanner-box button { width:100%; min-width:unset; }
 
-            .scanner-box input,
-            .scanner-box button { width: 100%; min-width: unset; }
-
-            .cta-strip {
-                margin: 0 18px 60px;
-                padding: 34px 26px;
-                flex-direction: column;
-                text-align: center;
-            }
-
+            /* CTA */
+            .cta-strip { margin:0 18px 60px; padding:34px 26px; flex-direction:column; text-align:center; }
             .cta-strip h2 { font-size: 20px; }
+            .cta-strip .btn-primary { width:100%; text-align:center; }
 
-            .cta-strip .btn-primary { width: 100%; text-align: center; }
-
-            .chatbot-button {
-                width: 50px; height: 50px;
-                font-size: 19px;
-                bottom: 18px; right: 18px;
-            }
+            /* CHATBOT */
+            .chatbot-button { width:50px; height:50px; font-size:19px; bottom:18px; right:18px; }
         }
 
         @media (max-width: 420px) {
-
             .logo span { display: none; }
-
-            .hero h1 { font-size: 23px; }
-
+            .hero h1   { font-size: 23px; }
             .hero-eyebrow { font-size: 10px; }
-
             .stat { width: 100%; }
         }
 
@@ -1040,23 +908,26 @@
 
     <div id="progressBar"></div>
     <div id="userBar"></div>
+    <div id="desktop-warning">For best experience, please enable Desktop Site in your browser.</div>
+
     <canvas id="hexCanvas"></canvas>
     <canvas id="particleCanvas"></canvas>
 
     <!-- NAVBAR -->
-
     <header class="navbar">
 
         <div class="nav-left">
-            <a href="admin.html" class="admin-link">Admin</a>
+            <a href="admin.html" class="admin-link" tabindex="-1" aria-hidden="true">Admin</a>
             <div class="logo">
                 <img src="images/logo.png" alt="NovaShyld Technologies">
                 <span>NovaShyld Technologies</span>
             </div>
         </div>
 
-        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu">
-            <span></span><span></span><span></span>
+        <button class="menu-toggle" id="menuToggle" aria-label="Open navigation menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
         </button>
 
         <nav>
@@ -1080,7 +951,6 @@
     </header>
 
     <!-- HERO -->
-
     <section class="hero">
 
         <div class="hero-eyebrow">🛡️ Trusted Cybersecurity Partner</div>
@@ -1095,10 +965,8 @@
 
         <h1><span id="typing"></span><span class="cursor">&nbsp;</span></h1>
 
-        <p>
-            Protecting businesses through ethical hacking, VAPT, and web application security —
-            defense built on real-world offensive expertise.
-        </p>
+        <p>Protecting businesses through ethical hacking, VAPT, and web application security —
+        defense built on real-world offensive expertise.</p>
 
         <div class="hero-buttons">
             <a href="services.html" class="btn-primary">Explore Services →</a>
@@ -1113,7 +981,6 @@
     </section>
 
     <!-- TICKER -->
-
     <div class="ticker">
         <div class="ticker-inner">
             <span>Ethical Hacking</span>
@@ -1127,7 +994,6 @@
             <span>Penetration Testing</span>
             <span>Security Consulting</span>
             <span>Cybersecurity Training</span>
-            <!-- duplicate for seamless loop -->
             <span>Ethical Hacking</span>
             <span>VAPT</span>
             <span>Web Application Security</span>
@@ -1143,7 +1009,6 @@
     </div>
 
     <!-- STATS -->
-
     <section class="stats reveal">
         <div class="stats-container">
             <div class="stat">
@@ -1166,89 +1031,64 @@
     </section>
 
     <!-- SERVICES -->
-
     <section class="services reveal">
-
         <div class="section-label">What We Do</div>
         <h2>Our Core Services</h2>
-
         <div class="service-container">
-
             <div class="card">
                 <span class="card-icon">🔐</span>
                 <h3>Web App Security</h3>
                 <p>In-depth OWASP Top 10 testing, SQL injection, XSS, auth bypass, and session security audits.</p>
             </div>
-
             <div class="card">
                 <span class="card-icon">🛡️</span>
                 <h3>VAPT</h3>
                 <p>Complete vulnerability assessment and penetration testing across networks and applications.</p>
             </div>
-
             <div class="card">
                 <span class="card-icon">💻</span>
                 <h3>Ethical Hacking</h3>
                 <p>Simulated real-world attacks to uncover security gaps before malicious actors do.</p>
             </div>
-
         </div>
-
     </section>
 
     <!-- SCANNER -->
-
     <section class="scanner-section reveal">
 
-        <h2 class="scanner-title">
-            Real-Time <span class="highlight">Vulnerability Scanner</span>
-        </h2>
+        <h2 class="scanner-title">Real-Time <span class="highlight">Vulnerability Scanner</span></h2>
 
-        <p class="scanner-subtitle">
-            Simulate how attackers scan a target for security weaknesses.
-        </p>
+        <p class="scanner-subtitle">Simulate how attackers scan a target for security weaknesses.</p>
 
         <div class="scanner-box">
-
             <div class="scanner-input-row">
                 <input type="text" id="target" placeholder="Enter website (example.com)">
                 <button onclick="startScan()">Start Scan</button>
             </div>
-
-            <div class="scan-progress">
-                <div id="scanBar"></div>
-            </div>
-
+            <div class="scan-progress"><div id="scanBar"></div></div>
             <div id="results" class="scan-results"></div>
-
         </div>
 
     </section>
 
-    <!-- CTA STRIP -->
-
+    <!-- CTA -->
     <div class="cta-strip reveal">
         <div>
             <h2>Ready to Secure Your Business?</h2>
-            <p>
-                Partner with NovaShyld Technologies to identify vulnerabilities before
-                attackers do — and build a resilient security posture.
-            </p>
+            <p>Partner with NovaShyld Technologies to identify vulnerabilities before attackers do — and build a resilient security posture.</p>
         </div>
         <a href="contact.html" class="btn-primary">Get in Touch →</a>
     </div>
 
-    <!-- CHATBOT -->
     <div class="chatbot-button" onclick="openChat()">💬</div>
 
-    <!-- FOOTER -->
     <footer>
         <p>© 2026 NovaShyld Technologies | Learn. Build. Secure.</p>
     </footer>
 
     <script>
 
-        /* HEX GRID BACKGROUND */
+        /* HEX GRID */
 
         const hexCanvas = document.getElementById("hexCanvas");
         const hCtx      = hexCanvas.getContext("2d");
@@ -1261,16 +1101,15 @@
         resizeHex();
         window.addEventListener("resize", resizeHex);
 
-        const HEX_SIZE = 38;
-        const HEX_GAP  = 5;
-        let   hexOffset = 0;
+        const HEX_SIZE = 38, HEX_GAP = 5;
+        let hexOffset  = 0;
 
         function hexPath(cx, cy, size) {
             hCtx.beginPath();
             for (let i = 0; i < 6; i++) {
-                const angle = Math.PI / 3 * i - Math.PI / 6;
-                const x = cx + size * Math.cos(angle);
-                const y = cy + size * Math.sin(angle);
+                const a = Math.PI / 3 * i - Math.PI / 6;
+                const x = cx + size * Math.cos(a);
+                const y = cy + size * Math.sin(a);
                 i === 0 ? hCtx.moveTo(x, y) : hCtx.lineTo(x, y);
             }
             hCtx.closePath();
@@ -1278,61 +1117,45 @@
 
         function drawHexGrid() {
             hCtx.clearRect(0, 0, hexCanvas.width, hexCanvas.height);
-            const s    = HEX_SIZE;
-            const w    = Math.sqrt(3) * s;
-            const h    = 2 * s;
-            const cols = Math.ceil(hexCanvas.width  / w) + 2;
-            const rows = Math.ceil(hexCanvas.height / (h * .75)) + 2;
-
+            const s = HEX_SIZE, w = Math.sqrt(3)*s, h = 2*s;
+            const cols = Math.ceil(hexCanvas.width/w)+2;
+            const rows = Math.ceil(hexCanvas.height/(h*.75))+2;
             for (let row = -1; row < rows; row++) {
                 for (let col = -1; col < cols; col++) {
-                    const off = col % 2 === 0 ? 0 : h * .75 / 2;
-                    const cx  = col * w + (hexOffset % w) - w;
-                    const cy  = row * h * .75 + off + (hexOffset % (h * .75)) * .5 - h;
-                    const dx  = cx - hexCanvas.width  / 2;
-                    const dy  = cy - hexCanvas.height / 2;
-                    const dist = Math.sqrt(dx*dx + dy*dy);
-                    const maxD = Math.sqrt(hexCanvas.width*hexCanvas.width + hexCanvas.height*hexCanvas.height) * .55;
-                    const alpha = Math.max(0, 1 - dist/maxD) * .28;
+                    const off = col%2===0 ? 0 : h*.75/2;
+                    const cx  = col*w + (hexOffset%w) - w;
+                    const cy  = row*h*.75 + off + (hexOffset%(h*.75))*.5 - h;
+                    const dx  = cx - hexCanvas.width/2;
+                    const dy  = cy - hexCanvas.height/2;
+                    const d   = Math.sqrt(dx*dx+dy*dy);
+                    const maxD= Math.sqrt(hexCanvas.width*hexCanvas.width+hexCanvas.height*hexCanvas.height)*.55;
+                    const alpha = Math.max(0, 1-d/maxD)*.28;
                     if (alpha < .01) continue;
-                    hexPath(cx, cy, s - HEX_GAP);
+                    hexPath(cx, cy, s-HEX_GAP);
                     hCtx.strokeStyle = `rgba(59,130,246,${alpha})`;
-                    hCtx.lineWidth   = 1;
+                    hCtx.lineWidth = 1;
                     hCtx.stroke();
                 }
             }
         }
 
-        function animateHex() {
-            hexOffset += .18;
-            drawHexGrid();
-            requestAnimationFrame(animateHex);
-        }
-
+        function animateHex() { hexOffset += .18; drawHexGrid(); requestAnimationFrame(animateHex); }
         animateHex();
 
         /* PARTICLE NETWORK */
 
         const pCanvas = document.getElementById("particleCanvas");
         const pCtx    = pCanvas.getContext("2d");
-        let   pts     = [];
+        let pts = [];
 
-        function resizeP() {
-            pCanvas.width  = window.innerWidth;
-            pCanvas.height = window.innerHeight;
-        }
+        function resizeP() { pCanvas.width = window.innerWidth; pCanvas.height = window.innerHeight; }
 
         function initPts() {
             const n = window.innerWidth < 768 ? 45 : 85;
             pts = [];
             for (let i = 0; i < n; i++) {
-                pts.push({
-                    x:  Math.random() * pCanvas.width,
-                    y:  Math.random() * pCanvas.height,
-                    vx: (Math.random() - .5) * .3,
-                    vy: (Math.random() - .5) * .3,
-                    r:  Math.random() * 1.4 + .5
-                });
+                pts.push({ x:Math.random()*pCanvas.width, y:Math.random()*pCanvas.height,
+                           vx:(Math.random()-.5)*.3, vy:(Math.random()-.5)*.3, r:Math.random()*1.4+.5 });
             }
         }
 
@@ -1340,28 +1163,23 @@
         window.addEventListener("resize", () => { resizeP(); initPts(); });
 
         function drawParticles() {
-            pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+            pCtx.clearRect(0,0,pCanvas.width,pCanvas.height);
             pts.forEach(p => {
-                p.x += p.vx; p.y += p.vy;
-                if (p.x < 0 || p.x > pCanvas.width)  p.vx *= -1;
-                if (p.y < 0 || p.y > pCanvas.height)  p.vy *= -1;
-                pCtx.beginPath();
-                pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                pCtx.fillStyle = "#3b82f6";
-                pCtx.fill();
+                p.x+=p.vx; p.y+=p.vy;
+                if(p.x<0||p.x>pCanvas.width)  p.vx*=-1;
+                if(p.y<0||p.y>pCanvas.height)  p.vy*=-1;
+                pCtx.beginPath(); pCtx.arc(p.x,p.y,p.r,0,Math.PI*2);
+                pCtx.fillStyle="#3b82f6"; pCtx.fill();
             });
-            for (let i = 0; i < pts.length; i++) {
-                for (let j = i+1; j < pts.length; j++) {
-                    const dx   = pts[i].x - pts[j].x;
-                    const dy   = pts[i].y - pts[j].y;
-                    const dist = Math.sqrt(dx*dx + dy*dy);
-                    if (dist < 120) {
-                        pCtx.strokeStyle = `rgba(59,130,246,${.14*(1-dist/120)})`;
-                        pCtx.lineWidth   = 1;
-                        pCtx.beginPath();
-                        pCtx.moveTo(pts[i].x, pts[i].y);
-                        pCtx.lineTo(pts[j].x, pts[j].y);
-                        pCtx.stroke();
+            for(let i=0;i<pts.length;i++) {
+                for(let j=i+1;j<pts.length;j++) {
+                    const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y;
+                    const d=Math.sqrt(dx*dx+dy*dy);
+                    if(d<120) {
+                        pCtx.strokeStyle=`rgba(59,130,246,${.14*(1-d/120)})`;
+                        pCtx.lineWidth=1;
+                        pCtx.beginPath(); pCtx.moveTo(pts[i].x,pts[i].y);
+                        pCtx.lineTo(pts[j].x,pts[j].y); pCtx.stroke();
                     }
                 }
             }
@@ -1379,15 +1197,15 @@
             "Defend. Detect. Respond."
         ];
 
-        let wIdx = 0, cIdx = 0, deleting = false;
+        let wIdx=0, cIdx=0, deleting=false;
         const typingEl = document.getElementById("typing");
 
         function type() {
-            const word    = words[wIdx];
+            const word = words[wIdx];
             typingEl.innerHTML = word.substring(0, cIdx);
             let speed = deleting ? 42 : 68;
-            if (!deleting && cIdx === word.length) { speed = 1800; deleting = true; }
-            else if (deleting && cIdx === 0) { deleting = false; wIdx = (wIdx+1) % words.length; speed = 400; }
+            if (!deleting && cIdx===word.length) { speed=1800; deleting=true; }
+            else if (deleting && cIdx===0) { deleting=false; wIdx=(wIdx+1)%words.length; speed=400; }
             cIdx += deleting ? -1 : 1;
             setTimeout(type, speed);
         }
@@ -1397,46 +1215,38 @@
         /* SCROLL PROGRESS */
 
         window.addEventListener("scroll", () => {
-            const s = document.body.scrollTop || document.documentElement.scrollTop;
+            const s = document.body.scrollTop||document.documentElement.scrollTop;
             const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            document.getElementById("progressBar").style.width = (s/h*100) + "%";
+            document.getElementById("progressBar").style.width = (s/h*100)+"%";
         });
 
         /* SCROLL REVEAL */
 
-        const revealEls = document.querySelectorAll(".reveal");
         const revealObs = new IntersectionObserver(entries => {
             entries.forEach(e => {
-                if (e.isIntersecting) {
-                    e.target.classList.add("active");
-                    revealObs.unobserve(e.target);
-                }
+                if (e.isIntersecting) { e.target.classList.add("active"); revealObs.unobserve(e.target); }
             });
         }, { threshold: 0.12 });
 
-        revealEls.forEach(el => revealObs.observe(el));
+        document.querySelectorAll(".reveal").forEach(el => revealObs.observe(el));
 
         /* COUNTER ANIMATION */
 
-        const counterEls = document.querySelectorAll(".counter");
         const counterObs = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (!entry.isIntersecting) return;
-                const el     = entry.target;
-                const target = +el.getAttribute("data-target");
-                const isPct  = el.parentElement.textContent.includes("%");
-                let count    = 0;
-                const inc    = target / 180;
+                const el=entry.target, target=+el.getAttribute("data-target");
+                const isPct = el.parentElement.textContent.includes("%");
+                let count=0; const inc=target/180;
                 function tick() {
-                    if (count < target) { count += inc; el.innerText = Math.ceil(count); requestAnimationFrame(tick); }
+                    if (count<target) { count+=inc; el.innerText=Math.ceil(count); requestAnimationFrame(tick); }
                     else { el.innerText = isPct ? target+"%" : target+"+"; }
                 }
-                tick();
-                counterObs.unobserve(el);
+                tick(); counterObs.unobserve(el);
             });
         }, { threshold: 0.6 });
 
-        counterEls.forEach(el => counterObs.observe(el));
+        document.querySelectorAll(".counter").forEach(el => counterObs.observe(el));
 
         /* SCANNER */
 
@@ -1444,12 +1254,11 @@
             const target  = document.getElementById("target").value.trim();
             const results = document.getElementById("results");
             const bar     = document.getElementById("scanBar");
-            results.innerHTML = "";
-            bar.style.width   = "0%";
-            if (!target) { results.innerHTML = "> Please enter a website to scan."; return; }
+            results.innerHTML=""; bar.style.width="0%";
+            if (!target) { results.innerHTML="> Please enter a website to scan."; return; }
             const steps = [
                 "> Initializing NovaShyld Scanner...",
-                "> Resolving DNS for " + target + "...",
+                "> Resolving DNS for "+target+"...",
                 "> Detecting server IP and headers...",
                 "> Scanning open ports...",
                 "> Testing SQL Injection vectors...",
@@ -1458,14 +1267,13 @@
                 "> Generating vulnerability report...",
                 "> Scan completed ✔"
             ];
-            let i = 0;
+            let i=0;
             function run() {
-                if (i < steps.length) {
-                    results.innerHTML += steps[i] + "<br>";
-                    bar.style.width    = ((i+1)/steps.length*100) + "%";
-                    results.scrollTop  = results.scrollHeight;
-                    i++;
-                    setTimeout(run, 900);
+                if (i<steps.length) {
+                    results.innerHTML+=steps[i]+"<br>";
+                    bar.style.width=((i+1)/steps.length*100)+"%";
+                    results.scrollTop=results.scrollHeight;
+                    i++; setTimeout(run,900);
                 }
             }
             run();
@@ -1477,45 +1285,49 @@
         const sessTicket = sessionStorage.getItem("internTicket");
         if (sessEmail && sessTicket) {
             const bar = document.getElementById("userBar");
-            bar.style.display = "block";
-            bar.innerHTML = `Logged in: ${sessEmail} | Ticket ID: ${sessTicket}`;
+            bar.style.display="block";
+            bar.innerHTML=`Logged in: ${sessEmail} | Ticket ID: ${sessTicket}`;
         }
 
         /* MOBILE WARNING */
 
         if (/Mobi|Android/i.test(navigator.userAgent)) {
-            document.getElementById("desktop-warning").style.display = "block";
+            document.getElementById("desktop-warning").style.display="block";
         }
 
-        /* HAMBURGER */
+        /* ================================================================
+           HAMBURGER — clean, simple, reliable
+           This is the ONLY place the toggle logic lives.
+           No inline onclick, no duplicate handlers.
+        ================================================================ */
 
-       const menuToggle = document.getElementById("menuToggle");
-const navList = document.getElementById("navList");
+        const menuToggle = document.getElementById("menuToggle");
+        const navList    = document.getElementById("navList");
 
-if (menuToggle && navList) {
+        menuToggle.addEventListener("click", function(e) {
+            e.stopPropagation();
+            const isOpen = navList.classList.toggle("open");
+            menuToggle.classList.toggle("open", isOpen);
+            menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        });
 
-    menuToggle.addEventListener("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
+        // Close when a nav link is tapped
+        navList.querySelectorAll("a").forEach(function(link) {
+            link.addEventListener("click", function() {
+                navList.classList.remove("open");
+                menuToggle.classList.remove("open");
+                menuToggle.setAttribute("aria-expanded", "false");
+            });
+        });
 
-        navList.classList.toggle("open");
-        menuToggle.classList.toggle("open");
-    });
-
-    document.addEventListener("click", function (e) {
-
-        if (!navList.contains(e.target) && !menuToggle.contains(e.target)) {
-
-            navList.classList.remove("open");
-            menuToggle.classList.remove("open");
-
-        }
-
-    });
-
-}
-
-        /* CHATBOT STUB */
+        // Close when tapping outside the navbar
+        document.addEventListener("click", function(e) {
+            if (!e.target.closest(".navbar")) {
+                navList.classList.remove("open");
+                menuToggle.classList.remove("open");
+                menuToggle.setAttribute("aria-expanded", "false");
+            }
+        });
 
         function openChat() {
             alert("NovaShyld AI assistant coming soon!");
