@@ -869,18 +869,19 @@
            DESKTOP WARNING
         =========================== */
 
-        #desktop-warning {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%;
-            background: #b91c1c;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            z-index: 9999;
-            font-size: 13.5px;
-        }
+      #desktop-warning {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    background: #b91c1c;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    z-index: 9999;
+    font-size: 13.5px;
+    pointer-events: none;   /* ← THIS was blocking all taps */
+}
 
         /* ===========================
            SCROLL REVEAL
